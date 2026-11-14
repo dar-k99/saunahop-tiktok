@@ -23,7 +23,7 @@
   "buffer": {
     "_scheduling": "notification = Buffer sends a notification to your phone at the set time; you add a sound in TikTok and post. automatic = Buffer posts by itself (no sound choice).",
     "scheduling": "notification",
-    "carouselTime": "18:00",
-    "videoTime": "12:30"
+    "carouselTime": "17:00",
+    "videoTime": "20:00"
   }
 }

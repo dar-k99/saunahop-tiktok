@@ -4,7 +4,7 @@ Makes one TikTok post a day for saunahop.com (London 5 days a week, Dublin on Mo
 
 ## What happens each day
 
-1. **7am (GitHub Action):** the job starts on its own.
+1. **3:30pm London time (GitHub Action):** the job starts on its own, late enough that "space tonight" numbers are fresh.
 2. **Data:** reads the venue list (`data/venues.json`, this repo's copy of the London venues) and downloads live slots from `data.saunahop.com/availability.json`.
 3. **City and topic:** picks the city for the day (`cities` in `config.json`), then the next topic from that city's list in `topics.json`, for example "London saunas under £15" or "Sea saunas in Dublin". Topics that don't have at least 3 matching venues that day are skipped.
 4. **Slides:** makes 6 images at 1080×1920 (`slide-1.jpg` … `slide-6.jpg`):
@@ -14,12 +14,12 @@ Makes one TikTok post a day for saunahop.com (London 5 days a week, Dublin on Mo
 5. **Video** (Tue, Thu, Sat): a 4-second sauna clip; "Every London sauna. One timetable." fades in at 2 seconds.
 6. **Caption:** picked from `captions.json`, always with saunahop.com on the first line, plus #londonsauna and 5 rotating hashtags.
 7. **Images online:** the day's images are pushed to the `posts` branch of this repo, because Buffer only takes images from a public link. That branch only keeps the last 14 days.
-8. **Buffer:** the carousel is scheduled for 18:00 and the video (on video days) for 12:30, as "Notify me" posts.
+8. **Buffer:** the carousel is scheduled for 17:00 and the video (on video days) for 20:00, as "Notify me" posts.
 9. **You (1 minute):** at that time the Buffer app on your phone sends a notification. Tap it, it opens TikTok with the images and caption, add a trending sound, post, then pin a comment "Book here → saunahop.com". (No app can pick TikTok sounds for you: TikTok doesn't allow it.)
 
 ## Rules it follows
 
-- **Never invents availability.** Session counts are shown only for venues with live, scraped data, only if that data is under 6 hours old, and with the time it was checked ("at 8am"). Otherwise the slide shows price and tags only.
+- **Never invents availability.** Session counts are shown only for venues with live, scraped data, only if that data is under 6 hours old, and with the time it was checked ("at 3:34pm"). Otherwise the slide shows price and tags only.
 - **People photos only on the first and last slides.** Venue slides use empty saunas, so no one looks like they're at a particular venue.
 - **Same day = same post.** All "random" choices are seeded by the date, so re-running gives the same result.
 
@@ -69,7 +69,7 @@ There are two GitHub Actions (repo → Actions tab):
 
 | Job | When | Needs |
 |---|---|---|
-| **Daily TikTok post** | every day, 07:00 UTC | `BUFFER_API_KEY` |
+| **Daily TikTok post** | every day, 3:30pm London time | `BUFFER_API_KEY` |
 | **Update venue list** | Mondays, 06:00 UTC | `LOYLY_TOKEN` (optional: without it the job skips and the daily post uses the current copy) |
 
 1. **Buffer** (free plan): connect the TikTok account, then publish.buffer.com/settings/api → create a key. Install the Buffer app on your phone and allow notifications.

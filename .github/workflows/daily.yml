@@ -10,7 +10,11 @@ name: Daily TikTok post
 
 on:
   schedule:
-    - cron: "0 7 * * *" # 07:00 UTC = 7am in winter, 8am in summer (London)
+    # GitHub's timer is in UTC and can run late, so there are two timers and
+    # the first step keeps the one that is 3:30pm in London:
+    # 14:30 UTC in summer (BST), 15:30 UTC in winter (GMT).
+    - cron: "30 14 * * *"
+    - cron: "30 15 * * *"
   workflow_dispatch:
     inputs:
       topic:
@@ -29,20 +33,38 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - name: Only run at 3:30pm London time
+        id: time
+        run: |
+          go=true
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            # +0100 in summer, +0000 in winter
+            if [ "$(TZ=Europe/London date +%z)" = "+0100" ]; then wanted="30 14 * * *"; else wanted="30 15 * * *"; fi
+            if [ "${{ github.event.schedule }}" != "$wanted" ]; then
+              echo "This is the other timer (not 3:30pm in London), so skipping."
+              go=false
+            fi
+          fi
+          echo "go=$go" >> "$GITHUB_OUTPUT"
 
+      - uses: actions/checkout@v4
+        if: steps.time.outputs.go == 'true'
       - uses: actions/setup-node@v4
+        if: steps.time.outputs.go == 'true'
         with:
           node-version: 22
           cache: npm
 
       - run: npm ci
+        if: steps.time.outputs.go == 'true'
       - run: npx playwright install --with-deps chromium
-
+        if: steps.time.outputs.go == 'true'
       - name: Build today's post
+        if: steps.time.outputs.go == 'true'
         run: node build.mjs ${{ inputs.topic && format('--topic {0}', inputs.topic) || '' }}
 
       - name: Keep a copy of the post (Actions tab -> this run -> Artifacts)
+        if: steps.time.outputs.go == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: tiktok-post
@@ -50,7 +72,7 @@ jobs:
           retention-days: 14
 
       - name: Schedule in Buffer
-        if: ${{ github.event_name == 'schedule' || inputs.send }}
+        if: ${{ steps.time.outputs.go == 'true' && (github.event_name == 'schedule' || inputs.send) }}
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
         run: node post.mjs
