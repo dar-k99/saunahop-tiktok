@@ -1,0 +1,24 @@
+{
+  "_README": "Settings for the daily TikTok post. Safe to edit. See README.md.",
+
+  "venuesPerPost": 4,
+  "minVenuesPerPost": 3,
+
+  "tonightFromHour": 17,
+
+  "videoDays": ["Tue", "Thu", "Sat"],
+  "video": {
+    "clipStart": 2,
+    "clipLength": 4,
+    "textAt": 2,
+    "fadeLength": 0.4
+  },
+
+  "tiktok": {
+    "_postingMethod": "UPLOAD = goes to your TikTok inbox as a draft, you add a sound and post it. DIRECT_POST = publishes straight away with no one touching it.",
+    "postingMethod": "UPLOAD",
+    "privacy": "PUBLIC_TO_EVERYONE",
+    "autoAddMusic": "yes",
+    "allowComments": true
+  }
+}

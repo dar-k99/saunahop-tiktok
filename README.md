@@ -1,0 +1,75 @@
+# SaunaHop TikTok
+
+Makes one TikTok post a day for saunahop.com, from real venue and availability data, and sends it to TikTok through Postiz.
+
+## What happens each day
+
+1. **7am (GitHub Action):** the job starts on its own.
+2. **Data:** reads the venue list (`data/venues.json` from the `loyly` repo) and downloads live slots from `data.saunahop.com/availability.json`.
+3. **Topic:** picks the next topic from `topics.json`, for example "London saunas under £15". Topics that don't have at least 3 matching venues that day are skipped.
+4. **Slides:** makes 6 images at 1080×1920 (`slide-1.jpg` … `slide-6.jpg`):
+   - 1: the hook, over a photo with people in it
+   - 2–5: one venue each (name, area, price, 3 tags, and for "tonight" or "weekend" topics, how many sessions still have space)
+   - 6: "Every London sauna. One timetable." + saunahop.com
+5. **Video** (Tue, Thu, Sat): a 4-second sauna clip; "Every London sauna. One timetable." fades in at 2 seconds.
+6. **Caption:** picked from `captions.json`, always with saunahop.com on the first line, plus #londonsauna and 5 rotating hashtags.
+7. **Postiz:** sends it to the TikTok app inbox as a draft.
+8. **You (1 minute):** open TikTok → inbox → add a trending sound → post → pin a comment "Book here → saunahop.com". Drafts not posted within 24 hours are deleted by TikTok.
+
+## Rules it follows
+
+- **Never invents availability.** Session counts are shown only for venues with live, scraped data, only if that data is under 6 hours old, and with the time it was checked ("at 8am"). Otherwise the slide shows price and tags only.
+- **People photos only on the first and last slides.** Venue slides use empty saunas, so no one looks like they're at a particular venue.
+- **Same day = same post.** All "random" choices are seeded by the date, so re-running gives the same result.
+
+## Things you can change without touching code
+
+| File | What it controls |
+|---|---|
+| `topics.json` | The topics, in order. Add, remove or reword. |
+| `captions.json` | Caption wording and hashtags. |
+| `config.json` | Venues per post, video days, video timing, draft vs direct posting. |
+| `assets/photos/people/` | Photos for the first and last slides (portrait works best). |
+| `assets/photos/empty/` | Photos behind venue names: saunas with no people. |
+| `assets/clips/` | Video clips for the video post (vertical, 6+ seconds). One is picked at random. |
+
+### Topic fields
+
+```json
+{ "id": "under-15", "hook": "London saunas under £15", "subhook": "you didn't know about",
+  "filter": { "maxPrice": 15, "regions": ["East"], "tagsAny": ["Cold plunge"] },
+  "show": "tonight", "sort": "price", "minVenues": 2 }
+```
+
+- `filter` (optional): `maxPrice` in £, `regions` (North, South, East, West, Central), `tagsAny` (venue has at least one of these tags, as written in venues.json).
+- `show` (optional): `"tonight"` (from 5pm) or `"weekend"`. Only venues with live free sessions are used, and the slide shows the count.
+- `sort` (optional): `"price"` (cheapest first), `"free"` (most free sessions first) or `"random"` (default).
+- `minVenues` (optional): default 3.
+
+## Running it on your Mac
+
+```bash
+npm install
+npm run setup                     # downloads the browser used to make the images (once)
+node build.mjs                    # today's post → output/<date>/
+node build.mjs --topic tonight    # a specific topic
+node build.mjs --video            # also make the video
+node post.mjs --dry-run           # shows what would be sent
+node post.mjs                     # sends it (needs POSTIZ_API_KEY in .env)
+node post.mjs --channels          # lists channels connected in Postiz
+```
+
+It reads venues from `~/code/loyly` by default (change with `LOYLY_DIR` in `.env`).
+
+## Setting up the daily automation
+
+1. **Postiz:** sign up (paid, from $29/month after a 7-day trial), connect TikTok, then Settings → Public API → copy the key.
+2. **GitHub token for loyly:** the job needs to read `venues.json` from the private `dbinchy/loyly` repo. Create a fine-grained token at github.com/settings/tokens with read-only *Contents* access to that one repo. If you can't select `dbinchy/loyly`, Donnacha needs to create it or approve it.
+3. **Secrets:** in this repo on GitHub → Settings → Secrets and variables → Actions → New repository secret:
+   - `POSTIZ_API_KEY`
+   - `LOYLY_TOKEN`
+4. **Test:** Actions tab → Daily TikTok post → Run workflow. Untick "Send to Postiz" for a first look: the images are under the run's Artifacts.
+
+## Credits
+
+Photos and clips: Pexels (free licence, no credit required). Brand font Amoured: SIL Open Font License (`assets/brand/Amoured-OFL.txt`).

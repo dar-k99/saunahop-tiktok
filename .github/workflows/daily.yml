@@ -1,0 +1,66 @@
+# Builds today's TikTok post and sends it to Postiz, every morning.
+# Also runs from the Actions tab ("Run workflow"), where you can pick a topic
+# or build without sending.
+#
+# Secrets needed (repo Settings -> Secrets and variables -> Actions):
+#   LOYLY_TOKEN     a GitHub token that can read dbinchy/loyly (for venues.json)
+#   POSTIZ_API_KEY  from Postiz -> Settings -> Public API
+#                   (leave it unset and the job builds the post but sends nothing)
+
+name: Daily TikTok post
+
+on:
+  schedule:
+    - cron: "0 7 * * *" # 07:00 UTC = 7am in winter, 8am in summer (London)
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: "Topic id from topics.json (blank = today's rotation)"
+        required: false
+      send:
+        description: "Send to Postiz"
+        type: boolean
+        default: true
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get venues.json from the SaunaHop repo
+        uses: actions/checkout@v4
+        with:
+          repository: dbinchy/loyly
+          token: ${{ secrets.LOYLY_TOKEN }}
+          path: loyly
+          sparse-checkout: data/venues.json
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+
+      - name: Build today's post
+        env:
+          LOYLY_DIR: loyly
+        run: node build.mjs ${{ inputs.topic && format('--topic {0}', inputs.topic) || '' }}
+
+      - name: Keep a copy of the post (Actions tab -> this run -> Artifacts)
+        uses: actions/upload-artifact@v4
+        with:
+          name: tiktok-post
+          path: output/
+          retention-days: 14
+
+      - name: Send to TikTok via Postiz
+        if: ${{ github.event_name == 'schedule' || inputs.send }}
+        env:
+          POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
+          POSTIZ_TIKTOK_ID: ${{ secrets.POSTIZ_TIKTOK_ID }}
+        run: node post.mjs

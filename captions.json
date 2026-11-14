@@ -1,0 +1,24 @@
+{
+  "_README": "Caption wording. {hook} and {subhook} are swapped for the day's topic. The first line always carries saunahop.com so people see it without swiping. One template is picked per day.",
+
+  "carousel": [
+    "Live slots for every London sauna: saunahop.com 🔗\n{hook} 🧖 Which one are you booking?",
+    "Every London sauna in one timetable: saunahop.com 🔗\n{hook}, {subhook}. Save this for later 📌",
+    "Find a free sauna slot in London: saunahop.com 🔗\n{hook} 🔥 Tag who you're going with",
+    "saunahop.com shows live availability for London saunas 🔗\n{hook}. Have you been to any of these?",
+    "Book your next London sauna via saunahop.com 🔗\n{hook} ♨️ Which one's your favourite?"
+  ],
+
+  "video": [
+    "Every London sauna. One timetable. saunahop.com 🔗",
+    "Find a free sauna slot in London tonight: saunahop.com 🔗",
+    "Stop scrolling 20 booking sites. Every London sauna, one place: saunahop.com 🔗",
+    "Live sauna availability across London: saunahop.com 🔗"
+  ],
+
+  "hashtags": {
+    "always": ["#londonsauna"],
+    "pool": ["#saunalondon", "#londonthingstodo", "#coldplunge", "#sauna", "#london", "#thingstodoinlondon", "#londonlife", "#saunatime", "#wellnesslondon", "#contrasttherapy", "#londondateideas", "#selfcare"],
+    "pickFromPool": 5
+  }
+}
