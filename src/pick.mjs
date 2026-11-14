@@ -1,4 +1,4 @@
-// Chooses the day's topic, venues, photos and caption.
+// Chooses the day's topic and venues, lists photos and clips, and writes the caption.
 // Everything "random" is seeded by the date, so running twice on the same
 // day gives the same post, but each day is different.
 

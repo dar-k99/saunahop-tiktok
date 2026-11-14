@@ -1,4 +1,4 @@
-# Copies the latest London venue list from the SaunaHop repo (dbinchy/loyly)
+# Copies the latest London and Irish venue list from the SaunaHop repo (dbinchy/loyly)
 # into data/venues.json here, once a week. The daily post reads that copy,
 # so it keeps working even if this job can't run.
 #

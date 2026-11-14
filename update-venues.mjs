@@ -1,4 +1,4 @@
-// Refreshes data/venues.json (this repo's copy of the London venue list)
+// Refreshes data/venues.json (this repo's copy of the London and Irish venue list)
 // from the SaunaHop repo, so the daily post doesn't need access to it.
 //
 //   node update-venues.mjs [path/to/loyly]     default: $LOYLY_DIR or ~/code/loyly

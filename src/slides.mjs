@@ -68,7 +68,7 @@ export function hookSlide(topic, background) {
 /**
  * One venue. `free` is the number of sessions with space (tonight or this
  * weekend), only passed for venues with live data. `checkedAt` is a label
- * like "8am" so viewers know when the number was true.
+ * like "3:34pm" (when the scraper last checked) so viewers know when the number was true.
  */
 export function venueSlide({ venue, city, index, total, pills, show, free, checkedAt, background }) {
   const size = sizeFor(venue.name, [[18, 120], [26, 104], [34, 92], [999, 80]]);

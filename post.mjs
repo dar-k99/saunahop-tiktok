@@ -10,11 +10,16 @@
 // How it works:
 //   1. Buffer can only take images from a public web link, so the day's
 //      images are pushed to the "posts" branch of this (public) GitHub repo.
-//      That branch only ever holds the last 14 days.
+//      Dated folders older than 14 days are removed; other folders (like
+//      quirky/, for hand-made videos) are left alone.
 //   2. A post is created in Buffer for each (carousel, and video on video
 //      days). With scheduling "notification" (the default) Buffer sends a
 //      notification to your phone at the set time: tap it, add a sound in
 //      TikTok, post.
+//
+// Running it twice on the same day creates a second set of Buffer posts.
+// On your Mac, output/<date>/sent.json stops that; on GitHub each run starts
+// fresh, so don't re-run the daily job by hand on a day it already ran.
 
 import fs from "fs";
 import path from "path";
@@ -60,9 +65,9 @@ function mediaBaseUrl() {
 }
 
 /**
- * Copies today's files into the "posts" branch and pushes it. The branch is
- * kept to a single commit holding only the last 14 days, so the repo never
- * grows large.
+ * Copies today's files into the "posts" branch and pushes it. Each time, the
+ * branch is replaced by a single fresh commit (old dated folders dropped),
+ * so the repo never grows large.
  */
 function publishMedia() {
   const work = fs.mkdtempSync(path.join(os.tmpdir(), "saunahop-posts-"));
@@ -138,7 +143,7 @@ async function tiktokChannelId() {
   return channels[0].id;
 }
 
-/** "18:00" today in London, as a UTC timestamp. */
+/** A time like "17:00" today in London, as a UTC timestamp (handles summer time). */
 function londonTimeToday(hhmm) {
   const [h, m] = hhmm.split(":").map(Number);
   const [y, mo, d] = today.split("-").map(Number);
