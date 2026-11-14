@@ -14,11 +14,10 @@
     "fadeLength": 0.4
   },
 
-  "tiktok": {
-    "_postingMethod": "UPLOAD = goes to your TikTok inbox as a draft, you add a sound and post it. DIRECT_POST = publishes straight away with no one touching it.",
-    "postingMethod": "UPLOAD",
-    "privacy": "PUBLIC_TO_EVERYONE",
-    "autoAddMusic": "yes",
-    "allowComments": true
+  "buffer": {
+    "_scheduling": "notification = Buffer sends a notification to your phone at the set time; you add a sound in TikTok and post. automatic = Buffer posts by itself (no sound choice).",
+    "scheduling": "notification",
+    "carouselTime": "18:00",
+    "videoTime": "12:30"
   }
 }

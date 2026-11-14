@@ -1,53 +1,43 @@
-// Sends today's post (made by build.mjs) to TikTok through Postiz.
+// Sends today's post (made by build.mjs) to TikTok through Buffer.
 //
-//   node post.mjs              send today's post
+//   node post.mjs              publish images, then schedule the post(s) in Buffer
+//   node post.mjs --draft      same, but saves them as Buffer drafts (nothing gets scheduled)
 //   node post.mjs --dry-run    show what would be sent, send nothing
-//   node post.mjs --channels   list the channels connected in Postiz
 //
-// Needs POSTIZ_API_KEY, either in a .env file (on your Mac) or as a GitHub
+// Needs BUFFER_API_KEY, either in a .env file (on your Mac) or as a GitHub
 // secret (for the daily automation). Without it, this always does a dry run.
 //
-// With postingMethod "UPLOAD" (the default) the post lands in your TikTok
-// app inbox as a draft: open it, add a sound, post. TikTok deletes drafts
-// that aren't posted within 24 hours.
+// How it works:
+//   1. Buffer can only take images from a public web link, so the day's
+//      images are pushed to the "posts" branch of this (public) GitHub repo.
+//      That branch only ever holds the last 14 days.
+//   2. A post is created in Buffer for each (carousel, and video on video
+//      days). With scheduling "notification" (the default) Buffer sends a
+//      notification to your phone at the set time: tap it, add a sound in
+//      TikTok, post.
 
 import fs from "fs";
 import path from "path";
+import os from "os";
+import { execFileSync } from "child_process";
 import { londonToday } from "./src/data.mjs";
 
 // ---- Read .env (a simple KEY=value file) if there is one ----
 if (fs.existsSync(".env")) {
   for (const line of fs.readFileSync(".env", "utf8").split("\n")) {
     const match = line.match(/^\s*([A-Z_]+)\s*=\s*(.*?)\s*$/);
-    if (match && !process.env[match[1]]) process.env[match[1]] = match[2].replace(/^["']|["']$/g, "");
+    if (match && match[2] && !process.env[match[1]]) process.env[match[1]] = match[2].replace(/^["']|["']$/g, "");
   }
 }
 
-const API = process.env.POSTIZ_API_URL || "https://api.postiz.com/public/v1";
-const KEY = process.env.POSTIZ_API_KEY;
+const KEY = process.env.BUFFER_API_KEY;
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run") || !KEY;
-const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
+const asDraft = args.includes("--draft");
+const config = JSON.parse(fs.readFileSync("config.json", "utf8")).buffer;
 
-async function postiz(method, endpoint, body) {
-  const isForm = body instanceof FormData;
-  const res = await fetch(API + endpoint, {
-    method,
-    headers: { Authorization: KEY, ...(isForm || !body ? {} : { "Content-Type": "application/json" }) },
-    body: isForm ? body : body ? JSON.stringify(body) : undefined,
-  });
-  const text = await res.text();
-  if (!res.ok) throw new Error(`Postiz ${method} ${endpoint} failed (${res.status}): ${text}`);
-  return text ? JSON.parse(text) : null;
-}
-
-// ---- --channels: list what's connected ----
-if (args.includes("--channels")) {
-  if (!KEY) throw new Error("Set POSTIZ_API_KEY in .env first.");
-  const channels = await postiz("GET", "/integrations");
-  for (const c of channels) console.log(`${c.identifier.padEnd(12)} ${c.id}  ${c.name}${c.disabled ? "  (disabled)" : ""}`);
-  process.exit(0);
-}
+const MEDIA_BRANCH = "posts";
+const KEEP_DAYS = 14;
 
 // ---- Load today's post ----
 const today = londonToday();
@@ -56,85 +46,167 @@ const postFile = path.join(outDir, "post.json");
 if (!fs.existsSync(postFile)) throw new Error(`No post built for ${today}. Run: node build.mjs`);
 const post = JSON.parse(fs.readFileSync(postFile, "utf8"));
 
+const files = [...post.carousel.images, ...(post.video ? [post.video.file] : [])];
+
+// ---- 1. Put the images online (posts branch of this GitHub repo) ----
+
+const git = (cwd, ...gitArgs) => execFileSync("git", ["-C", cwd, ...gitArgs], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+
+function mediaBaseUrl() {
+  if (process.env.MEDIA_BASE_URL) return process.env.MEDIA_BASE_URL;
+  const remote = git(".", "remote", "get-url", "origin"); // e.g. https://github.com/dar-k99/saunahop-tiktok.git
+  const repo = remote.replace(/^.*github\.com[:/]/, "").replace(/\.git$/, "");
+  return `https://raw.githubusercontent.com/${repo}/${MEDIA_BRANCH}`;
+}
+
+/**
+ * Copies today's files into the "posts" branch and pushes it. The branch is
+ * kept to a single commit holding only the last 14 days, so the repo never
+ * grows large.
+ */
+function publishMedia() {
+  const work = fs.mkdtempSync(path.join(os.tmpdir(), "saunahop-posts-"));
+  const bot = ["-c", "user.name=saunahop-bot", "-c", "user.email=saunahop-bot@users.noreply.github.com"];
+  let exists = true;
+  try { git(".", "fetch", "-q", "origin", MEDIA_BRANCH); } catch { exists = false; }
+
+  try {
+    if (exists) {
+      git(".", "worktree", "add", "-q", "--detach", work, "FETCH_HEAD");
+    } else {
+      git(".", "worktree", "add", "-q", "--detach", work);
+      git(work, "checkout", "-q", "--orphan", "new-posts");
+      git(work, "rm", "-rq", "--cached", ".");
+      for (const f of fs.readdirSync(work)) if (f !== ".git") fs.rmSync(path.join(work, f), { recursive: true, force: true });
+    }
+
+    // Drop folders older than KEEP_DAYS, then add today's.
+    const cutoff = new Date(Date.now() - KEEP_DAYS * 86400_000).toISOString().slice(0, 10);
+    for (const dir of fs.readdirSync(work)) {
+      if (/^\d{4}-\d{2}-\d{2}$/.test(dir) && dir < cutoff) fs.rmSync(path.join(work, dir), { recursive: true });
+    }
+    fs.mkdirSync(path.join(work, today), { recursive: true });
+    for (const f of files) fs.copyFileSync(path.join(outDir, f), path.join(work, today, f));
+    fs.writeFileSync(path.join(work, "README.md"), "Images for the daily TikTok posts (last 14 days). Generated automatically: do not edit.\n");
+
+    git(work, "add", "-A");
+    // Always one commit: start a fresh orphan each time and force-push it.
+    git(work, "checkout", "-q", "--orphan", `publish-${Date.now()}`);
+    execFileSync("git", ["-C", work, ...bot, "commit", "-q", "-m", `Images for ${today}`], { stdio: "pipe" });
+    git(work, "push", "-q", "--force", "origin", `HEAD:refs/heads/${MEDIA_BRANCH}`);
+  } finally {
+    try { git(".", "worktree", "remove", "--force", work); } catch { fs.rmSync(work, { recursive: true, force: true }); }
+  }
+}
+
+/** Waits until every link actually loads (GitHub can take a few seconds after a push). */
+async function waitForUrls(urls) {
+  for (const url of urls) {
+    for (let attempt = 1; ; attempt++) {
+      const res = await fetch(url, { method: "HEAD" });
+      if (res.ok) break;
+      if (attempt >= 12) throw new Error(`Image link not reachable: ${url} (${res.status})`);
+      await new Promise((r) => setTimeout(r, 5000));
+    }
+  }
+}
+
+// ---- 2. Buffer ----
+
+async function buffer(query, variables) {
+  const res = await fetch("https://api.buffer.com", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${KEY}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ query, variables }),
+  });
+  const json = await res.json();
+  if (!res.ok || json.errors) throw new Error(`Buffer error: ${JSON.stringify(json.errors || json)}`);
+  return json.data;
+}
+
+async function tiktokChannelId() {
+  if (process.env.BUFFER_CHANNEL_ID) return process.env.BUFFER_CHANNEL_ID;
+  const { account } = await buffer(`{ account { organizations { id } } }`);
+  const channels = [];
+  for (const org of account.organizations) {
+    const data = await buffer(`query($id: OrganizationId!) { channels(input: { organizationId: $id }) { id name service isDisconnected } }`, { id: org.id });
+    channels.push(...data.channels.filter((c) => c.service === "tiktok" && !c.isDisconnected));
+  }
+  if (channels.length !== 1) {
+    throw new Error(`Expected 1 TikTok channel in Buffer, found ${channels.length}. Set BUFFER_CHANNEL_ID.`);
+  }
+  return channels[0].id;
+}
+
+/** "18:00" today in London, as a UTC timestamp. */
+function londonTimeToday(hhmm) {
+  const [h, m] = hhmm.split(":").map(Number);
+  const [y, mo, d] = today.split("-").map(Number);
+  const guess = new Date(Date.UTC(y, mo - 1, d, h, m));
+  const londonHour = Number(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/London", hour: "2-digit", hour12: false }).format(guess)) % 24;
+  let offset = (londonHour - guess.getUTCHours() + 24) % 24; // 0 in winter, 1 in summer
+  if (offset > 12) offset -= 24;
+  return new Date(guess.getTime() - offset * 3600_000);
+}
+
+const CREATE_POST = `mutation($input: CreatePostInput!) {
+  createPost(input: $input) {
+    ... on PostActionSuccess { post { id dueAt } }
+    ... on MutationError { message }
+  }
+}`;
+
+async function send(label, assets, caption, time, channelId) {
+  const due = londonTimeToday(time);
+  const soon = due.getTime() < Date.now() + 5 * 60_000; // time already passed today: notify now
+  const input = {
+    channelId,
+    text: caption,
+    assets,
+    schedulingType: config.scheduling,
+    metadata: { tiktok: { title: post.title } },
+    ...(asDraft ? { saveToDraft: true, mode: "addToQueue" } : soon ? { mode: "shareNow" } : { mode: "customScheduled", dueAt: due.toISOString() }),
+  };
+
+  if (dryRun) {
+    console.log(`\n[dry run] ${label}: ${assets.length} file(s), ${config.scheduling}, ${asDraft ? "draft" : soon ? "now" : time}`);
+    assets.forEach((a) => console.log("  " + (a.image || a.video).url));
+    console.log(caption.split("\n").map((l) => "  | " + l).join("\n"));
+    return null;
+  }
+
+  const { createPost } = await buffer(CREATE_POST, { input });
+  if (!createPost.post) throw new Error(`Buffer refused the ${label}: ${createPost.message}`);
+  console.log(`${label}: ${asDraft ? "saved as a Buffer draft" : `scheduled for ${soon ? "now" : time}`} (post ${createPost.post.id})`);
+  return createPost.post;
+}
+
+// ---- Run ----
+
 const sentFile = path.join(outDir, "sent.json");
 if (fs.existsSync(sentFile) && !dryRun) {
   console.log(`Already sent today's post (see ${sentFile}). Delete that file to send again.`);
   process.exit(0);
 }
 
-// ---- Which TikTok channel ----
-async function tiktokChannelId() {
-  if (process.env.POSTIZ_TIKTOK_ID) return process.env.POSTIZ_TIKTOK_ID;
-  const channels = await postiz("GET", "/integrations");
-  const tiktok = channels.filter((c) => c.identifier.startsWith("tiktok") && !c.disabled);
-  if (tiktok.length !== 1) {
-    throw new Error(`Expected 1 TikTok channel in Postiz, found ${tiktok.length}. Set POSTIZ_TIKTOK_ID (see: node post.mjs --channels).`);
-  }
-  return tiktok[0].id;
-}
+const base = `${mediaBaseUrl()}/${today}`;
+const imageAssets = post.carousel.images.map((f) => ({ image: { url: `${base}/${f}` } }));
+const videoAssets = post.video ? [{ video: { url: `${base}/${post.video.file}` } }] : null;
 
-const mimeTypes = { ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".mp4": "video/mp4" };
-async function upload(file) {
-  const form = new FormData();
-  const blob = await fs.openAsBlob(file, { type: mimeTypes[path.extname(file).toLowerCase()] });
-  form.append("file", blob, path.basename(file));
-  const { id, path: url } = await postiz("POST", "/upload", form);
-  return { id, path: url };
-}
-
-function tiktokSettings(isVideo) {
-  const t = config.tiktok;
-  return {
-    __type: "tiktok",
-    title: post.title,
-    privacy_level: t.privacy,
-    duet: false,
-    stitch: false,
-    comment: t.allowComments,
-    autoAddMusic: isVideo ? "no" : t.autoAddMusic,
-    brand_content_toggle: false,
-    brand_organic_toggle: false,
-    video_made_with_ai: false,
-    content_posting_method: t.postingMethod,
-  };
-}
-
-async function send(label, files, caption, isVideo) {
-  const settings = tiktokSettings(isVideo);
-  if (dryRun) {
-    console.log(`\n[dry run] ${label}: ${files.length} file(s), ${settings.content_posting_method}`);
-    files.forEach((f) => console.log(`  ${path.basename(f)}`));
-    console.log(caption.split("\n").map((l) => "  | " + l).join("\n"));
-    return null;
-  }
-  const channelId = await tiktokChannelId();
-  const media = [];
-  for (const f of files) {
-    console.log(`Uploading ${path.basename(f)}...`);
-    media.push(await upload(f));
-  }
-  const result = await postiz("POST", "/posts", {
-    type: "now",
-    date: new Date().toISOString(),
-    shortLink: false,
-    tags: [],
-    posts: [{ integration: { id: channelId }, value: [{ content: caption, image: media }], settings }],
-  });
-  console.log(`Sent ${label} to Postiz.`);
-  return result;
+let channelId = null;
+if (!dryRun) {
+  console.log("Putting today's images online...");
+  publishMedia();
+  await waitForUrls(files.map((f) => `${base}/${f}`));
+  channelId = await tiktokChannelId();
 }
 
 const sent = {};
-sent.carousel = await send("Carousel", post.carousel.images.map((f) => path.join(outDir, f)), post.carousel.caption, false);
-if (post.video) {
-  sent.video = await send("Video", [path.join(outDir, post.video.file)], post.video.caption, true);
-}
+sent.carousel = await send("Carousel", imageAssets, post.carousel.caption, config.carouselTime, channelId);
+if (videoAssets) sent.video = await send("Video", videoAssets, post.video.caption, config.videoTime, channelId);
 
 if (dryRun) {
-  console.log(KEY ? "\nDry run: nothing was sent." : "\nNo POSTIZ_API_KEY set, so this was a dry run. Nothing was sent.");
-} else {
+  console.log(KEY ? "\nDry run: nothing was sent." : "\nNo BUFFER_API_KEY set, so this was a dry run. Nothing was sent.");
+} else if (!asDraft) {
   fs.writeFileSync(sentFile, JSON.stringify({ sentAt: new Date().toISOString(), ...sent }, null, 2));
-  console.log(config.tiktok.postingMethod === "UPLOAD"
-    ? "\nDone. Open TikTok: the post is in your inbox. Add a sound and post within 24 hours."
-    : "\nDone. Posted to TikTok.");
 }

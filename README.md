@@ -1,6 +1,6 @@
 # SaunaHop TikTok
 
-Makes one TikTok post a day for saunahop.com, from real venue and availability data, and sends it to TikTok through Postiz.
+Makes one TikTok post a day for saunahop.com, from real venue and availability data, and schedules it in Buffer, which sends it to your phone to post on TikTok.
 
 ## What happens each day
 
@@ -13,8 +13,9 @@ Makes one TikTok post a day for saunahop.com, from real venue and availability d
    - 6: "Every London sauna. One timetable." + saunahop.com
 5. **Video** (Tue, Thu, Sat): a 4-second sauna clip; "Every London sauna. One timetable." fades in at 2 seconds.
 6. **Caption:** picked from `captions.json`, always with saunahop.com on the first line, plus #londonsauna and 5 rotating hashtags.
-7. **Postiz:** sends it to the TikTok app inbox as a draft.
-8. **You (1 minute):** open TikTok → inbox → add a trending sound → post → pin a comment "Book here → saunahop.com". Drafts not posted within 24 hours are deleted by TikTok.
+7. **Images online:** the day's images are pushed to the `posts` branch of this repo, because Buffer only takes images from a public link. That branch only keeps the last 14 days.
+8. **Buffer:** the carousel is scheduled for 18:00 and the video (on video days) for 12:30, as "Notify me" posts.
+9. **You (1 minute):** at that time the Buffer app on your phone sends a notification. Tap it, it opens TikTok with the images and caption, add a trending sound, post, then pin a comment "Book here → saunahop.com". (No app can pick TikTok sounds for you: TikTok doesn't allow it.)
 
 ## Rules it follows
 
@@ -28,7 +29,7 @@ Makes one TikTok post a day for saunahop.com, from real venue and availability d
 |---|---|
 | `topics.json` | The topics, in order. Add, remove or reword. |
 | `captions.json` | Caption wording and hashtags. |
-| `config.json` | Venues per post, video days, video timing, draft vs direct posting. |
+| `config.json` | Venues per post, video days, video timing, posting times, notification vs automatic posting. |
 | `assets/photos/people/` | Photos for the first and last slides (portrait works best). |
 | `assets/photos/empty/` | Photos behind venue names: saunas with no people. |
 | `assets/clips/` | Video clips for the video post (vertical, 6+ seconds). One is picked at random. |
@@ -55,20 +56,20 @@ node build.mjs                    # today's post → output/<date>/
 node build.mjs --topic tonight    # a specific topic
 node build.mjs --video            # also make the video
 node post.mjs --dry-run           # shows what would be sent
-node post.mjs                     # sends it (needs POSTIZ_API_KEY in .env)
-node post.mjs --channels          # lists channels connected in Postiz
+node post.mjs --draft             # saves it as Buffer drafts (to check, nothing scheduled)
+node post.mjs                     # schedules it in Buffer (needs BUFFER_API_KEY in .env)
 ```
 
 It reads venues from `~/code/loyly` by default (change with `LOYLY_DIR` in `.env`).
 
 ## Setting up the daily automation
 
-1. **Postiz:** sign up (paid, from $29/month after a 7-day trial), connect TikTok, then Settings → Public API → copy the key.
+1. **Buffer** (free plan): connect the TikTok account, then publish.buffer.com/settings/api → create a key. Install the Buffer app on your phone and allow notifications.
 2. **GitHub token for loyly:** the job needs to read `venues.json` from the private `dbinchy/loyly` repo. Create a fine-grained token at github.com/settings/tokens with read-only *Contents* access to that one repo. If you can't select `dbinchy/loyly`, Donnacha needs to create it or approve it.
 3. **Secrets:** in this repo on GitHub → Settings → Secrets and variables → Actions → New repository secret:
-   - `POSTIZ_API_KEY`
+   - `BUFFER_API_KEY`
    - `LOYLY_TOKEN`
-4. **Test:** Actions tab → Daily TikTok post → Run workflow. Untick "Send to Postiz" for a first look: the images are under the run's Artifacts.
+4. **Test:** Actions tab → Daily TikTok post → Run workflow. Untick "Send to Buffer" for a first look: the images are under the run's Artifacts.
 
 ## Credits
 

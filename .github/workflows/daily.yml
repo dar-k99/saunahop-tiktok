@@ -1,10 +1,10 @@
-# Builds today's TikTok post and sends it to Postiz, every morning.
+# Builds today's TikTok post and schedules it in Buffer, every morning.
 # Also runs from the Actions tab ("Run workflow"), where you can pick a topic
 # or build without sending.
 #
 # Secrets needed (repo Settings -> Secrets and variables -> Actions):
 #   LOYLY_TOKEN     a GitHub token that can read dbinchy/loyly (for venues.json)
-#   POSTIZ_API_KEY  from Postiz -> Settings -> Public API
+#   BUFFER_API_KEY  from publish.buffer.com/settings/api
 #                   (leave it unset and the job builds the post but sends nothing)
 
 name: Daily TikTok post
@@ -18,9 +18,12 @@ on:
         description: "Topic id from topics.json (blank = today's rotation)"
         required: false
       send:
-        description: "Send to Postiz"
+        description: "Send to Buffer"
         type: boolean
         default: true
+
+permissions:
+  contents: write # lets the job push the day's images to the "posts" branch
 
 jobs:
   post:
@@ -58,9 +61,8 @@ jobs:
           path: output/
           retention-days: 14
 
-      - name: Send to TikTok via Postiz
+      - name: Schedule in Buffer
         if: ${{ github.event_name == 'schedule' || inputs.send }}
         env:
-          POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
-          POSTIZ_TIKTOK_ID: ${{ secrets.POSTIZ_TIKTOK_ID }}
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
         run: node post.mjs
