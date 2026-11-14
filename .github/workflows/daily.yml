@@ -30,7 +30,7 @@ permissions:
 
 jobs:
   post:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 # pinned: Playwright 1.58 does not support Ubuntu 26 yet
     timeout-minutes: 15
     steps:
       - name: Only run at 3:30pm London time
