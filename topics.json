@@ -1,36 +1,487 @@
 {
-  "_README": "One topic per day, in order, then it starts again. A topic is skipped if fewer than 3 venues match it that day. See README.md for what each field means.",
-
-  "topics": [
-    { "id": "under-15", "hook": "London saunas under £15", "subhook": "you didn't know about", "filter": { "maxPrice": 15 }, "sort": "random" },
-    { "id": "tonight", "hook": "London saunas with space tonight", "subhook": "no plans? sorted", "show": "tonight", "sort": "free" },
-    { "id": "cold-plunge-east", "hook": "Saunas with a cold plunge in East London", "subhook": "hot, cold, repeat", "filter": { "regions": ["East"], "tagsAny": ["Cold plunge", "Ice bath", "Plunge pool"] } },
-    { "id": "historic", "hook": "Historic London bathhouses still open today", "subhook": "some are over 100 years old", "filter": { "tagsAny": ["Historic", "Turkish baths", "Art deco"] } },
-    { "id": "weekend", "hook": "Sauna slots free in London this weekend", "subhook": "book before they go", "show": "weekend", "sort": "free" },
-    { "id": "south", "hook": "South London saunas worth the trip", "subhook": "save this for the weekend", "filter": { "regions": ["South"] } },
-    { "id": "under-10", "hook": "London saunas for a tenner or less", "subhook": "yes, really", "filter": { "maxPrice": 10 }, "sort": "price" },
-    { "id": "outdoor", "hook": "Outdoor saunas in London", "subhook": "best when it's freezing", "filter": { "tagsAny": ["Outdoor", "Lido", "Riverside", "Rooftop", "Floating"] } },
-    { "id": "tonight-cheap", "hook": "Cheap sauna tonight in London?", "subhook": "under £15 and still has space", "filter": { "maxPrice": 15 }, "show": "tonight", "sort": "price" },
-    { "id": "not-for-profit", "hook": "Not-for-profit saunas in London", "subhook": "cheap, friendly, no frills", "filter": { "tagsAny": ["Not-for-profit", "Community"] } },
-    { "id": "north", "hook": "North London saunas you need to try", "subhook": "save for later", "filter": { "regions": ["North"] } },
-    { "id": "water", "hook": "London saunas on the water", "subhook": "sauna, then jump in", "filter": { "tagsAny": ["Floating", "Riverside", "Cold river dip", "Lido", "Cold swim", "Canal"] } },
-    { "id": "cheapest", "hook": "The cheapest saunas in London", "subhook": "ranked by price", "sort": "price" },
-    { "id": "east", "hook": "East London saunas, ranked by price", "subhook": "cheapest first", "filter": { "regions": ["East"] }, "sort": "price" },
-    { "id": "finnish", "hook": "Proper Finnish saunas in London", "subhook": "the real thing", "filter": { "tagsAny": ["Authentic Finnish", "Finnish sauna", "Wood-fired"] } },
-    { "id": "after-work", "hook": "After-work sauna? Space tonight in London", "subhook": "beats another pint", "show": "tonight", "sort": "random" },
-    { "id": "steam", "hook": "Steam rooms & Turkish baths in London", "subhook": "old-school heat", "filter": { "tagsAny": ["Turkish baths", "Steam room", "Russian steam", "Russian banya"] } },
-    { "id": "central-west", "hook": "Saunas in Central & West London", "subhook": "closer than you think", "filter": { "regions": ["Central", "West"] } },
-    { "id": "contrast", "hook": "Hot-cold contrast therapy in London", "subhook": "the reset you need", "filter": { "tagsAny": ["Cold plunge", "Ice bath", "Contrast", "Contrast therapy", "Plunge pool"] } },
-    { "id": "weekend-cheap", "hook": "Weekend sauna plans under £15", "subhook": "London, with space this weekend", "filter": { "maxPrice": 15 }, "show": "weekend", "sort": "price" },
-    { "id": "date-idea", "hook": "Date idea that isn't drinks", "subhook": "London saunas for two", "filter": { "tagsAny": ["Private cabin", "Groups up to 4", "Rooftop", "Floating", "Riverside", "Restaurant", "Live music"] } },
-    { "id": "cold-plunge-south", "hook": "Saunas with a cold plunge in South London", "subhook": "hot, cold, repeat", "filter": { "regions": ["South"], "tagsAny": ["Cold plunge", "Ice bath", "Plunge pool"] } },
-    { "id": "pub-swap", "hook": "Swap the pub for a sauna", "subhook": "London spots under £15", "filter": { "maxPrice": 15 } },
-    { "id": "sunday-reset", "hook": "Sunday reset: London saunas with space", "subhook": "this weekend", "show": "weekend", "sort": "random" },
-    { "id": "checked-all", "hook": "I checked every London sauna so you don't have to", "subhook": "here's where to start", "sort": "random" },
-    { "id": "cold-plunge-north", "hook": "Saunas with a cold plunge in North London", "subhook": "hot, cold, repeat", "filter": { "regions": ["North"], "tagsAny": ["Cold plunge", "Ice bath", "Plunge pool"] } },
-    { "id": "private", "hook": "Private sauna sessions in London", "subhook": "just you and your people", "filter": { "tagsAny": ["Private cabin", "Private hire", "Groups up to 4"] }, "minVenues": 2 },
-    { "id": "hidden", "hook": "London saunas most people walk past", "subhook": "hidden in plain sight", "sort": "random" },
-    { "id": "tonight-east", "hook": "East London saunas with space tonight", "subhook": "go after work", "filter": { "regions": ["East"] }, "show": "tonight", "sort": "free" },
-    { "id": "winter", "hook": "How London gets through winter", "subhook": "saunas worth booking", "sort": "random" }
-  ]
+ "_README": "Topics per city, used in order (one per post for that city), then it starts again. A topic is skipped if fewer than 3 venues match it that day. See README.md for what each field means.",
+ "london": [
+  {
+   "id": "under-15",
+   "hook": "London saunas under £15",
+   "subhook": "you didn't know about",
+   "filter": {
+    "maxPrice": 15
+   },
+   "sort": "random"
+  },
+  {
+   "id": "tonight",
+   "hook": "London saunas with space tonight",
+   "subhook": "no plans? sorted",
+   "show": "tonight",
+   "sort": "free"
+  },
+  {
+   "id": "cold-plunge-east",
+   "hook": "Saunas with a cold plunge in East London",
+   "subhook": "hot, cold, repeat",
+   "filter": {
+    "regions": [
+     "East"
+    ],
+    "tagsAny": [
+     "Cold plunge",
+     "Ice bath",
+     "Plunge pool"
+    ]
+   }
+  },
+  {
+   "id": "historic",
+   "hook": "Historic London bathhouses still open today",
+   "subhook": "some are over 100 years old",
+   "filter": {
+    "tagsAny": [
+     "Historic",
+     "Turkish baths",
+     "Art deco"
+    ]
+   }
+  },
+  {
+   "id": "weekend",
+   "hook": "Sauna slots free in London this weekend",
+   "subhook": "book before they go",
+   "show": "weekend",
+   "sort": "free"
+  },
+  {
+   "id": "south",
+   "hook": "South London saunas worth the trip",
+   "subhook": "save this for the weekend",
+   "filter": {
+    "regions": [
+     "South"
+    ]
+   }
+  },
+  {
+   "id": "under-10",
+   "hook": "London saunas for a tenner or less",
+   "subhook": "yes, really",
+   "filter": {
+    "maxPrice": 10
+   },
+   "sort": "price"
+  },
+  {
+   "id": "outdoor",
+   "hook": "Outdoor saunas in London",
+   "subhook": "best when it's freezing",
+   "filter": {
+    "tagsAny": [
+     "Outdoor",
+     "Lido",
+     "Riverside",
+     "Rooftop",
+     "Floating"
+    ]
+   }
+  },
+  {
+   "id": "tonight-cheap",
+   "hook": "Cheap sauna tonight in London?",
+   "subhook": "under £15 and still has space",
+   "filter": {
+    "maxPrice": 15
+   },
+   "show": "tonight",
+   "sort": "price"
+  },
+  {
+   "id": "not-for-profit",
+   "hook": "Not-for-profit saunas in London",
+   "subhook": "cheap, friendly, no frills",
+   "filter": {
+    "tagsAny": [
+     "Not-for-profit",
+     "Community"
+    ]
+   }
+  },
+  {
+   "id": "north",
+   "hook": "North London saunas you need to try",
+   "subhook": "save for later",
+   "filter": {
+    "regions": [
+     "North"
+    ]
+   }
+  },
+  {
+   "id": "water",
+   "hook": "London saunas on the water",
+   "subhook": "sauna, then jump in",
+   "filter": {
+    "tagsAny": [
+     "Floating",
+     "Riverside",
+     "Cold river dip",
+     "Lido",
+     "Cold swim",
+     "Canal"
+    ]
+   }
+  },
+  {
+   "id": "cheapest",
+   "hook": "The cheapest saunas in London",
+   "subhook": "ranked by price",
+   "sort": "price"
+  },
+  {
+   "id": "east",
+   "hook": "East London saunas, ranked by price",
+   "subhook": "cheapest first",
+   "filter": {
+    "regions": [
+     "East"
+    ]
+   },
+   "sort": "price"
+  },
+  {
+   "id": "finnish",
+   "hook": "Proper Finnish saunas in London",
+   "subhook": "the real thing",
+   "filter": {
+    "tagsAny": [
+     "Authentic Finnish",
+     "Finnish sauna",
+     "Wood-fired"
+    ]
+   }
+  },
+  {
+   "id": "after-work",
+   "hook": "After-work sauna? Space tonight in London",
+   "subhook": "beats another pint",
+   "show": "tonight",
+   "sort": "random"
+  },
+  {
+   "id": "steam",
+   "hook": "Steam rooms & Turkish baths in London",
+   "subhook": "old-school heat",
+   "filter": {
+    "tagsAny": [
+     "Turkish baths",
+     "Steam room",
+     "Russian steam",
+     "Russian banya"
+    ]
+   }
+  },
+  {
+   "id": "central-west",
+   "hook": "Saunas in Central & West London",
+   "subhook": "closer than you think",
+   "filter": {
+    "regions": [
+     "Central",
+     "West"
+    ]
+   }
+  },
+  {
+   "id": "contrast",
+   "hook": "Hot-cold contrast therapy in London",
+   "subhook": "the reset you need",
+   "filter": {
+    "tagsAny": [
+     "Cold plunge",
+     "Ice bath",
+     "Contrast",
+     "Contrast therapy",
+     "Plunge pool"
+    ]
+   }
+  },
+  {
+   "id": "weekend-cheap",
+   "hook": "Weekend sauna plans under £15",
+   "subhook": "London, with space this weekend",
+   "filter": {
+    "maxPrice": 15
+   },
+   "show": "weekend",
+   "sort": "price"
+  },
+  {
+   "id": "date-idea",
+   "hook": "Date idea that isn't drinks",
+   "subhook": "London saunas for two",
+   "filter": {
+    "tagsAny": [
+     "Private cabin",
+     "Groups up to 4",
+     "Rooftop",
+     "Floating",
+     "Riverside",
+     "Restaurant",
+     "Live music"
+    ]
+   }
+  },
+  {
+   "id": "cold-plunge-south",
+   "hook": "Saunas with a cold plunge in South London",
+   "subhook": "hot, cold, repeat",
+   "filter": {
+    "regions": [
+     "South"
+    ],
+    "tagsAny": [
+     "Cold plunge",
+     "Ice bath",
+     "Plunge pool"
+    ]
+   }
+  },
+  {
+   "id": "pub-swap",
+   "hook": "Swap the pub for a sauna",
+   "subhook": "London spots under £15",
+   "filter": {
+    "maxPrice": 15
+   }
+  },
+  {
+   "id": "sunday-reset",
+   "hook": "Sunday reset: London saunas with space",
+   "subhook": "this weekend",
+   "show": "weekend",
+   "sort": "random"
+  },
+  {
+   "id": "checked-all",
+   "hook": "I checked every London sauna so you don't have to",
+   "subhook": "here's where to start",
+   "sort": "random"
+  },
+  {
+   "id": "cold-plunge-north",
+   "hook": "Saunas with a cold plunge in North London",
+   "subhook": "hot, cold, repeat",
+   "filter": {
+    "regions": [
+     "North"
+    ],
+    "tagsAny": [
+     "Cold plunge",
+     "Ice bath",
+     "Plunge pool"
+    ]
+   }
+  },
+  {
+   "id": "private",
+   "hook": "Private sauna sessions in London",
+   "subhook": "just you and your people",
+   "filter": {
+    "tagsAny": [
+     "Private cabin",
+     "Private hire",
+     "Groups up to 4"
+    ]
+   },
+   "minVenues": 2
+  },
+  {
+   "id": "hidden",
+   "hook": "London saunas most people walk past",
+   "subhook": "hidden in plain sight",
+   "sort": "random"
+  },
+  {
+   "id": "tonight-east",
+   "hook": "East London saunas with space tonight",
+   "subhook": "go after work",
+   "filter": {
+    "regions": [
+     "East"
+    ]
+   },
+   "show": "tonight",
+   "sort": "free"
+  },
+  {
+   "id": "winter",
+   "hook": "How London gets through winter",
+   "subhook": "saunas worth booking",
+   "sort": "random"
+  }
+ ],
+ "dublin": [
+  {
+   "id": "under-15",
+   "hook": "Dublin saunas under €15",
+   "subhook": "you didn't know about",
+   "filter": {
+    "maxPrice": 15
+   },
+   "sort": "random"
+  },
+  {
+   "id": "tonight",
+   "hook": "Dublin saunas with space tonight",
+   "subhook": "no plans? sorted",
+   "show": "tonight",
+   "sort": "free"
+  },
+  {
+   "id": "sea",
+   "hook": "Sea saunas in Dublin",
+   "subhook": "sauna, then straight into the sea",
+   "filter": {
+    "tagsAny": [
+     "Beach",
+     "Seaside",
+     "Sea views",
+     "Sea dips",
+     "Sea swimming",
+     "Harbour",
+     "Forty Foot",
+     "Floating",
+     "Private beach"
+    ]
+   }
+  },
+  {
+   "id": "weekend",
+   "hook": "Sauna slots free in Dublin this weekend",
+   "subhook": "book before they go",
+   "show": "weekend",
+   "sort": "free"
+  },
+  {
+   "id": "wood-fired",
+   "hook": "Wood-fired saunas in Dublin",
+   "subhook": "the real thing",
+   "filter": {
+    "tagsAny": [
+     "Wood-fired sauna",
+     "Wood-fired barrel sauna",
+     "Wood-fired barrel saunas",
+     "Three wood-fired saunas",
+     "Wood-fired and electric saunas",
+     "Barrel sauna",
+     "Outdoor barrel sauna"
+    ]
+   }
+  },
+  {
+   "id": "cheapest",
+   "hook": "The cheapest saunas in Dublin",
+   "subhook": "ranked by price",
+   "sort": "price"
+  },
+  {
+   "id": "cold-plunge",
+   "hook": "Dublin saunas with a cold plunge",
+   "subhook": "hot, cold, repeat",
+   "filter": {
+    "tagsAny": [
+     "Cold plunge",
+     "Ice bath",
+     "Ice baths",
+     "Plunge pool",
+     "Plunge pools",
+     "Ice plunges",
+     "Cold plunge tubs",
+     "4 cold plunges",
+     "Plunge barrels"
+    ]
+   }
+  },
+  {
+   "id": "after-work",
+   "hook": "After-work sauna? Space tonight in Dublin",
+   "subhook": "beats another pint",
+   "show": "tonight",
+   "sort": "random"
+  },
+  {
+   "id": "outdoor",
+   "hook": "Outdoor saunas in Dublin",
+   "subhook": "best when it's freezing",
+   "filter": {
+    "tagsAny": [
+     "Outdoor",
+     "Outdoor sauna",
+     "Beach",
+     "Rooftop",
+     "Riverside",
+     "Canal side",
+     "Countryside",
+     "Mountains",
+     "Seaside"
+    ]
+   }
+  },
+  {
+   "id": "tonight-cheap",
+   "hook": "Cheap sauna tonight in Dublin?",
+   "subhook": "under €15 and still has space",
+   "filter": {
+    "maxPrice": 15
+   },
+   "show": "tonight",
+   "sort": "price"
+  },
+  {
+   "id": "date-idea",
+   "hook": "Dublin date idea that isn't a pint",
+   "subhook": "saunas for two",
+   "sort": "random"
+  },
+  {
+   "id": "weekend-cheap",
+   "hook": "Weekend sauna plans in Dublin under €15",
+   "subhook": "with space this weekend",
+   "filter": {
+    "maxPrice": 15
+   },
+   "show": "weekend",
+   "sort": "price"
+  },
+  {
+   "id": "checked-all",
+   "hook": "I checked every Dublin sauna so you don't have to",
+   "subhook": "here's where to start",
+   "sort": "random"
+  },
+  {
+   "id": "sea-swim",
+   "hook": "Sauna + sea swim: Dublin's best combo",
+   "subhook": "save this for the weekend",
+   "filter": {
+    "tagsAny": [
+     "Beach",
+     "Seaside",
+     "Sea views",
+     "Sea dips",
+     "Sea swimming",
+     "Harbour",
+     "Forty Foot",
+     "Floating",
+     "Private beach"
+    ]
+   },
+   "sort": "random"
+  },
+  {
+   "id": "winter",
+   "hook": "How Dublin gets through winter",
+   "subhook": "saunas worth booking",
+   "sort": "random"
+  }
+ ]
 }

@@ -1,7 +1,8 @@
 // Builds today's TikTok post into output/<date>/.
 //
-//   node build.mjs                   today's topic (from the rotation in topics.json)
-//   node build.mjs --topic tonight   a specific topic
+//   node build.mjs                   today's city and topic (from config.json and topics.json)
+//   node build.mjs --city dublin     a specific city
+//   node build.mjs --topic tonight   a specific topic (from that city's list)
 //   node build.mjs --video           also make the video, even if today isn't a video day
 //
 // Output: slide-1.jpg ... slide-6.jpg, caption.txt, (video.mp4, video-caption.txt), post.json
@@ -15,22 +16,32 @@ import { renderPages, renderVideo } from "./src/render.mjs";
 
 const readJson = (file) => JSON.parse(fs.readFileSync(file, "utf8"));
 const config = readJson("config.json");
-const { topics } = readJson("topics.json");
+const allTopics = readJson("topics.json");
 const captions = readJson("captions.json");
 
 const args = process.argv.slice(2);
-const forcedTopic = args.includes("--topic") ? args[args.indexOf("--topic") + 1] : null;
+const argValue = (name) => (args.includes(name) ? args[args.indexOf(name) + 1] : null);
+const forcedTopic = argValue("--topic");
+const forcedCity = argValue("--city");
 const forceVideo = args.includes("--video");
 
 const now = new Date();
 const today = londonToday(now);
-const random = seededRandom(today + (forcedTopic || ""));
+const weekday = londonWeekday(now);
+
+// ---- 0. Which city: from config.json (or --city) ----
+const cityId = forcedCity || Object.keys(config.cities).find((id) => config.cities[id].days?.includes(weekday));
+const city = config.cities[cityId];
+if (!city) throw new Error(`No city for ${weekday}: check "cities" in config.json`);
+const topics = allTopics[cityId];
+const random = seededRandom(today + cityId + (forcedTopic || ""));
+console.log(`City: ${city.name}`);
 
 // ---- 1. Data ----
-const venues = loadVenues();
+const venues = loadVenues(cityId);
 const availability = await loadAvailability();
 const freeSessions = countFreeSessions(venues, availability, config.tonightFromHour, now);
-console.log(`${venues.length} London venues, ${Object.keys(freeSessions).length} with live availability.`);
+console.log(`${venues.length} ${city.name} venues, ${Object.keys(freeSessions).length} with live availability.`);
 
 const checkedAt = availability
   ? new Date(availability.generatedAt)
@@ -48,7 +59,7 @@ if (forcedTopic) {
   if (!result) throw new Error(`Topic "${forcedTopic}" doesn't have enough matching venues today.`);
   chosen = { topic, venues: result };
 } else {
-  chosen = pickTopic(topics, today, tryTopic);
+  chosen = pickTopic(topics, today, weekday, city.days, tryTopic);
 }
 const { topic } = chosen;
 console.log(`Topic: ${topic.id}: "${topic.hook}"`);
@@ -70,6 +81,7 @@ const slidePages = [
   ...chosen.venues.map((venue, index) => ({
     html: venueSlide({
       venue,
+      city,
       index,
       total: chosen.venues.length,
       pills: pillsFor(venue, topic),
@@ -79,20 +91,21 @@ const slidePages = [
       background: empty[index % empty.length],
     }),
   })),
-  { html: endSlide(venues.length, people[1 % people.length]) },
+  { html: endSlide(city, venues.length, people[1 % people.length]) },
 ].map((p, i) => ({ ...p, file: path.join(outDir, `slide-${i + 1}.jpg`) }));
 
-const makeVideo = forceVideo || config.videoDays.includes(londonWeekday(now));
+const makeVideo = forceVideo || config.videoDays.includes(weekday);
 const overlayFile = path.join(tmpDir, "overlay.png");
-const pages = makeVideo ? [...slidePages, { html: videoOverlay(venues.length), file: overlayFile, transparent: true }] : slidePages;
+const pages = makeVideo ? [...slidePages, { html: videoOverlay(city, venues.length), file: overlayFile, transparent: true }] : slidePages;
 await renderPages(pages, tmpDir);
 
 // ---- 5. Captions ----
-const caption = buildCaption(captions.carousel, captions.hashtags, { hook: topic.hook, subhook: topic.subhook }, random);
+const caption = buildCaption(captions.carousel, captions.hashtags, cityId, { hook: topic.hook, subhook: topic.subhook, city: city.name }, random);
 fs.writeFileSync(path.join(outDir, "caption.txt"), caption);
 
 const post = {
   date: today,
+  city: cityId,
   topic: topic.id,
   title: topic.hook.slice(0, 90),
   carousel: { images: slidePages.map((p) => path.basename(p.file)), caption },
@@ -103,7 +116,7 @@ const post = {
 if (makeVideo) {
   const clip = clips[Math.floor(random() * clips.length)];
   renderVideo({ clip, overlay: overlayFile, output: path.join(outDir, "video.mp4"), ...config.video });
-  const videoCaption = buildCaption(captions.video, captions.hashtags, {}, random);
+  const videoCaption = buildCaption(captions.video, captions.hashtags, cityId, { city: city.name }, random);
   fs.writeFileSync(path.join(outDir, "video-caption.txt"), videoCaption);
   post.video = { file: "video.mp4", caption: videoCaption, clip: path.basename(clip) };
 }

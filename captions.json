@@ -1,24 +1,57 @@
 {
-  "_README": "Caption wording. {hook} and {subhook} are swapped for the day's topic. The first line always carries saunahop.com so people see it without swiping. One template is picked per day.",
-
+  "_README": "Caption wording. {hook}, {subhook} and {city} are swapped in. The first line always carries saunahop.com so people see it without swiping. One template is picked per day; hashtags depend on the city.",
   "carousel": [
-    "Live slots for every London sauna: saunahop.com 🔗\n{hook} 🧖 Which one are you booking?",
-    "Every London sauna in one timetable: saunahop.com 🔗\n{hook}, {subhook}. Save this for later 📌",
-    "Find a free sauna slot in London: saunahop.com 🔗\n{hook} 🔥 Tag who you're going with",
-    "saunahop.com shows live availability for London saunas 🔗\n{hook}. Have you been to any of these?",
-    "Book your next London sauna via saunahop.com 🔗\n{hook} ♨️ Which one's your favourite?"
+    "Live slots for every {city} sauna: saunahop.com 🔗\n{hook} 🧖 Which one are you booking?",
+    "Every {city} sauna in one timetable: saunahop.com 🔗\n{hook}, {subhook}. Save this for later 📌",
+    "Find a free sauna slot in {city}: saunahop.com 🔗\n{hook} 🔥 Tag who you're going with",
+    "saunahop.com shows live availability for {city} saunas 🔗\n{hook}. Have you been to any of these?",
+    "Book your next {city} sauna via saunahop.com 🔗\n{hook} ♨️ Which one's your favourite?"
   ],
-
   "video": [
-    "Every London sauna. One timetable. saunahop.com 🔗",
-    "Find a free sauna slot in London tonight: saunahop.com 🔗",
-    "Stop scrolling 20 booking sites. Every London sauna, one place: saunahop.com 🔗",
-    "Live sauna availability across London: saunahop.com 🔗"
+    "Every {city} sauna. One timetable. saunahop.com 🔗",
+    "Find a free sauna slot in {city} tonight: saunahop.com 🔗",
+    "Stop scrolling 20 booking sites. Every {city} sauna, one place: saunahop.com 🔗",
+    "Live sauna availability across {city}: saunahop.com 🔗"
   ],
-
   "hashtags": {
-    "always": ["#londonsauna"],
-    "pool": ["#saunalondon", "#londonthingstodo", "#coldplunge", "#sauna", "#london", "#thingstodoinlondon", "#londonlife", "#saunatime", "#wellnesslondon", "#contrasttherapy", "#londondateideas", "#selfcare"],
-    "pickFromPool": 5
+    "pickFromPool": 5,
+    "london": {
+      "always": [
+        "#londonsauna"
+      ],
+      "pool": [
+        "#saunalondon",
+        "#londonthingstodo",
+        "#coldplunge",
+        "#sauna",
+        "#london",
+        "#thingstodoinlondon",
+        "#londonlife",
+        "#saunatime",
+        "#wellnesslondon",
+        "#contrasttherapy",
+        "#londondateideas",
+        "#selfcare"
+      ]
+    },
+    "dublin": {
+      "always": [
+        "#dublinsauna"
+      ],
+      "pool": [
+        "#saunadublin",
+        "#dublin",
+        "#thingstodoindublin",
+        "#seaswimming",
+        "#coldplunge",
+        "#sauna",
+        "#ireland",
+        "#dublinlife",
+        "#dublindateideas",
+        "#irishsauna",
+        "#wildswimming",
+        "#selfcare"
+      ]
+    }
   }
 }

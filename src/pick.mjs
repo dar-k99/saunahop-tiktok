@@ -69,17 +69,26 @@ export function pillsFor(venue, topic, count = 3) {
 
 // ---- Topic rotation ----
 
-/** Days since 1 Jan 2026, used to step through topics.json one per day. */
+/** Days since Monday 5 Jan 2026. */
 function dayNumber(isoDay) {
-  return Math.round((new Date(isoDay + "T12:00:00Z") - new Date("2026-01-01T12:00:00Z")) / 86400_000);
+  return Math.round((new Date(isoDay + "T12:00:00Z") - new Date("2026-01-05T12:00:00Z")) / 86400_000);
 }
 
 /**
- * Picks today's topic: the next one in the list, skipping any that don't
- * have enough venues today (for example "space tonight" when nothing is free).
+ * Counts this city's posts so far, so each city steps through its own topic
+ * list one by one. (Dublin posts twice a week, so a plain day count would skip topics.)
  */
-export function pickTopic(topics, today, tryTopic) {
-  const start = ((dayNumber(today) % topics.length) + topics.length) % topics.length;
+function postNumber(isoDay, weekday, cityDays) {
+  return Math.floor(dayNumber(isoDay) / 7) * cityDays.length + cityDays.indexOf(weekday);
+}
+
+/**
+ * Picks today's topic: the next one in the city's list, skipping any that
+ * don't have enough venues today (for example "space tonight" when nothing is free).
+ */
+export function pickTopic(topics, today, weekday, cityDays, tryTopic) {
+  const n = postNumber(today, weekday, cityDays);
+  const start = ((n % topics.length) + topics.length) % topics.length;
   for (let i = 0; i < topics.length; i++) {
     const topic = topics[(start + i) % topics.length];
     const result = tryTopic(topic);
@@ -100,9 +109,10 @@ export function listFiles(dir, extensions) {
 
 // ---- Captions ----
 
-export function buildCaption(templates, hashtags, values, random) {
+export function buildCaption(templates, hashtags, cityId, values, random) {
   let text = templates[Math.floor(random() * templates.length)];
   for (const [key, value] of Object.entries(values)) text = text.replaceAll(`{${key}}`, value);
-  const tags = [...hashtags.always, ...shuffle(hashtags.pool, random).slice(0, hashtags.pickFromPool)];
+  const { always, pool } = hashtags[cityId];
+  const tags = [...always, ...shuffle(pool, random).slice(0, hashtags.pickFromPool)];
   return `${text}\n\n${tags.join(" ")}`;
 }

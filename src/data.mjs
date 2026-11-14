@@ -1,5 +1,5 @@
 // Loads the two SaunaHop data files:
-//   - data/venues.json: this repo's copy of the London venue list
+//   - data/venues.json: this repo's copy of the London and Irish venue list
 //     (refreshed weekly from the SaunaHop repo by update-venues.mjs)
 //   - availability.json: live slots, downloaded from the scraper server
 //
@@ -14,9 +14,15 @@ const AVAILABILITY_URL = process.env.AVAILABILITY_URL || "https://data.saunahop.
 // Availability older than this is treated as missing, so we never post stale numbers.
 const MAX_AGE_HOURS = 6;
 
-export function loadVenues() {
-  const json = JSON.parse(fs.readFileSync("data/venues.json", "utf8"));
-  return json.venues;
+/**
+ * The venues for one city. London venues have no "country" field; Irish ones
+ * have country "ie", and Dublin posts use the ones in the Dublin region.
+ */
+export function loadVenues(cityId) {
+  const { venues } = JSON.parse(fs.readFileSync("data/venues.json", "utf8"));
+  if (cityId === "london") return venues.filter((v) => !v.country || v.country === "uk");
+  if (cityId === "dublin") return venues.filter((v) => v.country === "ie" && v.region === "Dublin");
+  throw new Error(`Unknown city "${cityId}"`);
 }
 
 export async function loadAvailability() {

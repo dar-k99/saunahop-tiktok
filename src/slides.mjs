@@ -11,7 +11,10 @@ const LOGO = path.join(ROOT, "assets/brand/saunahop-mark-light.png");
 const escape = (text) =>
   String(text).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
-const price = (n) => "£" + (Number.isInteger(n) ? n : n.toFixed(2));
+const price = (n, currency) => currency + (Number.isInteger(n) ? n : n.toFixed(2));
+
+// "Peckham, South London" / "Inchicore, Dublin"
+const place = (venue, city) => (city.name === "London" ? `${venue.area}, ${venue.region} London` : `${venue.area}, ${city.name}`);
 
 // Long text gets a smaller font so it never runs off the slide.
 const sizeFor = (text, sizes) => {
@@ -67,7 +70,7 @@ export function hookSlide(topic, background) {
  * weekend), only passed for venues with live data. `checkedAt` is a label
  * like "8am" so viewers know when the number was true.
  */
-export function venueSlide({ venue, index, total, pills, show, free, checkedAt, background }) {
+export function venueSlide({ venue, city, index, total, pills, show, free, checkedAt, background }) {
   const size = sizeFor(venue.name, [[18, 120], [26, 104], [34, 92], [999, 80]]);
   const when = show === "tonight" ? "tonight" : "this weekend";
   const live = free
@@ -75,26 +78,26 @@ export function venueSlide({ venue, index, total, pills, show, free, checkedAt, 
     : "";
   return page(`
   <div class="content">
-    <div style="font-size:40px;font-weight:600;opacity:.85;margin-bottom:16px">${index + 1} / ${total} · ${escape(venue.area)}, ${escape(venue.region)} London</div>
+    <div style="font-size:40px;font-weight:600;opacity:.85;margin-bottom:16px">${index + 1} / ${total} · ${escape(place(venue, city))}</div>
     <div class="brand" style="font-size:${size}px;margin-bottom:30px">${escape(venue.name)}</div>
-    ${venue.priceFrom != null ? `<div style="font-size:84px;font-weight:800;margin-bottom:30px">from <span class="ember">${price(venue.priceFrom)}</span></div>` : ""}
+    ${venue.priceFrom != null ? `<div style="font-size:84px;font-weight:800;margin-bottom:30px">from <span class="ember">${price(venue.priceFrom, city.currency)}</span></div>` : ""}
     ${live}
     <div>${pills.map((t) => `<span class="pill">${escape(t)}</span>`).join("")}</div>
   </div>
   <div class="url">saunahop.com</div>`, background);
 }
 
-function endingBody(venueCount) {
+function endingBody(city, venueCount) {
   return `
   <div class="content" style="bottom:470px">
-    <div class="brand" style="font-size:130px">Every London sauna.<br>One timetable.</div>
+    <div class="brand" style="font-size:130px">Every ${city.name} sauna.<br>One timetable.</div>
     <div style="font-size:48px;font-weight:600;margin:30px 0 50px">Live availability for ${venueCount} saunas</div>
     <div class="button">saunahop.com</div>
   </div>`;
 }
 
-export const endSlide = (venueCount, background) => page(endingBody(venueCount), background);
+export const endSlide = (city, venueCount, background) => page(endingBody(city, venueCount), background);
 
 /** Transparent version laid over the video clip, with a light tint so it fades in with the text. */
-export const videoOverlay = (venueCount) =>
-  page(`<div style="position:absolute;inset:0;background:rgba(0,0,0,.4)"></div>${endingBody(venueCount)}`, null);
+export const videoOverlay = (city, venueCount) =>
+  page(`<div style="position:absolute;inset:0;background:rgba(0,0,0,.4)"></div>${endingBody(city, venueCount)}`, null);

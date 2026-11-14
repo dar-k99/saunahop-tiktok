@@ -1,6 +1,12 @@
 {
   "_README": "Settings for the daily TikTok post. Safe to edit. See README.md.",
 
+  "cities": {
+    "_README": "Which city each day's post is about. Every day must appear exactly once.",
+    "london": { "name": "London", "currency": "£", "days": ["Tue", "Wed", "Fri", "Sat", "Sun"] },
+    "dublin": { "name": "Dublin", "currency": "€", "days": ["Mon", "Thu"] }
+  },
+
   "venuesPerPost": 4,
   "minVenuesPerPost": 3,
 

@@ -1,12 +1,12 @@
 # SaunaHop TikTok
 
-Makes one TikTok post a day for saunahop.com, from real venue and availability data, and schedules it in Buffer, which sends it to your phone to post on TikTok.
+Makes one TikTok post a day for saunahop.com (London 5 days a week, Dublin on Mondays and Thursdays), from real venue and availability data, and schedules it in Buffer, which sends it to your phone to post on TikTok.
 
 ## What happens each day
 
 1. **7am (GitHub Action):** the job starts on its own.
 2. **Data:** reads the venue list (`data/venues.json`, this repo's copy of the London venues) and downloads live slots from `data.saunahop.com/availability.json`.
-3. **Topic:** picks the next topic from `topics.json`, for example "London saunas under £15". Topics that don't have at least 3 matching venues that day are skipped.
+3. **City and topic:** picks the city for the day (`cities` in `config.json`), then the next topic from that city's list in `topics.json`, for example "London saunas under £15" or "Sea saunas in Dublin". Topics that don't have at least 3 matching venues that day are skipped.
 4. **Slides:** makes 6 images at 1080×1920 (`slide-1.jpg` … `slide-6.jpg`):
    - 1: the hook, over a photo with people in it
    - 2–5: one venue each (name, area, price, 3 tags, and for "tonight" or "weekend" topics, how many sessions still have space)
@@ -27,9 +27,9 @@ Makes one TikTok post a day for saunahop.com, from real venue and availability d
 
 | File | What it controls |
 |---|---|
-| `topics.json` | The topics, in order. Add, remove or reword. |
-| `captions.json` | Caption wording and hashtags. |
-| `config.json` | Venues per post, video days, video timing, posting times, notification vs automatic posting. |
+| `topics.json` | The topics for each city, in order. Add, remove or reword. |
+| `captions.json` | Caption wording, and hashtags for each city. |
+| `config.json` | Which days are London or Dublin, venues per post, video days, video timing, posting times, notification vs automatic posting. |
 | `assets/photos/people/` | Photos for the first and last slides (portrait works best). |
 | `assets/photos/empty/` | Photos behind venue names: saunas with no people. |
 | `assets/clips/` | Video clips for the video post (vertical, 6+ seconds). One is picked at random. |
@@ -53,6 +53,7 @@ Makes one TikTok post a day for saunahop.com, from real venue and availability d
 npm install
 npm run setup                     # downloads the browser used to make the images (once)
 node build.mjs                    # today's post → output/<date>/
+node build.mjs --city dublin      # a specific city
 node build.mjs --topic tonight    # a specific topic
 node build.mjs --video            # also make the video
 node post.mjs --dry-run           # shows what would be sent
