@@ -1,0 +1,58 @@
+# Copies the latest London venue list from the SaunaHop repo (dbinchy/loyly)
+# into data/venues.json here, once a week. The daily post reads that copy,
+# so it keeps working even if this job can't run.
+#
+# Secret needed (repo Settings -> Secrets and variables -> Actions):
+#   LOYLY_TOKEN   a GitHub token with read-only access to dbinchy/loyly
+# Without it, this job does nothing and says so.
+
+name: Update venue list
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC, before the daily post
+  workflow_dispatch:
+
+permissions:
+  contents: write # lets the job commit the updated data/venues.json
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      HAS_TOKEN: ${{ secrets.LOYLY_TOKEN != '' }}
+    steps:
+      - name: Check for LOYLY_TOKEN
+        if: env.HAS_TOKEN != 'true'
+        run: echo "::notice::No LOYLY_TOKEN secret yet, so the venue list was not updated. The daily post keeps using the current copy."
+
+      - uses: actions/checkout@v4
+        if: env.HAS_TOKEN == 'true'
+
+      - name: Get venues.json from the SaunaHop repo
+        if: env.HAS_TOKEN == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: dbinchy/loyly
+          token: ${{ secrets.LOYLY_TOKEN }}
+          path: loyly
+          sparse-checkout: data/venues.json
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-node@v4
+        if: env.HAS_TOKEN == 'true'
+        with:
+          node-version: 22
+
+      - name: Update and commit if anything changed
+        if: env.HAS_TOKEN == 'true'
+        run: |
+          node update-venues.mjs loyly
+          if git diff --quiet data/venues.json; then
+            echo "Venue list unchanged."
+          else
+            git -c user.name=saunahop-bot -c user.email=saunahop-bot@users.noreply.github.com \
+              commit -m "Update venue list from SaunaHop repo" data/venues.json
+            git push
+          fi

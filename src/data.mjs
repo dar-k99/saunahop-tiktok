@@ -1,5 +1,6 @@
 // Loads the two SaunaHop data files:
-//   - venues.json: the hand-maintained venue list, read from a copy of the loyly repo
+//   - data/venues.json: this repo's copy of the London venue list
+//     (refreshed weekly from the SaunaHop repo by update-venues.mjs)
 //   - availability.json: live slots, downloaded from the scraper server
 //
 // Rule from the SaunaHop project: never invent availability. A venue only
@@ -7,21 +8,15 @@
 // latest scrape worked). Everything else shows price and tags only.
 
 import fs from "fs";
-import path from "path";
-import os from "os";
 
-const LOYLY_DIR = process.env.LOYLY_DIR || path.join(os.homedir(), "code/loyly");
 const AVAILABILITY_URL = process.env.AVAILABILITY_URL || "https://data.saunahop.com/availability.json";
 
 // Availability older than this is treated as missing, so we never post stale numbers.
 const MAX_AGE_HOURS = 6;
 
 export function loadVenues() {
-  const file = path.join(LOYLY_DIR, "data/venues.json");
-  const json = JSON.parse(fs.readFileSync(file, "utf8"));
-  const all = json.venues || json;
-  // London venues have no "country" field; Irish ones have country: "ie".
-  return all.filter((v) => !v.country || v.country === "uk");
+  const json = JSON.parse(fs.readFileSync("data/venues.json", "utf8"));
+  return json.venues;
 }
 
 export async function loadAvailability() {

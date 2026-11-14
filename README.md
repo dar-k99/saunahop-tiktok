@@ -5,7 +5,7 @@ Makes one TikTok post a day for saunahop.com, from real venue and availability d
 ## What happens each day
 
 1. **7am (GitHub Action):** the job starts on its own.
-2. **Data:** reads the venue list (`data/venues.json` from the `loyly` repo) and downloads live slots from `data.saunahop.com/availability.json`.
+2. **Data:** reads the venue list (`data/venues.json`, this repo's copy of the London venues) and downloads live slots from `data.saunahop.com/availability.json`.
 3. **Topic:** picks the next topic from `topics.json`, for example "London saunas under £15". Topics that don't have at least 3 matching venues that day are skipped.
 4. **Slides:** makes 6 images at 1080×1920 (`slide-1.jpg` … `slide-6.jpg`):
    - 1: the hook, over a photo with people in it
@@ -60,16 +60,22 @@ node post.mjs --draft             # saves it as Buffer drafts (to check, nothing
 node post.mjs                     # schedules it in Buffer (needs BUFFER_API_KEY in .env)
 ```
 
-It reads venues from `~/code/loyly` by default (change with `LOYLY_DIR` in `.env`).
+To refresh the venue list by hand from your local SaunaHop repo: `node update-venues.mjs ~/code/loyly`.
 
-## Setting up the daily automation
+## Setting up the automation
+
+There are two GitHub Actions (repo → Actions tab):
+
+| Job | When | Needs |
+|---|---|---|
+| **Daily TikTok post** | every day, 07:00 UTC | `BUFFER_API_KEY` |
+| **Update venue list** | Mondays, 06:00 UTC | `LOYLY_TOKEN` (optional: without it the job skips and the daily post uses the current copy) |
 
 1. **Buffer** (free plan): connect the TikTok account, then publish.buffer.com/settings/api → create a key. Install the Buffer app on your phone and allow notifications.
-2. **GitHub token for loyly:** the job needs to read `venues.json` from the private `dbinchy/loyly` repo. Create a fine-grained token at github.com/settings/tokens with read-only *Contents* access to that one repo. If you can't select `dbinchy/loyly`, Donnacha needs to create it or approve it.
-3. **Secrets:** in this repo on GitHub → Settings → Secrets and variables → Actions → New repository secret:
-   - `BUFFER_API_KEY`
-   - `LOYLY_TOKEN`
-4. **Test:** Actions tab → Daily TikTok post → Run workflow. Untick "Send to Buffer" for a first look: the images are under the run's Artifacts.
+2. **Secrets:** github.com/dar-k99/saunahop-tiktok/settings/secrets/actions/new
+   - `BUFFER_API_KEY`: the Buffer key
+   - `LOYLY_TOKEN` (optional): a fine-grained token from github.com/settings/tokens with read-only *Contents* access to `dbinchy/loyly`. If you can't select that repo, Donnacha needs to create or approve it.
+3. **Test:** Actions tab → Daily TikTok post → Run workflow. Untick "Send to Buffer" for a first look: the images are under the run's Artifacts.
 
 ## Credits
 

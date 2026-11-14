@@ -2,8 +2,7 @@
 # Also runs from the Actions tab ("Run workflow"), where you can pick a topic
 # or build without sending.
 #
-# Secrets needed (repo Settings -> Secrets and variables -> Actions):
-#   LOYLY_TOKEN     a GitHub token that can read dbinchy/loyly (for venues.json)
+# Secret needed (repo Settings -> Secrets and variables -> Actions):
 #   BUFFER_API_KEY  from publish.buffer.com/settings/api
 #                   (leave it unset and the job builds the post but sends nothing)
 
@@ -32,15 +31,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get venues.json from the SaunaHop repo
-        uses: actions/checkout@v4
-        with:
-          repository: dbinchy/loyly
-          token: ${{ secrets.LOYLY_TOKEN }}
-          path: loyly
-          sparse-checkout: data/venues.json
-          sparse-checkout-cone-mode: false
-
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -50,8 +40,6 @@ jobs:
       - run: npx playwright install --with-deps chromium
 
       - name: Build today's post
-        env:
-          LOYLY_DIR: loyly
         run: node build.mjs ${{ inputs.topic && format('--topic {0}', inputs.topic) || '' }}
 
       - name: Keep a copy of the post (Actions tab -> this run -> Artifacts)
