@@ -15,7 +15,7 @@ Story slides: hook, then one slide per myth (crossed out, then "actually ...") o
 
 ## What happens each day (venue lists)
 
-1. **3:30pm London time (GitHub Action):** the job starts on its own, late enough that "space tonight" numbers are fresh.
+1. **07:00 UTC (GitHub Action):** the job starts on its own, early so that GitHub running late does not matter. (Venue posts' "space tonight" numbers are from the morning.)
 2. **Data:** reads the venue list (`data/venues.json`, this repo's copy of the London and Irish venues; Dublin posts use the ones in the Dublin region) and downloads live slots from `data.saunahop.com/availability.json`.
 3. **City and topic:** picks the city for the day (`cities` in `config.json`), then the next topic from that city's list in `topics.json`, for example "London saunas under £15" or "Sea saunas in Dublin". Topics that don't have at least 3 matching venues that day are skipped.
 4. **Slides:** makes 6 images at 1080×1920 (`slide-1.jpg` … `slide-6.jpg`):
@@ -25,7 +25,7 @@ Story slides: hook, then one slide per myth (crossed out, then "actually ...") o
 5. **Video** (Tue, Thu, Sat): a 4-second sauna clip from `assets/clips/`; "Every London sauna. One timetable." (or Dublin) fades in at 2 seconds.
 6. **Caption:** picked from `captions.json`, always with saunahop.com on the first line, plus #londonsauna or #dublinsauna and 5 rotating hashtags for that city.
 7. **Images online:** the day's images are pushed to the `posts` branch of this repo, because Buffer only takes images from a public link. That branch only keeps the last 14 days.
-8. **Buffer:** the carousel is scheduled for 17:00 and the video (on video days) for 20:00, as "Notify me" posts.
+8. **Buffer:** the carousel is scheduled for 18:40 and the video (on video days) for 20:00, as "Notify me" posts.
 9. **You (1 minute):** at that time the Buffer app on your phone sends a notification. Tap it, it opens TikTok with the images and caption, add a trending sound, post, then pin a comment "Book here → saunahop.com". (No app can pick TikTok sounds for you: TikTok doesn't allow it.)
 
 ## Rules it follows
@@ -106,7 +106,7 @@ There are two GitHub Actions (repo → Actions tab):
 
 | Job | When | Needs |
 |---|---|---|
-| **Daily TikTok post** | every day, 3:30pm London time | `BUFFER_API_KEY` |
+| **Daily TikTok post** | every day, 07:00 UTC | `BUFFER_API_KEY` |
 | **Update venue list** | Mondays, 06:00 UTC | `LOYLY_TOKEN` (optional: without it the job skips and the daily post uses the current copy) |
 
 1. **Buffer** (free plan): connect the TikTok account, then publish.buffer.com/settings/api → create a key. Install the Buffer app on your phone and allow notifications.
