@@ -1,17 +1,29 @@
 {
-  "_README": "Caption wording. {hook}, {subhook} and {city} are swapped in. The first line always carries saunahop.com so people see it without swiping. One template is picked per day; hashtags depend on the city.",
+  "_README": "Caption wording. {hook}, {subhook}, {question} and {city} are swapped in. Story captions lead with the hook (TikTok search reads it); the others put saunahop.com first. saunahop.com is always in the first two lines so people see it without tapping more. One template is picked per day; hashtags depend on the city. No emojis. Story captions and storyVideo are all lowercase (the tips style).",
   "carousel": [
-    "Live slots for every {city} sauna: saunahop.com 🔗\n{hook} 🧖 Which one are you booking?",
-    "Every {city} sauna in one timetable: saunahop.com 🔗\n{hook}, {subhook}. Save this for later 📌",
-    "Find a free sauna slot in {city}: saunahop.com 🔗\n{hook} 🔥 Tag who you're going with",
-    "saunahop.com shows live availability for {city} saunas 🔗\n{hook}. Have you been to any of these?",
-    "Book your next {city} sauna via saunahop.com 🔗\n{hook} ♨️ Which one's your favourite?"
+    "Live slots for every {city} sauna: saunahop.com\n{hook}. Which one are you booking?",
+    "Every {city} sauna in one timetable: saunahop.com\n{hook}, {subhook}. Save this for later.",
+    "Find a free sauna slot in {city}: saunahop.com\n{hook}. Tag who you're going with.",
+    "saunahop.com shows live availability for {city} saunas\n{hook}. Have you been to any of these?",
+    "Book your next {city} sauna via saunahop.com\n{hook}. Which one's your favourite?"
+  ],
+  "story": [
+    "{hook}. {question}\nfind a sauna in {city}: saunahop.com",
+    "{hook}. save this for your next sauna.\n{question} every {city} sauna in one place: saunahop.com",
+    "{hook}. {question}\nlive sauna slots across {city}: saunahop.com",
+    "{hook}. send this to your sauna buddy.\n{question} book your next one: saunahop.com"
   ],
   "video": [
-    "Every {city} sauna. One timetable. saunahop.com 🔗",
-    "Find a free sauna slot in {city} tonight: saunahop.com 🔗",
-    "Stop scrolling 20 booking sites. Every {city} sauna, one place: saunahop.com 🔗",
-    "Live sauna availability across {city}: saunahop.com 🔗"
+    "Every {city} sauna. One timetable. saunahop.com",
+    "Find a free sauna slot in {city} tonight: saunahop.com",
+    "Stop scrolling 20 booking sites. Every {city} sauna, one place: saunahop.com",
+    "Live sauna availability across {city}: saunahop.com"
+  ],
+  "storyVideo": [
+    "every {city} sauna. one timetable. saunahop.com",
+    "find a free sauna slot in {city} tonight: saunahop.com",
+    "stop scrolling 20 booking sites. every {city} sauna, one place: saunahop.com",
+    "live sauna availability across {city}: saunahop.com"
   ],
   "hashtags": {
     "pickFromPool": 5,

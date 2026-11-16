@@ -1,0 +1,833 @@
+{
+  "_README": "Tips, myths and culture posts: no venue data needed. Used in order, one per story day (see storyDays in config.json), then it starts again. kind 'myths' = slides with myth + truth; kind 'list' = slides with title + body. {city} is swapped in. 'question' ends the caption to get comments; 'note' (optional) is added to the caption, for health topics. Style: all lowercase, no emojis, a blustering, posh, over-the-top old-school politician voice (cripes, piffle, latin, 'folks'). Never name or quote a real person. Facts stay accurate: health claims say 'linked with', never 'cures'. Dublin: each story has have a 'dublin' block (hook, subhook, question, note, slides) that replaces those fields on Dublin days. The Dublin voice is irish, not posh english: cap, bad craic, grand, deadly, notions, fair play, sure look, lads.",
+  "stories": [
+    {
+      "id": "perfect-round",
+      "kind": "list",
+      "hook": "how to do a sauna session properly",
+      "subhook": "the nordic way, explained",
+      "question": "how many rounds do you do?",
+      "slides": [
+        {
+          "title": "1. heat",
+          "body": "8–15 minutes in the sauna. bail out sooner if you fancy. no medals awarded."
+        },
+        {
+          "title": "2. cold",
+          "body": "cold shower, plunge pool or fresh air. even 30 seconds counts. brace yourself."
+        },
+        {
+          "title": "3. rest",
+          "body": "sit or lie down for 10–15 minutes and drink some water. frankly, the best bit."
+        },
+        {
+          "title": "4. repeat",
+          "body": "two to four rounds is the classic. then finish however your heart desires."
+        }
+      ],
+      "dublin": {
+        "subhook": "the nordic way, no notions",
+        "question": "how many rounds do you do?",
+        "slides": [
+          {
+            "title": "1. heat",
+            "body": "8–15 minutes in the sauna. get out sooner if you want. nobody's counting."
+          },
+          {
+            "title": "2. cold",
+            "body": "cold shower, plunge or the sea. even 30 seconds counts. you'll survive."
+          },
+          {
+            "title": "3. rest",
+            "body": "sit or lie down for 10–15 minutes and have some water. honestly the best bit."
+          },
+          {
+            "title": "4. repeat",
+            "body": "two to four rounds is the classic. finish however you like, sure look."
+          }
+        ]
+      }
+    },
+    {
+      "id": "glossary",
+      "kind": "list",
+      "hook": "sauna words you need to know",
+      "subhook": "a small lexicon",
+      "question": "which one was new to you?",
+      "slides": [
+        {
+          "title": "löyly",
+          "body": "finnish for the steam that rises when water hits the hot stones. say it with gusto."
+        },
+        {
+          "title": "aufguss",
+          "body": "a german sauna show: a sauna master whirls a towel and fans hot, scented air at you. theatre!"
+        },
+        {
+          "title": "vihta",
+          "body": "a bundle of birch twigs you gently tap yourself with. smells sublime. looks bonkers."
+        },
+        {
+          "title": "hammam",
+          "body": "a turkish bath: warm marble, steam and a jolly good scrub."
+        },
+        {
+          "title": "contrast therapy",
+          "body": "hot, then cold, then hot again. sauna, plunge, repeat. ad infinitum."
+        }
+      ],
+      "dublin": {
+        "subhook": "sound like a regular",
+        "question": "which one was new to you?",
+        "slides": [
+          {
+            "title": "löyly",
+            "body": "finnish for the steam that rises when water hits the hot stones. say it with confidence."
+          },
+          {
+            "title": "aufguss",
+            "body": "a german sauna show: someone waves a towel and fans hot, scented air at you. it's gas."
+          },
+          {
+            "title": "vihta",
+            "body": "a bunch of birch twigs you tap yourself with. smells unreal. looks mad."
+          },
+          {
+            "title": "hammam",
+            "body": "a turkish bath: warm marble, steam and a good scrub."
+          },
+          {
+            "title": "contrast therapy",
+            "body": "hot, then cold, then hot again. sauna, sea, repeat. dublin's been at it for years."
+          }
+        ]
+      }
+    },
+    {
+      "id": "nobody-tells-you",
+      "kind": "list",
+      "hook": "things nobody tells you before your first sauna",
+      "subhook": "frankly, a scandal",
+      "question": "what surprised you on your first visit?",
+      "slides": [
+        {
+          "title": "the top bench is the hottest",
+          "body": "heat rises. too much? descend a level. a strategic retreat is no defeat."
+        },
+        {
+          "title": "your heart speeds up",
+          "body": "a bit like a brisk walk, and that's normal. feel dizzy or sick? get out and cool down."
+        },
+        {
+          "title": "stand up slowly",
+          "body": "leap up after the heat and you may get a head rush. rise with gravitas."
+        },
+        {
+          "title": "some saunas are quiet zones",
+          "body": "others are a veritable parliament of chatter. read the room."
+        },
+        {
+          "title": "the afterglow is real",
+          "body": "that calm, floaty feeling after? that, folks, is why people get hooked."
+        }
+      ],
+      "dublin": {
+        "subhook": "nobody warned us either",
+        "question": "what surprised you on your first visit?",
+        "slides": [
+          {
+            "title": "the top bench is the hottest",
+            "body": "heat rises. too much? move down a level. no shame in it."
+          },
+          {
+            "title": "your heart speeds up",
+            "body": "a bit like a brisk walk, and that's normal. feel dizzy or sick? get out and cool down."
+          },
+          {
+            "title": "stand up slowly",
+            "body": "jump up after the heat and you might get a head rush. take it handy."
+          },
+          {
+            "title": "some saunas are quiet zones",
+            "body": "others are pure chats. read the room."
+          },
+          {
+            "title": "the afterglow is real",
+            "body": "that calm, floaty feeling after? that's why people get hooked. it's deadly."
+          }
+        ]
+      }
+    },
+    {
+      "id": "etiquette",
+      "kind": "list",
+      "hook": "sauna etiquette: don't be this person",
+      "subhook": "we've all met them",
+      "question": "what's the worst sauna etiquette you've seen?",
+      "slides": [
+        {
+          "title": "skipping the shower",
+          "body": "rinse off before you go in. a small step for you, a giant leap for everyone else."
+        },
+        {
+          "title": "no towel on the bench",
+          "body": "always sit on your own towel. always. i cannot stress this enough."
+        },
+        {
+          "title": "throwing water without asking",
+          "body": "more steam means more heat for everyone. consult the room. democracy!"
+        },
+        {
+          "title": "holding the door open",
+          "body": "all the heat escapes. in and out, briskly, like a man late for a vote."
+        },
+        {
+          "title": "the loud phone call",
+          "body": "if you must bring it, silence it. better still, abandon it in the locker."
+        }
+      ],
+      "dublin": {
+        "subhook": "we all know one",
+        "question": "what's the worst sauna etiquette you've seen?",
+        "slides": [
+          {
+            "title": "skipping the shower",
+            "body": "rinse off before you go in. it's bad craic otherwise."
+          },
+          {
+            "title": "no towel on the bench",
+            "body": "always sit on your own towel. always. no excuses."
+          },
+          {
+            "title": "throwing water without asking",
+            "body": "more steam means more heat for everyone. ask first, don't be that lad."
+          },
+          {
+            "title": "holding the door open",
+            "body": "all the heat escapes. were you born in a field? in and out, quick."
+          },
+          {
+            "title": "the loud phone call",
+            "body": "if you must bring it, put it on silent. better again, leave it in the locker."
+          }
+        ]
+      }
+    },
+    {
+      "id": "finland",
+      "kind": "list",
+      "hook": "why finland is obsessed with saunas",
+      "subhook": "a nation of heroes",
+      "question": "would you build a sauna before a house?",
+      "slides": [
+        {
+          "title": "3 million saunas",
+          "body": "for about 5.5 million people. a sauna-to-citizen ratio we can only dream of."
+        },
+        {
+          "title": "sauna first, house second",
+          "body": "families traditionally built the sauna first and lived in it while building the house. priorities!"
+        },
+        {
+          "title": "it's on unesco's list",
+          "body": "finnish sauna culture was added to unesco's cultural heritage list in 2020. quite right too."
+        },
+        {
+          "title": "löyly is almost sacred",
+          "body": "the word for sauna steam is said to have once meant spirit or soul. poetry, folks."
+        }
+      ],
+      "dublin": {
+        "subhook": "they're on another level",
+        "question": "would you build a sauna before a house?",
+        "slides": [
+          {
+            "title": "3 million saunas",
+            "body": "for about 5.5 million people. we'd want to catch up."
+          },
+          {
+            "title": "sauna first, house second",
+            "body": "families traditionally built the sauna first and lived in it while building the house. fair play."
+          },
+          {
+            "title": "it's on unesco's list",
+            "body": "finnish sauna culture was added to unesco's cultural heritage list in 2020. deserved."
+          },
+          {
+            "title": "löyly is almost sacred",
+            "body": "the word for sauna steam is said to have once meant spirit or soul. lovely stuff."
+          }
+        ]
+      }
+    },
+    {
+      "id": "signs",
+      "kind": "list",
+      "hook": "signs you need a sauna this week",
+      "subhook": "be honest with yourself",
+      "question": "how many of these are you?",
+      "slides": [
+        {
+          "title": "you've stared at a screen for 9 hours",
+          "body": "your eyes need a break. so does the rest of you, frankly."
+        },
+        {
+          "title": "your shoulders live next to your ears",
+          "body": "20 minutes of heat and they may well return to their rightful place."
+        },
+        {
+          "title": "it's grey and 6°C outside",
+          "body": "the fastest way to be properly warm, right down to the marrow."
+        },
+        {
+          "title": "you need a plan that isn't the pub",
+          "body": "still social, still fun, and you'll feel better tomorrow, not worse."
+        },
+        {
+          "title": "you've said \"i'm so tired\" four times today",
+          "body": "sauna, plunge, rest, early night. trust me. i'm very nearly an expert."
+        }
+      ],
+      "dublin": {
+        "subhook": "be honest now",
+        "question": "how many of these are you?",
+        "slides": [
+          {
+            "title": "you've stared at a screen for 9 hours",
+            "body": "your eyes are melted. so is the rest of you."
+          },
+          {
+            "title": "your shoulders are up at your ears",
+            "body": "20 minutes of heat and they might come back down."
+          },
+          {
+            "title": "it's grey, 6°c and lashing",
+            "body": "the fastest way to be properly warm, right through."
+          },
+          {
+            "title": "you need a plan that isn't the pub",
+            "body": "still a bit of craic. and you'll feel better tomorrow, not worse."
+          },
+          {
+            "title": "you've said \"i'm wrecked\" four times today",
+            "body": "sauna, plunge, rest, early night. trust us."
+          }
+        ]
+      }
+    },
+    {
+      "id": "research",
+      "kind": "list",
+      "hook": "what science actually says about saunas",
+      "subhook": "no hype, only facts",
+      "question": "did you know any of these?",
+      "note": "not medical advice. pregnant, have a heart condition or on medication? ask your doctor before using a sauna.",
+      "slides": [
+        {
+          "title": "heart health",
+          "body": "big finnish studies link regular sauna use with lower heart disease risk. a link, mind you, not proof. but promising."
+        },
+        {
+          "title": "blood pressure",
+          "body": "studies show blood pressure tends to drop for a while after a sauna session."
+        },
+        {
+          "title": "muscles",
+          "body": "heat helps tight muscles relax, which is why so many go after training."
+        },
+        {
+          "title": "mood",
+          "body": "early research suggests heat may help mood. more studies are on the way. watch this space."
+        },
+        {
+          "title": "not a cure",
+          "body": "sauna is a splendid habit, not a medicine. enjoy it for what it is."
+        }
+      ],
+      "dublin": {
+        "subhook": "no cap, just research",
+        "question": "did you know any of these?",
+        "note": "not medical advice. pregnant, have a heart condition or on medication? ask your doctor before using a sauna.",
+        "slides": [
+          {
+            "title": "heart health",
+            "body": "big finnish studies link regular sauna use with lower heart disease risk. it's a link, not proof, but it's promising."
+          },
+          {
+            "title": "blood pressure",
+            "body": "studies show blood pressure tends to drop for a while after a sauna session."
+          },
+          {
+            "title": "muscles",
+            "body": "heat helps tight muscles relax, which is why so many go after training."
+          },
+          {
+            "title": "mood",
+            "body": "early research suggests heat may help mood. more studies are on the way."
+          },
+          {
+            "title": "not a cure",
+            "body": "sauna is a great habit, not a medicine. enjoy it for what it is."
+          }
+        ]
+      }
+    },
+    {
+      "id": "what-to-bring",
+      "kind": "list",
+      "hook": "what to bring to the sauna",
+      "subhook": "the essential kit list",
+      "question": "what's always in your sauna bag?",
+      "slides": [
+        {
+          "title": "two towels",
+          "body": "one for the bench, one for after. i've said it before, i'll say it again."
+        },
+        {
+          "title": "flip-flops",
+          "body": "for the march between sauna, showers and plunge. tiled floors are treacherous."
+        },
+        {
+          "title": "a big water bottle",
+          "body": "you will want more than you think. vastly more."
+        },
+        {
+          "title": "swimwear (check first)",
+          "body": "some saunas are swimwear only, some aren't. check the venue's rules before you go."
+        },
+        {
+          "title": "a sauna hat",
+          "body": "optional, but a felt hat keeps your head cooler. ridiculous? yes. effective? also yes."
+        }
+      ],
+      "dublin": {
+        "subhook": "the essentials",
+        "question": "what's always in your sauna bag?",
+        "slides": [
+          {
+            "title": "two towels",
+            "body": "one for the bench, one for after. we'll keep saying it."
+          },
+          {
+            "title": "flip-flops",
+            "body": "for between the sauna, showers and plunge. wet tiles are no joke."
+          },
+          {
+            "title": "a big water bottle",
+            "body": "you'll want way more than you think."
+          },
+          {
+            "title": "swimwear (check first)",
+            "body": "some saunas are swimwear only, some aren't. check the venue's rules before you go."
+          },
+          {
+            "title": "a sauna hat",
+            "body": "optional, but a felt hat keeps your head cooler. looks a bit mad. works though."
+          }
+        ]
+      }
+    },
+    {
+      "id": "new-pub",
+      "kind": "list",
+      "hook": "sauna is the new pub. here's why",
+      "subhook": "hear me out, folks",
+      "question": "sauna or pub this friday?",
+      "slides": [
+        {
+          "title": "no hangover",
+          "body": "you wake up feeling better than when you went out. unheard of."
+        },
+        {
+          "title": "actual conversation",
+          "body": "no bellowing over music. just heat, chat and the occasional philosophical tangent."
+        },
+        {
+          "title": "it's a proper night out",
+          "body": "lots of saunas now have music nights, events and bars for after."
+        },
+        {
+          "title": "the pub after is allowed",
+          "body": "sauna, plunge, then one drink. the best of both worlds. have your cake and sweat it."
+        }
+      ],
+      "dublin": {
+        "subhook": "hear us out",
+        "question": "sauna or pub this friday?",
+        "slides": [
+          {
+            "title": "no hangover",
+            "body": "you wake up feeling better than when you went out. unheard of in this country."
+          },
+          {
+            "title": "actual conversation",
+            "body": "no roaring over the music. just heat and the chats."
+          },
+          {
+            "title": "it's a proper night out",
+            "body": "lots of saunas now have music nights, events and bars for after. the craic is mighty."
+          },
+          {
+            "title": "the pub after is allowed",
+            "body": "sauna, sea, then one pint. best of both worlds."
+          }
+        ]
+      }
+    },
+    {
+      "id": "myths-2",
+      "kind": "myths",
+      "hook": "sauna things people get wrong",
+      "subhook": "the last one matters",
+      "question": "which one surprised you?",
+      "slides": [
+        {
+          "myth": "saunas are just for winter",
+          "truth": "the finns sauna all year round. a summer sauna and a cold swim is simply unbeatable."
+        },
+        {
+          "myth": "sauna on a full stomach",
+          "truth": "a feast right before makes it heavy going. eat lightly, banquet after."
+        },
+        {
+          "myth": "you need to be really fit",
+          "truth": "go at your own pace, sit low, keep rounds short. it's not a workout, it's a sit-down."
+        },
+        {
+          "myth": "a beer in the sauna is fine",
+          "truth": "alcohol and heat are a risky mix, and alcohol is involved in many sauna accidents. save it for after."
+        }
+      ],
+      "dublin": {
+        "subhook": "the last one matters",
+        "question": "which one surprised you?",
+        "slides": [
+          {
+            "myth": "saunas are just for winter",
+            "truth": "the finns go all year round. a summer sauna and a dip in the sea is unbeatable."
+          },
+          {
+            "myth": "sauna on a full stomach",
+            "truth": "a big feed right before makes it hard going. eat light, have the chipper after."
+          },
+          {
+            "myth": "you need to be really fit",
+            "truth": "go at your own pace, sit low, keep rounds short. it's not a workout, it's a sit-down."
+          },
+          {
+            "myth": "a can in the sauna is grand",
+            "truth": "alcohol and heat are a risky mix, and drink is involved in a lot of sauna accidents. save it for after."
+          }
+        ]
+      }
+    },
+    {
+      "id": "date",
+      "kind": "list",
+      "hook": "why a sauna is the best date idea in {city}",
+      "subhook": "send this to them",
+      "question": "would you go on a sauna date?",
+      "slides": [
+        {
+          "title": "no awkward silences",
+          "body": "silence in a sauna is perfectly normal. bliss, actually."
+        },
+        {
+          "title": "built-in adrenaline",
+          "body": "leaping into a cold plunge together is instant bonding. shared peril, folks."
+        },
+        {
+          "title": "cheaper than dinner",
+          "body": "lots of sessions cost less than a round of cocktails."
+        },
+        {
+          "title": "you both leave glowing",
+          "body": "literally. then go and get some food. a triumph."
+        }
+      ],
+      "dublin": {
+        "subhook": "send this to them",
+        "question": "would you go on a sauna date?",
+        "slides": [
+          {
+            "title": "no awkward silences",
+            "body": "silence in a sauna is totally normal. bliss, actually."
+          },
+          {
+            "title": "built-in adrenaline",
+            "body": "jumping into the cold together is instant bonding. pure craic."
+          },
+          {
+            "title": "cheaper than dinner",
+            "body": "lots of sessions cost less than a round of cocktails."
+          },
+          {
+            "title": "you both leave glowing",
+            "body": "literally. then go get chips."
+          }
+        ]
+      }
+    },
+    {
+      "id": "myths-1",
+      "kind": "myths",
+      "hook": "sauna myths you probably believe",
+      "subhook": "cripes, number three",
+      "question": "which one did you fall for?",
+      "slides": [
+        {
+          "myth": "sweating detoxes your body",
+          "truth": "piffle. sweat is mostly water and salt. your liver and kidneys do the detoxing, magnificent organs, both of them."
+        },
+        {
+          "myth": "hotter is always better",
+          "truth": "most saunas sit at a perfectly civilised 70–90°C. too toasty? retreat to a lower bench. no shame in a tactical withdrawal."
+        },
+        {
+          "myth": "you lose weight in the sauna",
+          "truth": "alas, water weight. it returns the instant you drink, which, folks, you absolutely must."
+        },
+        {
+          "myth": "stay in as long as you can",
+          "truth": "this is not a contest of grit. 8–15 minutes, then cool off. leave when you jolly well like."
+        },
+        {
+          "myth": "saunas are for gym people",
+          "truth": "the finns have about 3 million saunas for 5.5 million people. it is for everyone. everyone!"
+        }
+      ],
+      "dublin": {
+        "subhook": "number three is pure cap",
+        "question": "go on, which one did you fall for?",
+        "slides": [
+          {
+            "myth": "sweating detoxes your body",
+            "truth": "that's cap. sweat is mostly water and salt. your liver and kidneys do the detoxing. fair play to them."
+          },
+          {
+            "myth": "hotter is always better",
+            "truth": "most saunas sit around 70–90°c. if you're melted, move down a bench. no notions needed."
+          },
+          {
+            "myth": "you lose weight in the sauna",
+            "truth": "sure that's only water weight. it's back the minute you drink, and you'd want to be drinking plenty."
+          },
+          {
+            "myth": "stay in as long as you can",
+            "truth": "it's not a competition, lads. 8–15 minutes, then cool down. staying in till you're dizzy is bad craic."
+          },
+          {
+            "myth": "saunas are for gym people",
+            "truth": "the finns have about 3 million saunas for 5.5 million people. everyone's at it. your mam would love it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "once-a-week",
+      "kind": "list",
+      "hook": "why going to the sauna once a week can change your life",
+      "subhook": "a manifesto, of sorts",
+      "question": "what day is your sauna day?",
+      "slides": [
+        {
+          "title": "no phone for 90 minutes",
+          "body": "phones simply cannot cope with 80°C. nobody can reach you. not your boss, not your group chat. glorious."
+        },
+        {
+          "title": "you sleep like a log",
+          "body": "heat, cold, rest. plenty of folk say they sleep deeper after. like a felled oak, i'm told."
+        },
+        {
+          "title": "the post-plunge buzz",
+          "body": "one dunk in cold water and you emerge positively electrified. grinning like a loon."
+        },
+        {
+          "title": "a social plan that isn't the pub",
+          "body": "proper conversation, no shouting over music, and absolutely no hangover. revolutionary stuff."
+        },
+        {
+          "title": "it becomes your ritual",
+          "body": "same day, same time, every week. carpe diem, or rather carpe sauna."
+        }
+      ],
+      "dublin": {
+        "subhook": "hear me out, lads",
+        "question": "what day is your sauna day?",
+        "slides": [
+          {
+            "title": "no phone for 90 minutes",
+            "body": "phones can't handle 80°c. nobody can reach you, not your boss, not the group chat. deadly."
+          },
+          {
+            "title": "you sleep like a baby",
+            "body": "heat, cold, rest. loads of people say they sleep deeper after. out like a light."
+          },
+          {
+            "title": "the post-plunge buzz",
+            "body": "one dip in cold water and you come out buzzing. grinning like an eejit."
+          },
+          {
+            "title": "a plan that isn't the pub",
+            "body": "proper chats, no roaring over music, and no hangover. the mammy would be proud."
+          },
+          {
+            "title": "it becomes your thing",
+            "body": "same day, same time, every week. something to look forward to when it's lashing rain."
+          }
+        ]
+      }
+    },
+    {
+      "id": "first-time",
+      "kind": "list",
+      "hook": "first time at a sauna? read this first",
+      "subhook": "a briefing, if you will",
+      "question": "what would you tell a sauna first-timer?",
+      "slides": [
+        {
+          "title": "shower first",
+          "body": "basic good manners, folks. and you'll start sweating sooner. everybody wins."
+        },
+        {
+          "title": "bring two towels",
+          "body": "one to sit on in the hot room, one to dry off after. two towels. non-negotiable."
+        },
+        {
+          "title": "start on a low bench",
+          "body": "heat rises, as any schoolboy knows. the top is hottest. climb when ready."
+        },
+        {
+          "title": "keep rounds short",
+          "body": "8–10 minutes is ample for a debut. then cool down and rest. rome wasn't sweated in a day."
+        },
+        {
+          "title": "drink water",
+          "body": "before, between rounds and after. you will lose more than you think. hydrate, hydrate, hydrate."
+        }
+      ],
+      "dublin": {
+        "subhook": "don't be an eejit",
+        "question": "what would you tell a sauna first-timer?",
+        "slides": [
+          {
+            "title": "shower first",
+            "body": "basic manners, lads. and you'll start sweating sooner. sure it's grand."
+          },
+          {
+            "title": "bring two towels",
+            "body": "one to sit on in the hot room, one to dry off after. two. not one."
+          },
+          {
+            "title": "start on a low bench",
+            "body": "heat rises, so the top is hottest. no need to be a hero on day one."
+          },
+          {
+            "title": "keep rounds short",
+            "body": "8–10 minutes is plenty for your first go. then cool down and rest. handy enough."
+          },
+          {
+            "title": "drink water",
+            "body": "before, between rounds and after. you'll lose more than you think."
+          }
+        ]
+      }
+    },
+    {
+      "id": "cold-plunge-myths",
+      "kind": "myths",
+      "hook": "cold plunge myths, debunked",
+      "subhook": "before you take the plunge",
+      "question": "cold plunge: love it or loathe it?",
+      "note": "got a heart condition or pregnant? check with your doctor before trying heat or cold.",
+      "slides": [
+        {
+          "myth": "longer is better",
+          "truth": "nonsense. dips of 1–3 minutes are plenty for most people. it's a plunge, not a siege."
+        },
+        {
+          "myth": "it has to be ice cold",
+          "truth": "around 10–15°C already feels like the north sea in january. no ice cubes required."
+        },
+        {
+          "myth": "just jump in and hold your breath",
+          "truth": "get in slowly and breathe out long. the gasp is a reflex. ease in, like a dignified walrus."
+        },
+        {
+          "myth": "it's only for athletes",
+          "truth": "most people do it for the feeling after: awake, calm and inexplicably cheerful."
+        }
+      ],
+      "dublin": {
+        "subhook": "before you lep in",
+        "question": "cold plunge: love it or hate it?",
+        "note": "got a heart condition or pregnant? check with your doctor before trying heat or cold.",
+        "slides": [
+          {
+            "myth": "longer is better",
+            "truth": "cap. dips of 1–3 minutes are plenty for most people. it's not a test of how hard you are."
+          },
+          {
+            "myth": "it has to be ice cold",
+            "truth": "around 10–15°c already feels like the irish sea in january. no ice cubes needed."
+          },
+          {
+            "myth": "lep in and hold your breath",
+            "truth": "get in slowly and breathe out long. the gasp is a reflex. take it handy."
+          },
+          {
+            "myth": "it's only for athletes",
+            "truth": "most people do it for the feeling after: awake, calm and in flying form."
+          }
+        ]
+      }
+    },
+    {
+      "id": "sauna-vs-steam",
+      "kind": "list",
+      "hook": "sauna vs steam room vs infrared",
+      "subhook": "the great debate",
+      "question": "team sauna or team steam room?",
+      "slides": [
+        {
+          "title": "sauna: dry heat",
+          "body": "usually 70–100°C with dry air. chuck water on the hot stones and whoosh: a burst of steam called löyly."
+        },
+        {
+          "title": "steam room: wet heat",
+          "body": "only about 40–50°C, but close to 100% humidity. feels like a tropical summit. sweltering."
+        },
+        {
+          "title": "infrared: warms you, not the air",
+          "body": "the room stays around 45–60°C. gentler, so people tend to linger."
+        },
+        {
+          "title": "so which is best?",
+          "body": "the one you'll actually go to. try all three. a coalition of heat, if you like."
+        }
+      ],
+      "dublin": {
+        "subhook": "settle it once and for all",
+        "question": "team sauna or team steam room?",
+        "slides": [
+          {
+            "title": "sauna: dry heat",
+            "body": "usually 70–100°c with dry air. throw water on the hot stones and you get a blast of steam called löyly."
+          },
+          {
+            "title": "steam room: wet heat",
+            "body": "only about 40–50°c, but close to 100% humidity. feels like a dublin bus in august."
+          },
+          {
+            "title": "infrared: warms you, not the air",
+            "body": "the room stays around 45–60°c. gentler, so people tend to stay in longer."
+          },
+          {
+            "title": "so which is best?",
+            "body": "whichever one you'll actually go to. try all three, sure what harm."
+          }
+        ]
+      }
+    }
+  ]
+}

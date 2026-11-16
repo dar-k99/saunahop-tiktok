@@ -2,7 +2,18 @@
 
 Makes one TikTok post a day for saunahop.com (London 5 days a week, Dublin on Mondays and Thursdays), from real venue and availability data, and schedules it in Buffer, which sends it to your phone to post on TikTok.
 
-## What happens each day
+## Two kinds of post
+
+- **Tips and myths** (`stories.json`, every day for now): "sauna myths you probably believe", "why going to the sauna once a week can change your life", etiquette, first-timer tips, Finland facts and so on. All lowercase, no emojis, written in a blustering, posh old-school politician voice ("cripes", "piffle", "folks"). It's a parody voice: never name or quote a real person. Facts stay accurate, and health posts say "linked with", never "cures", plus a "not medical advice" line in the caption.
+- **Venue lists** (`topics.json`): the original format below, with real venues and live slots.
+
+Dublin days use each story's `dublin` block: the same post in an irish voice ("cap", "bad craic", "grand", "deadly", "notions", "sure look") instead of the posh english one.
+
+Which days get which is `storyDays` in `config.json`. Remove a day from that list and it goes back to venue lists.
+
+Story slides: hook, then one slide per myth (crossed out, then "actually ...") or tip, then the ending slide. They use the same photos. Headlines use Hanken Grotesk because the Amoured brand font only has capitals.
+
+## What happens each day (venue lists)
 
 1. **3:30pm London time (GitHub Action):** the job starts on its own, late enough that "space tonight" numbers are fresh.
 2. **Data:** reads the venue list (`data/venues.json`, this repo's copy of the London and Irish venues; Dublin posts use the ones in the Dublin region) and downloads live slots from `data.saunahop.com/availability.json`.
@@ -37,9 +48,10 @@ A "session" is one bookable time slot, so a venue with two saunas bookable at 6p
 
 | File | What it controls |
 |---|---|
-| `topics.json` | The topics for each city, in order. Add, remove or reword. |
+| `stories.json` | Tips and myths posts, in order. Add, remove or reword (keep it lowercase). |
+| `topics.json` | The venue-list topics for each city, in order. Add, remove or reword. |
 | `captions.json` | Caption wording, and hashtags for each city. |
-| `config.json` | Which days are London or Dublin, venues per post, video days, video timing, posting times, notification vs automatic posting. |
+| `config.json` | Which days are tips/myths (`storyDays`), which are London or Dublin, venues per post, video days, video timing, posting times, notification vs automatic posting. |
 | `assets/photos/people/` | Photos for the first and last slides (portrait works best). |
 | `assets/photos/empty/` | Photos behind venue names: saunas with no people. |
 | `assets/clips/` | Video clips for the video post (vertical, 6+ seconds). One is picked at random. |
@@ -78,6 +90,8 @@ npm run setup                     # downloads the browser used to make the image
 node build.mjs                    # today's post → output/<date>/
 node build.mjs --city dublin      # a specific city
 node build.mjs --topic tonight    # a specific topic
+node build.mjs --topic myths-1    # a specific tips/myths post (id from stories.json)
+node build.mjs --type venues      # a venue list, even on a tips day
 node build.mjs --video            # also make the video
 node post.mjs --dry-run           # shows what would be sent
 node post.mjs --draft             # saves it as Buffer drafts (to check, nothing scheduled)

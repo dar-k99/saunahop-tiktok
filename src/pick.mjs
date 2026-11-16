@@ -98,6 +98,12 @@ export function pickTopic(topics, today, weekday, cityDays, tryTopic) {
   throw new Error("No topic had enough venues today.");
 }
 
+/** Today's tips/myths post: the next one in stories.json, one per story day. */
+export function pickStory(stories, today, weekday, storyDays) {
+  const n = postNumber(today, weekday, storyDays);
+  return stories[((n % stories.length) + stories.length) % stories.length];
+}
+
 // ---- Photos and clips ----
 
 export function listFiles(dir, extensions) {

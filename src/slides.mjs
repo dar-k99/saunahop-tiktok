@@ -22,7 +22,8 @@ const sizeFor = (text, sizes) => {
   return sizes[sizes.length - 1][1];
 };
 
-function page(body, background) {
+// plain = tips/myths style: all lowercase, headlines in Hanken Grotesk (Amoured only has capitals).
+function page(body, background, { shade = "", plain = false } = {}) {
   return `<!doctype html><html><head><meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
@@ -46,23 +47,25 @@ function page(body, background) {
   .live { display: inline-flex; align-items: center; gap: 14px; font-size: 40px; font-weight: 700; margin-bottom: 30px; }
   .live .dot { width: 20px; height: 20px; border-radius: 50%; background: #f0773f; }
   .live small { font-size: 28px; font-weight: 400; opacity: .75; }
+  body.plain .brand { font-family: "Hanken Grotesk", sans-serif; font-weight: 800; letter-spacing: -2px; line-height: 1.02; }
+  body.plain .content, body.plain .url { text-transform: lowercase; }
   .button { display: inline-block; background: #f0773f; color: #fff; padding: 22px 48px; border-radius: 999px;
     font-size: 64px; font-weight: 800; }
-</style></head><body>
-${background ? `<div class="bg"></div><div class="shade"></div>` : ""}
+</style></head><body class="${plain ? "plain" : ""}">
+${background ? `<div class="bg"></div><div class="shade" style="${shade}"></div>` : ""}
 <div class="logo"><img src="file://${LOGO}">SaunaHop</div>
 ${body}
 </body></html>`;
 }
 
-export function hookSlide(topic, background) {
+export function hookSlide(topic, background, { cta = "live slots → <b>saunahop.com</b>", plain = false } = {}) {
   const size = sizeFor(topic.hook, [[24, 160], [34, 140], [44, 120], [999, 104]]);
   return page(`
   <div class="content">
     <div class="brand" style="font-size:${size}px">${escape(topic.hook)}</div>
-    <div style="font-size:60px;font-weight:600;margin-top:24px">${escape(topic.subhook)} 🔥</div>
-    <div style="font-size:38px;margin-top:40px;opacity:.9">live slots → <b>saunahop.com</b></div>
-  </div>`, background);
+    <div style="font-size:60px;font-weight:600;margin-top:24px">${escape(topic.subhook)}</div>
+    <div style="font-size:38px;margin-top:40px;opacity:.9">${cta}</div>
+  </div>`, background, { plain });
 }
 
 /**
@@ -87,6 +90,40 @@ export function venueSlide({ venue, city, index, total, pills, show, free, check
   <div class="url">saunahop.com</div>`, background);
 }
 
+// ---- Tips, myths and culture posts (stories.json) ----
+
+// Text-heavy slides get a darker, even shade so the words stay readable.
+const TEXT_SHADE = "background: linear-gradient(180deg, rgba(0,0,0,.6) 0%, rgba(0,0,0,.72) 40%, rgba(0,0,0,.85) 100%)";
+
+const counter = (index, total) =>
+  `<div style="font-size:40px;font-weight:600;opacity:.75;margin-bottom:28px">${index + 1} / ${total}</div>`;
+
+/** One myth: crossed-out myth, then the truth. */
+export function mythSlide({ myth, truth }, index, total, background) {
+  const size = sizeFor(myth, [[22, 104], [32, 92], [44, 80], [999, 70]]);
+  return page(`
+  <div class="content">
+    ${counter(index, total)}
+    <span class="pill" style="font-size:32px;letter-spacing:2px">myth</span>
+    <div class="brand" style="font-size:${size}px;margin:20px 0 56px;opacity:.8;text-decoration:line-through;text-decoration-color:#f0773f;text-decoration-thickness:8px">${escape(myth)}</div>
+    <div class="ember" style="font-size:40px;font-weight:800;letter-spacing:1px;margin-bottom:18px">actually</div>
+    <div style="font-size:52px;font-weight:600;line-height:1.3">${escape(truth)}</div>
+  </div>
+  <div class="url">saunahop.com</div>`, background, { shade: TEXT_SHADE, plain: true });
+}
+
+/** One tip or point: title, then a sentence or two. */
+export function pointSlide({ title, body }, index, total, background) {
+  const size = sizeFor(title, [[18, 116], [28, 100], [40, 86], [999, 74]]);
+  return page(`
+  <div class="content">
+    ${counter(index, total)}
+    <div class="brand" style="font-size:${size}px;margin-bottom:40px">${escape(title)}</div>
+    <div style="font-size:54px;font-weight:600;line-height:1.3">${escape(body)}</div>
+  </div>
+  <div class="url">saunahop.com</div>`, background, { shade: TEXT_SHADE, plain: true });
+}
+
 function endingBody(city, venueCount) {
   return `
   <div class="content" style="bottom:470px">
@@ -96,8 +133,8 @@ function endingBody(city, venueCount) {
   </div>`;
 }
 
-export const endSlide = (city, venueCount, background) => page(endingBody(city, venueCount), background);
+export const endSlide = (city, venueCount, background, plain = false) => page(endingBody(city, venueCount), background, { plain });
 
 /** Transparent version laid over the video clip, with a light tint so it fades in with the text. */
-export const videoOverlay = (city, venueCount) =>
-  page(`<div style="position:absolute;inset:0;background:rgba(0,0,0,.4)"></div>${endingBody(city, venueCount)}`, null);
+export const videoOverlay = (city, venueCount, plain = false) =>
+  page(`<div style="position:absolute;inset:0;background:rgba(0,0,0,.4)"></div>${endingBody(city, venueCount)}`, null, { plain });

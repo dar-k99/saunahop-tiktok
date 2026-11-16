@@ -7,6 +7,9 @@
     "dublin": { "name": "Dublin", "currency": "€", "days": ["Mon", "Thu"] }
   },
 
+  "storyDays": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  "_storyDays": "Days that post tips, myths and culture (stories.json). Other days post the venue lists (topics.json). Put a day back to venues by removing it here.",
+
   "venuesPerPost": 4,
   "minVenuesPerPost": 3,
 
