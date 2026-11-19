@@ -23,7 +23,8 @@ const sizeFor = (text, sizes) => {
 };
 
 // plain = tips/myths style: all lowercase, headlines in Hanken Grotesk (Amoured only has capitals).
-function page(body, background, { shade = "", plain = false } = {}) {
+// framed: show the whole photo (e.g. an old landscape print) in the top half, over a blurred copy of itself.
+function page(body, background, { shade = "", plain = false, framed = false } = {}) {
   return `<!doctype html><html><head><meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
@@ -49,23 +50,30 @@ function page(body, background, { shade = "", plain = false } = {}) {
   .live small { font-size: 28px; font-weight: 400; opacity: .75; }
   body.plain .brand { font-family: "Hanken Grotesk", sans-serif; font-weight: 800; letter-spacing: -2px; line-height: 1.02; }
   body.plain .content, body.plain .url { text-transform: lowercase; }
+  body.framed .bg { filter: blur(36px) brightness(.45); transform: scale(1.15); }
+  .picture { position: absolute; top: 200px; left: 80px; height: 600px; width: 920px;
+    object-fit: contain; filter: drop-shadow(0 20px 40px rgba(0,0,0,.6)); }
+  /* Framed slides: text sits under the picture, titles in the SaunaHop font. */
+  body.framed .content { top: 860px; bottom: auto; }
+  body.framed .brand { font-family: "Amoured"; font-weight: normal; letter-spacing: 0; line-height: 1.05; }
   .button { display: inline-block; background: #f0773f; color: #fff; padding: 22px 48px; border-radius: 999px;
     font-size: 64px; font-weight: 800; }
-</style></head><body class="${plain ? "plain" : ""}">
-${background ? `<div class="bg"></div><div class="shade" style="${shade}"></div>` : ""}
+</style></head><body class="${plain ? "plain" : ""} ${framed ? "framed" : ""}">
+${background ? `<div class="bg"></div><div class="shade" style="${framed ? "" : shade}"></div>` : ""}
+${background && framed ? `<img class="picture" src="file://${background}">` : ""}
 <div class="logo"><img src="file://${LOGO}">SaunaHop</div>
 ${body}
 </body></html>`;
 }
 
-export function hookSlide(topic, background, { cta = "live slots → <b>saunahop.com</b>", plain = false } = {}) {
+export function hookSlide(topic, background, { cta = "live slots → <b>saunahop.com</b>", plain = false, framed = false } = {}) {
   const size = sizeFor(topic.hook, [[24, 160], [34, 140], [44, 120], [999, 104]]);
   return page(`
   <div class="content">
     <div class="brand" style="font-size:${size}px">${escape(topic.hook)}</div>
     <div style="font-size:60px;font-weight:600;margin-top:24px">${escape(topic.subhook)}</div>
     <div style="font-size:38px;margin-top:40px;opacity:.9">${cta}</div>
-  </div>`, background, { plain });
+  </div>`, background, { plain, framed });
 }
 
 /**
@@ -113,7 +121,7 @@ export function mythSlide({ myth, truth }, index, total, background) {
 }
 
 /** One tip or point: title, then a sentence or two. */
-export function pointSlide({ title, body }, index, total, background) {
+export function pointSlide({ title, body }, index, total, background, framed = false) {
   const size = sizeFor(title, [[18, 116], [28, 100], [40, 86], [999, 74]]);
   return page(`
   <div class="content">
@@ -121,7 +129,7 @@ export function pointSlide({ title, body }, index, total, background) {
     <div class="brand" style="font-size:${size}px;margin-bottom:40px">${escape(title)}</div>
     <div style="font-size:54px;font-weight:600;line-height:1.3">${escape(body)}</div>
   </div>
-  <div class="url">saunahop.com</div>`, background, { shade: TEXT_SHADE, plain: true });
+  <div class="url">saunahop.com</div>`, background, { shade: TEXT_SHADE, plain: true, framed });
 }
 
 function endingBody(city, venueCount) {

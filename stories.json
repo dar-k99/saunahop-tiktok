@@ -828,6 +828,41 @@
           }
         ]
       }
+    },
+    {
+      "id": "london-bathhouses",
+      "kind": "list",
+      "cities": [
+        "london"
+      ],
+      "hook": "london was sweating centuries before it was cool",
+      "subhook": "a short history: part 1",
+      "hookImage": "assets/photos/history/01-1600s-bagnio-st-giles.jpg",
+      "question": "which old london bathhouse should we dig up next?",
+      "note": "pictures: hogarth (public domain); illustrated london news and st giles bagnio via wellcome collection (cc by 4.0); bishopsgate kiosk by herry lawford (cc by 2.0).",
+      "slides": [
+        {
+          "title": "the 1600s: bagnios",
+          "body": "london's first hot baths. hogarth set this scene in one: a husband skewered by his wife's lover, who legs it out the window. hardly relaxing.",
+          "image": "assets/photos/history/02-1743-hogarth-the-bagnio.jpg"
+        },
+        {
+          "title": "1862: jermyn street",
+          "body": "the victorians went utterly potty for turkish baths. this hot room in st james's was the toast of the town, until a wartime bomb did for it.",
+          "image": "assets/photos/history/08-1862-jermyn-st-hot-room.jpg"
+        },
+        {
+          "title": "1895: bishopsgate",
+          "body": "nevill's turkish baths, tucked off bishopsgate. city chaps sweated here, then toddled back to the office. marvellous.",
+          "image": "assets/photos/history/11-1895-nevills-bishopsgate-cooling-room.jpg"
+        },
+        {
+          "title": "it's still there",
+          "body": "the little tiled kiosk survives in bishopsgate churchyard, a stone's throw from liverpool street. go and gawp, folks.",
+          "image": "assets/photos/history/12-bishopsgate-turkish-bath-kiosk.jpg"
+        }
+      ],
+      "caption": "london was sweating centuries before it was cool. a short history of the city's steam rooms, part 1.\n\n1. bagnios. london's first hot baths, from the 1600s. hogarth set this scene from marriage a-la-mode (about 1743) in one: a husband run through by his wife's lover, who flees out of the window. by then 'bagnio' had a rather racy reputation, cripes.\n\n2. jermyn street, 1862. the victorians went utterly potty for turkish baths. this is the hot room of the hammam in st james's, drawn for the illustrated london news. a wartime bomb finished it off.\n\n3. bishopsgate, 1895. nevill's turkish baths opened just off bishopsgate. this is one of its cooling rooms, where city chaps lounged about after the hot rooms.\n\n4. the tiled entrance kiosk, little dome and all, still stands in bishopsgate churchyard, a stone's throw from liverpool street. go and gawp, folks.\n\npart 2 soon. {question} for a modern sweat: saunahop.com"
     }
   ]
 }

@@ -7,6 +7,9 @@
     "dublin": { "name": "Dublin", "currency": "€", "days": ["Mon", "Thu"] }
   },
 
+  "postsPerDay": 2,
+  "_postsPerDay": "How many carousels a day. Each gets its own time in buffer.carouselTimes. The video (on videoDays) goes with the last one.",
+
   "storyDays": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
   "_storyDays": "Days that post tips, myths and culture (stories.json). Other days post the venue lists (topics.json). Put a day back to venues by removing it here.",
 
@@ -26,7 +29,7 @@
   "buffer": {
     "_scheduling": "notification = Buffer sends a notification to your phone at the set time; you add a sound in TikTok and post. automatic = Buffer posts by itself (no sound choice).",
     "scheduling": "notification",
-    "carouselTime": "18:40",
+    "carouselTimes": ["12:30", "18:40"],
     "videoTime": "20:00"
   }
 }

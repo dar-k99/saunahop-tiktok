@@ -5,6 +5,7 @@
 //   node build.mjs --topic tonight   a specific topic (from that city's list, or a story id from stories.json)
 //   node build.mjs --type venues     venue list or story post, whatever the day (story | venues)
 //   node build.mjs --video           also make the video, even if today isn't a video day
+//   node build.mjs --slot 2          the day's 2nd post (config.json postsPerDay), into output/<date>-2/
 //
 // Output: slide-1.jpg ... slide-6.jpg, caption.txt, (video.mp4, video-caption.txt), post.json
 
@@ -27,6 +28,9 @@ const forcedTopic = argValue("--topic");
 const forcedCity = argValue("--city");
 const forcedType = argValue("--type");
 const forceVideo = args.includes("--video");
+const postsPerDay = config.postsPerDay || 1;
+const slot = Number(argValue("--slot") || 1);
+if (!(slot >= 1 && slot <= postsPerDay)) throw new Error(`--slot must be 1..${postsPerDay} (postsPerDay in config.json)`);
 
 const now = new Date();
 const today = londonToday(now);
@@ -37,7 +41,8 @@ const cityId = forcedCity || Object.keys(config.cities).find((id) => config.citi
 const city = config.cities[cityId];
 if (!city) throw new Error(`No city for ${weekday}: check "cities" in config.json`);
 const topics = allTopics[cityId];
-const random = seededRandom(today + cityId + (forcedTopic || ""));
+const postKey = slot === 1 ? today : `${today}-${slot}`; // output folder name
+const random = seededRandom(postKey + cityId + (forcedTopic || ""));
 console.log(`City: ${city.name}`);
 
 // ---- Post type: tips/myths story, or venue list ----
@@ -62,7 +67,7 @@ const checkedAt = availability
 const tryTopic = (topic) => pickVenues(topic, venues, freeSessions, config, random);
 let chosen;
 if (type === "story") {
-  const base = forcedStory || pickStory(stories, today, weekday, config.storyDays || [weekday]);
+  const base = forcedStory || pickStory(stories, today, weekday, config.storyDays || [weekday], cityId, slot, postsPerDay);
   const story = { ...base, ...(base[cityId] || {}) }; // e.g. the "dublin" block: same post, irish wording
   if (forcedTopic && !forcedStory) throw new Error(`No story called "${forcedTopic}" in stories.json`);
   const fill = (text) => text.replaceAll("{city}", city.name);
@@ -86,17 +91,19 @@ const empty = shuffle(listFiles("assets/photos/empty", [".jpg", ".jpeg", ".png"]
 const clips = listFiles("assets/clips", [".mp4", ".mov"]);
 
 // ---- 4. Render slides ----
-const outDir = path.resolve("output", today);
+const outDir = path.resolve("output", postKey);
 const tmpDir = path.join(outDir, "tmp");
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });
 
+// A slide (or the story's "hookImage") can name its own photo, e.g. "assets/photos/history/....jpg".
+const ownImage = (file) => file && path.resolve(file);
 const storySlides = (topic.slides || []).map((slide, index, all) => ({
-  html: (topic.kind === "myths" ? mythSlide : pointSlide)(slide, index, all.length, empty[index % empty.length]),
+  html: (topic.kind === "myths" ? mythSlide : pointSlide)(slide, index, all.length, ownImage(slide.image) || empty[index % empty.length], !!slide.image),
 }));
 
 const slidePages = [
-  { html: type === "story" ? hookSlide(topic, people[0], { cta: "swipe →", plain: true }) : hookSlide(topic, people[0]) },
+  { html: type === "story" ? hookSlide(topic, ownImage(topic.hookImage) || people[0], { cta: "swipe →", plain: true, framed: !!topic.hookImage }) : hookSlide(topic, people[0]) },
   ...storySlides,
   ...chosen.venues.map((venue, index) => ({
     html: venueSlide({
@@ -114,14 +121,14 @@ const slidePages = [
   { html: endSlide(city, venues.length, people[1 % people.length], type === "story") },
 ].map((p, i) => ({ ...p, file: path.join(outDir, `slide-${i + 1}.jpg`) }));
 
-const makeVideo = forceVideo || config.videoDays.includes(weekday);
+const makeVideo = forceVideo || (config.videoDays.includes(weekday) && slot === postsPerDay); // video goes with the day's last post
 const overlayFile = path.join(tmpDir, "overlay.png");
 const pages = makeVideo ? [...slidePages, { html: videoOverlay(city, venues.length, type === "story"), file: overlayFile, transparent: true }] : slidePages;
 await renderPages(pages, tmpDir);
 
 // ---- 5. Captions ----
 let caption = type === "story"
-  ? buildCaption(captions.story, captions.hashtags, cityId, { hook: topic.hook, question: topic.question || "", city: city.name }, random)
+  ? buildCaption(topic.caption ? [topic.caption] : captions.story, captions.hashtags, cityId, { hook: topic.hook, question: topic.question || "", city: city.name }, random)
   : buildCaption(captions.carousel, captions.hashtags, cityId, { hook: topic.hook, subhook: topic.subhook, city: city.name }, random);
 if (topic.note) caption = caption.replace("\n\n#", `\n\n${topic.note}\n\n#`);
 if (type === "story") caption = caption.toLowerCase(); // the tips style is all lowercase
@@ -129,6 +136,7 @@ fs.writeFileSync(path.join(outDir, "caption.txt"), caption);
 
 const post = {
   date: today,
+  slot,
   city: cityId,
   type,
   topic: topic.id,

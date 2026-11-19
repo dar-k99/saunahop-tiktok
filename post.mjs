@@ -46,9 +46,14 @@ const KEEP_DAYS = 14;
 
 // ---- Load today's post ----
 const today = londonToday();
-const outDir = path.resolve("output", today);
+const slotArg = args.includes("--slot") ? Number(args[args.indexOf("--slot") + 1]) : 1;
+const postKey = slotArg === 1 ? today : `${today}-${slotArg}`; // matches build.mjs --slot
+const outDir = path.resolve("output", postKey);
+// Each send gets its own folder: GitHub caches files for 5 minutes, so reusing a
+// link after a rebuild can hand Buffer the old slides.
+const mediaDir = `${postKey}/${Date.now().toString(36)}`;
 const postFile = path.join(outDir, "post.json");
-if (!fs.existsSync(postFile)) throw new Error(`No post built for ${today}. Run: node build.mjs`);
+if (!fs.existsSync(postFile)) throw new Error(`No post built for ${postKey}. Run: node build.mjs${slotArg === 1 ? "" : ` --slot ${slotArg}`}`);
 const post = JSON.parse(fs.readFileSync(postFile, "utf8"));
 
 const files = [...post.carousel.images, ...(post.video ? [post.video.file] : [])];
@@ -88,16 +93,16 @@ function publishMedia() {
     // Drop folders older than KEEP_DAYS, then add today's.
     const cutoff = new Date(Date.now() - KEEP_DAYS * 86400_000).toISOString().slice(0, 10);
     for (const dir of fs.readdirSync(work)) {
-      if (/^\d{4}-\d{2}-\d{2}$/.test(dir) && dir < cutoff) fs.rmSync(path.join(work, dir), { recursive: true });
+      if (/^\d{4}-\d{2}-\d{2}(-\d+)?$/.test(dir) && dir.slice(0, 10) < cutoff) fs.rmSync(path.join(work, dir), { recursive: true });
     }
-    fs.mkdirSync(path.join(work, today), { recursive: true });
-    for (const f of files) fs.copyFileSync(path.join(outDir, f), path.join(work, today, f));
+    fs.mkdirSync(path.join(work, mediaDir), { recursive: true });
+    for (const f of files) fs.copyFileSync(path.join(outDir, f), path.join(work, mediaDir, f));
     fs.writeFileSync(path.join(work, "README.md"), "Images for the daily TikTok posts (last 14 days). Generated automatically: do not edit.\n");
 
     git(work, "add", "-A");
     // Always one commit: start a fresh orphan each time and force-push it.
     git(work, "checkout", "-q", "--orphan", `publish-${Date.now()}`);
-    execFileSync("git", ["-C", work, ...bot, "commit", "-q", "-m", `Images for ${today}`], { stdio: "pipe" });
+    execFileSync("git", ["-C", work, ...bot, "commit", "-q", "-m", `Images for ${postKey}`], { stdio: "pipe" });
     git(work, "push", "-q", "--force", "origin", `HEAD:refs/heads/${MEDIA_BRANCH}`);
   } finally {
     try { git(".", "worktree", "remove", "--force", work); } catch { fs.rmSync(work, { recursive: true, force: true }); }
@@ -194,7 +199,7 @@ if (fs.existsSync(sentFile) && !dryRun) {
   process.exit(0);
 }
 
-const base = `${mediaBaseUrl()}/${today}`;
+const base = `${mediaBaseUrl()}/${mediaDir}`;
 const imageAssets = post.carousel.images.map((f) => ({ image: { url: `${base}/${f}` } }));
 const videoAssets = post.video ? [{ video: { url: `${base}/${post.video.file}` } }] : null;
 
@@ -207,7 +212,10 @@ if (!dryRun) {
 }
 
 const sent = {};
-sent.carousel = await send("Carousel", imageAssets, post.carousel.caption, config.carouselTime, channelId);
+// carouselTimes: one London time per daily post (slot 1, 2, ...); carouselTime is the old single setting.
+const timeArg = args.includes("--time") ? args[args.indexOf("--time") + 1] : null; // e.g. --time 12:30, a one-off
+const carouselTime = timeArg || config.carouselTimes?.[slotArg - 1] || config.carouselTime;
+sent.carousel = await send("Carousel", imageAssets, post.carousel.caption, carouselTime, channelId);
 if (videoAssets) sent.video = await send("Video", videoAssets, post.video.caption, config.videoTime, channelId);
 
 if (dryRun) {

@@ -10,9 +10,10 @@ name: Daily TikTok post
 
 on:
   schedule:
-    # 07:00 UTC. GitHub's timer often runs hours late, so the job starts early
-    # and Buffer holds the post until carouselTime in config.json (London time).
-    - cron: "0 7 * * *"
+    # 04:00 UTC. GitHub's timer often runs hours late, so the job starts early
+    # and Buffer holds each post until its carouselTimes entry in config.json
+    # (London time). One run builds and schedules all postsPerDay posts.
+    - cron: "0 4 * * *"
   workflow_dispatch:
     inputs:
       topic:
@@ -39,8 +40,11 @@ jobs:
 
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - name: Build today's post
-        run: node build.mjs ${{ inputs.topic && format('--topic {0}', inputs.topic) || '' }}
+      - name: Build today's posts
+        run: |
+          n=$(node -p "require('./config.json').postsPerDay || 1")
+          node build.mjs ${{ inputs.topic && format('--topic {0}', inputs.topic) || '' }}
+          for s in $(seq 2 $n); do node build.mjs --slot $s; done
 
       - name: Keep a copy of the post (Actions tab -> this run -> Artifacts)
         uses: actions/upload-artifact@v4
@@ -53,4 +57,6 @@ jobs:
         if: ${{ github.event_name == 'schedule' || inputs.send }}
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
-        run: node post.mjs
+        run: |
+          n=$(node -p "require('./config.json').postsPerDay || 1")
+          for s in $(seq 1 $n); do node post.mjs --slot $s; done

@@ -98,10 +98,14 @@ export function pickTopic(topics, today, weekday, cityDays, tryTopic) {
   throw new Error("No topic had enough venues today.");
 }
 
-/** Today's tips/myths post: the next one in stories.json, one per story day. */
-export function pickStory(stories, today, weekday, storyDays) {
-  const n = postNumber(today, weekday, storyDays);
-  return stories[((n % stories.length) + stories.length) % stories.length];
+/**
+ * Today's tips/myths post: the next one in stories.json, one per story slot
+ * (postsPerDay slots on each story day). Stories with "cities" only run there.
+ */
+export function pickStory(stories, today, weekday, storyDays, cityId, slot = 1, postsPerDay = 1) {
+  const list = stories.filter((s) => !s.cities || s.cities.includes(cityId));
+  const n = postNumber(today, weekday, storyDays) * postsPerDay + (slot - 1);
+  return list[((n % list.length) + list.length) % list.length];
 }
 
 // ---- Photos and clips ----
