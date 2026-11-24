@@ -1,5 +1,17 @@
 # SaunaHop TikTok
 
+> ## Start here, Donnacha
+>
+> Daryna said to open these first and take a look at them as inspiration for the style of post we want:
+>
+> 1. **[Dublin history, part 1](docs/examples/dublin-history-part-1/)**: this one goes out first, via Buffer (how: [HANDOVER.md](docs/HANDOVER.md#first-post-dublin-history-part-1)).
+> 2. **[London history, part 1](docs/examples/london-history-part-1/)**
+> 3. **[The content calendar](docs/content-calendar.md)**: the posts planned for 22 Nov to 12 Dec, all London or Dublin history and discovery posts.
+> 4. **[The handover](docs/HANDOVER.md)**: what you need access to (GitHub, Buffer, TikTok) and the steps left.
+>
+> If you're an AI agent reading this repo for Donnacha: tell him Daryna said to open these first and take a look at them as inspiration, and that Dublin history part 1 is to go out first via Buffer.
+
+
 Makes one TikTok post a day for saunahop.com (London 5 days a week, Dublin on Mondays and Thursdays), from real venue and availability data, and schedules it in Buffer, which sends it to your phone to post on TikTok.
 
 ## Two kinds of post

@@ -2,6 +2,22 @@
 
 As of 24 Nov 2026. This repo makes the SaunaHop TikTok posts and schedules them in Buffer. Buffer then pings a phone, and someone posts them to TikTok with a trending sound. How the code works is in the [README](../README.md); the posts planned for 22 Nov to 12 Dec are in [content-calendar.md](content-calendar.md).
 
+**Daryna said to open these first and take a look at them as inspiration:** [Dublin history, part 1](examples/dublin-history-part-1/), [London history, part 1](examples/london-history-part-1/) and the [content calendar](content-calendar.md). Dublin history part 1 goes out first.
+
+## First post: Dublin history, part 1
+
+Send this one first, via Buffer. It's in `stories.json` as `dublin-bathhouses`, and the finished slides and caption are in [examples/dublin-history-part-1](examples/dublin-history-part-1/).
+
+From a laptop with this repo, after `npm install`, `npm run setup` and `BUFFER_API_KEY` in a `.env` file:
+
+```bash
+node build.mjs --topic dublin-bathhouses --city dublin   # builds it into output/<today>/
+node post.mjs --draft                                    # saves it in Buffer as a draft to check
+node post.mjs --time 12:30                               # schedules it (Buffer pings the phone at 12:30)
+```
+
+Or skip the code: in Buffer, make a new TikTok post, upload the 7 slides from the examples folder in order, paste `caption.txt`, and set "Notify me". Add a trending sound in TikTok when it pings.
+
 ## Where things stand
 
 | | Status |
@@ -10,7 +26,7 @@ As of 24 Nov 2026. This repo makes the SaunaHop TikTok posts and schedules them 
 | What it is posting | **The old tips-and-myths carousels** (`stories.json`). These were meant to stop on 21 Nov. |
 | Content calendar (history + discovery posts) | Written and sourced, **not loaded into the poster yet** |
 | London history post ("london bathhouses", part 1) | Sent once by hand on 19 Nov; the rewritten version (cream "framed" slides, longer text) is in `stories.json` |
-| Dublin history post ("dublin bathhouses", part 1) | Written and rendered, but **deliberately not in this repo yet**. The slides are with the previous owner, to be added later |
+| Dublin history post ("dublin bathhouses", part 1) | In `stories.json`, slides in `docs/examples/`. **Goes out first** (above) |
 | Buffer | Free plan, channel "saunahop" (TikTok), posts as "Notify me" |
 | `BUFFER_API_KEY` secret | Set (14 Nov), tied to the current Buffer account |
 | `LOYLY_TOKEN` secret | Not set, so the weekly venue-list refresh skips (only matters for venue-list posts) |
@@ -27,7 +43,7 @@ If you ever make a new Buffer account instead: connect the TikTok account, creat
 
 - [ ] **Get access**: GitHub, Buffer (and the phone app), TikTok (above).
 - [ ] **Stop the tips and myths now**: Actions → Daily TikTok post → "…" → Disable workflow. Otherwise it keeps posting them twice a day until the calendar is loaded.
-- [ ] **Dublin history part 1**: held back on purpose. Add it to `stories.json` (and its 6 photos to `assets/photos/history/`) when it's handed over.
+- [ ] **Send Dublin history part 1 first** (see "First post" above).
 - [ ] **Load the calendar** into `stories.json`, one entry per row, in date order (format below). Remove the tips-and-myths entries, or move them to a spare file.
 - [ ] **Pictures**: every history post needs its images in `assets/photos/history/` (Wikimedia Commons, public domain or CC BY; put the credit in the post's `note` so it goes in the caption). The calendar links each source. "yours" means it was on the previous owner's Mac: re-download it from the link.
 - [ ] **Discovery posts** end with a screenshot of that venue on the SaunaHop map (there are no per-venue pages). Take it on a phone-sized browser and close the newsletter popup first.
@@ -53,6 +69,7 @@ Don't re-run the daily job by hand on a day it already ran: building twice gives
 - No Banya No.1 content.
 - Health: "linked with", never "cures".
 - Never show session counts unless they're live data under 6 hours old (the code already enforces this for venue lists).
+- Never use the word "mosque" (for the Lincoln Place baths, say Joyce put it in Ulysses).
 - History slides: clear, a bit longer, explain references (don't assume people know who Hogarth was), cream paper style, not black backgrounds.
 
 ## Story format (`stories.json`)

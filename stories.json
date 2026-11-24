@@ -873,6 +873,51 @@
         }
       ],
       "caption": "london's secret sauna history, part 1.\n\n1600s: london's first steam baths were called bagnios. you could sweat, bathe and get a shave.\n\n1700s: bagnios also rented rooms by the night, and got a scandalous reputation. the painting is 'the bagnio' by william hogarth (1743), from his series marriage a-la-mode: a husband has just been stabbed by his wife's lover, who is escaping through the window.\n\n1862: the victorians went wild for turkish baths, a row of hotter and hotter rooms. the hammam on jermyn street in st james's was one of the grandest. this is its cooling room, drawn for the illustrated london news. a bomb destroyed it in the second world war.\n\n1895: nevill's turkish baths opened just off bishopsgate, by liverpool street. this postcard shows one of its cooling rooms.\n\ntoday: the tiled entrance kiosk is still standing in bishopsgate churchyard, two minutes from liverpool street station.\n\n{question} for a sauna today: saunahop.com"
+    },
+    {
+      "id": "dublin-bathhouses",
+      "kind": "list",
+      "cities": [
+        "dublin"
+      ],
+      "hook": "dublin's secret sauna history",
+      "subhook": "part 1: steam, rebels and a bath from guinness",
+      "hookImage": "assets/photos/history/dublin-05-forty-foot-sunrise.jpg",
+      "question": "what should part 2 cover?",
+      "slides": [
+        {
+          "year": "1860",
+          "title": "domes beside trinity",
+          "image": "assets/photos/history/dublin-01-1860-lincoln-place-turkish-baths.jpg",
+          "body": "in 1860 a doctor called richard barter opened dublin's first purpose-built turkish baths on lincoln place, beside trinity college. with its domes and fancy arches it was one of the most striking buildings in town, and james joyce even put it in ulysses. that's it on the left, decades later."
+        },
+        {
+          "year": "1869",
+          "title": "a hotel with a sweat",
+          "image": "assets/photos/history/dublin-02-1900s-hammam-hotel-sackville-st.jpg",
+          "body": "on paddy's day 1869 barter opened another one on sackville street, now o'connell street. the hammam hotel had turkish baths out the back, so you could steam, get scrubbed and stay the night, right in the middle of town. notions? fair play to him."
+        },
+        {
+          "year": "1906",
+          "title": "a bath from guinness",
+          "image": "assets/photos/history/dublin-04-iveagh-baths-entrance.jpg",
+          "body": "plenty of dubliners had no bathroom at home, so in 1906 the guinness family's iveagh trust opened public baths in the liberties: hot baths and a swimming pool for the neighbours. it closed in 1985, but the red-brick building is still on bride road. it's a gym now."
+        },
+        {
+          "year": "1922",
+          "title": "the hammam goes up in smoke",
+          "image": "assets/photos/history/dublin-03-1922-hammam-hotel-civil-war.jpg",
+          "body": "in july 1922 the civil war reached o'connell street, and the hammam was right in the middle of the fighting. on 5 july explosions and fire destroyed it. it never reopened, and the hammam buildings stand on the spot today."
+        },
+        {
+          "year": "today",
+          "title": "and then there's the sea",
+          "image": "assets/photos/history/dublin-06-forty-foot-steps.jpg",
+          "body": "dublin never stopped dipping. the forty foot in sandycove was men only until july 1974, when a crowd of women marched down and jumped in. now the coast is lined with sea saunas, so you can sweat and swim like a proper dub."
+        }
+      ],
+      "caption": "dublin's secret sauna history, part 1.\n\n1860: dr richard barter opened dublin's first purpose-built turkish baths on lincoln place, beside trinity college. james joyce even put it in ulysses. the photo is from around 1972, with the old baths' facade on the left.\n\n1869: on st patrick's day barter opened the hammam hotel on sackville street (now o'connell street), a hotel with turkish baths out the back.\n\n1906: the guinness family's iveagh trust opened the iveagh baths on bride road in the liberties, for people with no bathroom at home. it closed in 1985 and the building is a gym today.\n\n1922: the civil war fighting on o'connell street destroyed the hammam on 5 july. it never reopened.\n\ntoday: the forty foot in sandycove was men only until women 'invaded' it in july 1974. now dublin's coast is full of sea saunas.\n\n{question} for a sauna today: saunahop.com",
+      "note": "pictures: national library of ireland (no known restrictions); hammam postcard and 1922 photo (public domain); iveagh baths by andreas wolf (cc0); forty foot sunrise by giuseppe milo (cc by 3.0); forty foot steps by aleks scholz (cc by-sa 2.0)."
     }
   ]
 }
