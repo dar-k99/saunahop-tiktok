@@ -50,17 +50,24 @@ function page(body, background, { shade = "", plain = false, framed = false } = 
   .live small { font-size: 28px; font-weight: 400; opacity: .75; }
   body.plain .brand { font-family: "Hanken Grotesk", sans-serif; font-weight: 800; letter-spacing: -2px; line-height: 1.02; }
   body.plain .content, body.plain .url { text-transform: lowercase; }
-  body.framed .bg { filter: blur(36px) brightness(.45); transform: scale(1.15); }
-  .picture { position: absolute; top: 200px; left: 80px; height: 600px; width: 920px;
-    object-fit: contain; filter: drop-shadow(0 20px 40px rgba(0,0,0,.6)); }
-  /* Framed slides: text sits under the picture, titles in the SaunaHop font. */
-  body.framed .content { top: 860px; bottom: auto; }
-  body.framed .brand { font-family: "Amoured"; font-weight: normal; letter-spacing: 0; line-height: 1.05; }
+  /* Framed slides (history posts): an old print on a cream mount, on warm near-black. */
+  body.framed { background: #f3ebdd; color: #2a1d16; }
+  body.framed .logo { color: #2a1d16; }
+  body.framed .logo img { filter: invert(1) brightness(.2); }
+  .picture { position: absolute; top: 180px; left: 80px; width: 920px; height: 560px;
+    display: flex; align-items: center; justify-content: center; }
+  .picture img { max-width: 100%; max-height: 100%; padding: 12px; background: #fffaf2;
+    border: 2px solid #2a1d16; box-shadow: 0 18px 40px rgba(42,29,22,.25); }
+  body.framed .content { top: 790px; bottom: auto; }
+  body.framed .brand { font-family: "Amoured"; font-weight: normal; letter-spacing: 0; line-height: 1.05; text-shadow: none; }
+  .year { font-family: "Amoured"; color: #e0602a; font-size: 104px; line-height: 1; margin-bottom: 14px; }
+  body.framed .body { color: #3d2c22; font-weight: 500; }
+  body.framed .url { display: none; } /* the end slide carries the link */
   .button { display: inline-block; background: #f0773f; color: #fff; padding: 22px 48px; border-radius: 999px;
     font-size: 64px; font-weight: 800; }
 </style></head><body class="${plain ? "plain" : ""} ${framed ? "framed" : ""}">
-${background ? `<div class="bg"></div><div class="shade" style="${framed ? "" : shade}"></div>` : ""}
-${background && framed ? `<img class="picture" src="file://${background}">` : ""}
+${background && !framed ? `<div class="bg"></div><div class="shade" style="${shade}"></div>` : ""}
+${background && framed ? `<div class="picture"><img src="file://${background}"></div>` : ""}
 <div class="logo"><img src="file://${LOGO}">SaunaHop</div>
 ${body}
 </body></html>`;
@@ -121,13 +128,13 @@ export function mythSlide({ myth, truth }, index, total, background) {
 }
 
 /** One tip or point: title, then a sentence or two. */
-export function pointSlide({ title, body }, index, total, background, framed = false) {
+export function pointSlide({ title, body, year }, index, total, background, framed = false) {
   const size = sizeFor(title, [[18, 116], [28, 100], [40, 86], [999, 74]]);
   return page(`
   <div class="content">
-    ${counter(index, total)}
-    <div class="brand" style="font-size:${size}px;margin-bottom:40px">${escape(title)}</div>
-    <div style="font-size:54px;font-weight:600;line-height:1.3">${escape(body)}</div>
+    ${year ? `<div class="year">${escape(year)}</div>` : counter(index, total)}
+    <div class="brand" style="font-size:${size}px;margin-bottom:${year ? 28 : 40}px">${escape(title)}</div>
+    <div class="body" style="font-size:${year ? 42 : 54}px;font-weight:600;line-height:1.3">${escape(body)}</div>
   </div>
   <div class="url">saunahop.com</div>`, background, { shade: TEXT_SHADE, plain: true, framed });
 }

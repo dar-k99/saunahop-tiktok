@@ -9,8 +9,8 @@ As of 24 Nov 2026. This repo makes the SaunaHop TikTok posts and schedules them 
 | Daily job (GitHub Actions, "Daily TikTok post") | Running every day, 2 posts a day (12:30 and 18:40 London) |
 | What it is posting | **The old tips-and-myths carousels** (`stories.json`). These were meant to stop on 21 Nov. |
 | Content calendar (history + discovery posts) | Written and sourced, **not loaded into the poster yet** |
-| London history post ("london bathhouses") | Sent once by hand on 19 Nov. A rewritten version is on the previous owner's Mac, not committed. |
-| Dublin history post ("dublin bathhouses") | Built on the previous owner's Mac with 6 photos, **not committed** |
+| London history post ("london bathhouses", part 1) | Sent once by hand on 19 Nov; the rewritten version (cream "framed" slides, longer text) is in `stories.json` |
+| Dublin history post ("dublin bathhouses", part 1) | Written and rendered, but **deliberately not in this repo yet**. The slides are with the previous owner, to be added later |
 | Buffer | Free plan, channel "saunahop" (TikTok), posts as "Notify me" |
 | `BUFFER_API_KEY` secret | Set (14 Nov), tied to the current Buffer account |
 | `LOYLY_TOKEN` secret | Not set, so the weekly venue-list refresh skips (only matters for venue-list posts) |
@@ -27,7 +27,7 @@ If you ever make a new Buffer account instead: connect the TikTok account, creat
 
 - [ ] **Get access**: GitHub, Buffer (and the phone app), TikTok (above).
 - [ ] **Stop the tips and myths now**: Actions → Daily TikTok post → "…" → Disable workflow. Otherwise it keeps posting them twice a day until the calendar is loaded.
-- [ ] **Commit the work-in-progress** from the previous owner's Mac: the rewritten London history post, the Dublin history post, the "framed" history slide layout (`src/slides.mjs`, `build.mjs`) and 7 photos in `assets/photos/history/`.
+- [ ] **Dublin history part 1**: held back on purpose. Add it to `stories.json` (and its 6 photos to `assets/photos/history/`) when it's handed over.
 - [ ] **Load the calendar** into `stories.json`, one entry per row, in date order (format below). Remove the tips-and-myths entries, or move them to a spare file.
 - [ ] **Pictures**: every history post needs its images in `assets/photos/history/` (Wikimedia Commons, public domain or CC BY; put the credit in the post's `note` so it goes in the caption). The calendar links each source. "yours" means it was on the previous owner's Mac: re-download it from the link.
 - [ ] **Discovery posts** end with a screenshot of that venue on the SaunaHop map (there are no per-venue pages). Take it on a phone-sized browser and close the newsletter popup first.

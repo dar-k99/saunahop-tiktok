@@ -156,5 +156,15 @@ if (makeVideo) {
 }
 
 fs.writeFileSync(path.join(outDir, "post.json"), JSON.stringify(post, null, 2));
+
+// On the Mac, also drop a copy where the user looks at posts (skipped on GitHub, where the folder doesn't exist).
+const previewRoot = path.join(process.env.HOME || "", "Desktop/SAUNA-pexels/saunahop-tiktok-content/previews");
+if (fs.existsSync(path.dirname(previewRoot))) {
+  const previewDir = path.join(previewRoot, `${postKey} ${topic.id}`);
+  fs.rmSync(previewDir, { recursive: true, force: true });
+  fs.mkdirSync(previewDir, { recursive: true });
+  for (const f of fs.readdirSync(outDir)) if (/\.(jpg|mp4|txt)$/.test(f)) fs.copyFileSync(path.join(outDir, f), path.join(previewDir, f));
+  console.log(`Preview copy: ${previewDir}`);
+}
 fs.rmSync(tmpDir, { recursive: true, force: true });
 console.log(`\nDone: ${outDir}`);
