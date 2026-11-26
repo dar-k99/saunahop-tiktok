@@ -16,11 +16,11 @@ import { fileURLToPath } from "url";
 const FILLER = new Set(("a an the and or but so of to in on at for with by from is are was were be been it its it's " +
   "you you're your youre you've youve i i'm im me my we us our they them their this that these those there here " +
   "do does did don't dont not no yes just very really still even if then than when what who how all any one which so " +
-  "go got get can many much sauna saunas").split(" "));
+  "go got get can many much sauna saunas part week this").split(" "));
 
 const words = (line) =>
   String(line).toLowerCase().replace(/[’']/g, "'").match(/[a-z0-9']+/g)?.map((w) => w.replace(/^'+|'+$/g, "")) || [];
-const keyWords = (line) => new Set(words(line).filter((w) => w && !FILLER.has(w)));
+const keyWords = (line) => new Set(words(line).filter((w) => w && !FILLER.has(w) && !/^\d+$/.test(w)));
 const same = (a, b) => words(a).join(" ") === words(b).join(" ");
 
 /** Share of key words two lines have in common (0 to 1). */
@@ -87,7 +87,7 @@ export function checkStories(stories, root = process.cwd()) {
       // The same photo can appear more than once inside one post, never in two posts.
       const owner = photoOwner.get(name);
       if (owner && owner.id !== s.id) say(s, `${p.where}: ${name} is already used by ${owner.label}`);
-      else if (!owner) photoOwner.set(name, { id: s.id, label: `${s.id} ${p.where}` });
+      else if (!owner) photoOwner.set(name, { id: s.id, series: s.series, label: `${s.id} ${p.where}` });
     }
   }
   // Photos in the retired folder count as used even if no story names them (the old random pools).
@@ -107,10 +107,11 @@ export function checkStories(stories, root = process.cwd()) {
   }
 
   // Lines: no repeats or close rewordings of any other post's lines (or the same post's other lines)
-  const all = stories.flatMap((s) => linesOf(s).map((l) => ({ ...l, id: s.id })));
+  const all = stories.flatMap((s) => linesOf(s).map((l) => ({ ...l, id: s.id, series: s.series })));
   for (const s of active) {
     const mine = linesOf(s).map((l) => ({ ...l, id: s.id }));
-    const others = all.filter((o) => o.id !== s.id);
+    // Parts of one series ("series" in stories.json) share a photo and a similar hook, so their hooks aren't compared.
+    const others = all.filter((o) => o.id !== s.id && !(s.series && o.series === s.series && o.where === "hook"));
     mine.forEach((line, i) => {
       for (const other of [...mine.slice(i + 1), ...others]) {
         if (same(line.text, other.text)) say(s, `${line.where} "${line.text}" repeats ${other.id} ${other.where}`);

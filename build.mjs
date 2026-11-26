@@ -118,7 +118,7 @@ fs.mkdirSync(outDir, { recursive: true });
 const ownImage = (file) => file && path.resolve(file);
 const storySlides = (topic.slides || []).flatMap((slide, index, all) =>
   topic.kind === "types" // per type: the photo alone (skipped when it's the hook photo again), then the photo framing a cream card
-    ? [...(slide.image === topic.hookImage ? [] : [{ html: photoOnlySlide(ownImage(slide.image)) }]), { html: typeCardSlide(slide, index, all.length, ownImage(slide.image)) }]
+    ? [...(slide.image === topic.hookImage ? [] : [{ html: photoOnlySlide(ownImage(slide.image)) }]), { html: typeCardSlide(slide, index, all.length, ownImage(slide.image), topic.label) }]
     : [{ html: (topic.kind === "myths" ? mythSlide : pointSlide)(slide, index, all.length, ownImage(slide.image), !!topic.framed) }]);
 
 const slidePages = [

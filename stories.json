@@ -319,7 +319,8 @@
           }
         ]
       },
-      "retired": true
+      "retired": true,
+      "series": "signs"
     },
     {
       "id": "research",
@@ -940,111 +941,6 @@
       "framed": true
     },
     {
-      "id": "dublin-sea-sauna-person",
-      "date": "2026-11-28",
-      "cities": [
-        "dublin"
-      ],
-      "kind": "list",
-      "hook": "signs you've become a sea sauna person",
-      "subhook": "no shame in it",
-      "question": "how deep in are you?",
-      "hookImage": "assets/photos/dublin/alone-at-the-dock-27264182.jpg",
-      "endImage": "assets/photos/dublin/alone-at-the-dock-27264182.jpg",
-      "slides": [
-        {
-          "title": "you check the tide times before the weather",
-          "body": "high tide at seven? grand. the forecast can mind itself.",
-          "image": "assets/photos/dublin/wooden-platform-on-sailing-vessel-15565352.jpg"
-        },
-        {
-          "title": "you've strong opinions on which pier is best",
-          "body": "and you'll defend them at a wedding if you have to.",
-          "image": "assets/photos/dublin/unrecognizable-people-walking-on-shore-near-trailer-5490151.jpg"
-        },
-        {
-          "title": "you've one towel for the sea and one for everything else",
-          "body": "never the twain shall meet. the sea towel knows what it did.",
-          "image": "assets/photos/dublin/cozy-sauna-essentials-on-rustic-wooden-bench-41258365.jpg"
-        },
-        {
-          "title": "you've said \"ah it's not even that cold\" in november",
-          "body": "it was nine degrees. the sea was ten. you were delighted.",
-          "image": "assets/photos/dublin/back-view-of-a-woman-standing-near-the-glass-wall-5979546.jpg"
-        }
-      ]
-    },
-    {
-      "id": "dublin-regulars-know",
-      "date": "2026-11-30",
-      "cities": [
-        "dublin"
-      ],
-      "kind": "list",
-      "hook": "things every dublin sauna regular knows",
-      "subhook": "the unwritten rules",
-      "question": "what did we miss?",
-      "hookImage": "assets/photos/dublin/relaxing-in-a-steamy-modern-sauna-31092896.jpg",
-      "endImage": "assets/photos/dublin/cozy-winter-night-in-an-outdoor-hot-tub-34762260.jpg",
-      "slides": [
-        {
-          "title": "you know everyone's name but not one of their jobs",
-          "body": "ciara from the 7am. lovely woman. could be a surgeon. no idea.",
-          "image": "assets/photos/dublin/cozy-wooden-sauna-interior-with-warm-lighting-36177119.jpg"
-        },
-        {
-          "title": "the 7am crowd and the 7pm crowd are two different species",
-          "body": "one is silent and hardcore. the other brought a speaker. don't bring a speaker.",
-          "image": "assets/photos/dublin/steam-rising-from-sauna-stones-with-ladle-32504789.jpg"
-        },
-        {
-          "title": "there's always one lad doing very loud breathing",
-          "body": "in through the nose for seven, out like a kettle. every session.",
-          "image": "assets/photos/dublin/relaxing-sauna-experience-with-steamy-stones-31092914.jpg"
-        },
-        {
-          "title": "the walk to the sea is the longest 20 seconds of your life",
-          "body": "barefoot, on the slip, in a north wind. worth it though.",
-          "image": "assets/photos/dublin/heap-of-snow-on-a-doorway-11588839.jpg"
-        }
-      ]
-    },
-    {
-      "id": "dublin-winter-when",
-      "date": "2026-12-02",
-      "cities": [
-        "dublin"
-      ],
-      "kind": "list",
-      "hook": "you know it's winter in dublin when…",
-      "subhook": "a field guide",
-      "question": "which one is your week?",
-      "hookImage": "assets/photos/dublin/warm-lighting-on-wooden-sauna-panels-39912941.jpg",
-      "endImage": "assets/photos/dublin/brown-table-near-the-glass-window-12404352.jpg",
-      "slides": [
-        {
-          "title": "it's pitch dark by half four",
-          "body": "lunch, a meeting, and suddenly it's night. the sauna's lit though.",
-          "image": "assets/photos/dublin/rustic-scandinavian-sauna-interior-41241636.jpg"
-        },
-        {
-          "title": "one flake of snow and the whole country shuts down",
-          "body": "the bread's gone from tesco. the sauna is still open.",
-          "image": "assets/photos/dublin/wooden-cabin-near-ski-slope-20989358.jpg"
-        },
-        {
-          "title": "the only warm places left are the sauna and your nan's kitchen",
-          "body": "and only one of them asks if you've met anyone yet.",
-          "image": "assets/photos/dublin/traditional-sauna-with-leaves-and-wooden-bucket-41258381.jpg"
-        },
-        {
-          "title": "you'd let a stranger hit you with leaves if it meant feeling your toes",
-          "body": "that's a whisking. it's a real thing. look it up.",
-          "image": "assets/photos/dublin/nordic-sauna-experience-with-whisking-ritual-32504771.jpg"
-        }
-      ]
-    },
-    {
       "id": "dublin-sauna-types",
       "date": "2026-12-04",
       "cities": [
@@ -1088,7 +984,274 @@
           "image": "assets/photos/dublin/women-in-a-room-behind-a-glass-panel-5976845.jpg"
         }
       ],
-      "scope": "ireland"
+      "scope": "ireland",
+      "series": "sauna-types",
+      "retired": true,
+      "note_posting": "sent to Buffer as drafts on 26 Nov 2026, posted by hand"
+    },
+    {
+      "id": "ireland-sauna-types-2",
+      "date": "2026-12-06",
+      "cities": [
+        "dublin"
+      ],
+      "scope": "ireland",
+      "series": "sauna-types",
+      "kind": "types",
+      "hook": "more types of people at an irish sea sauna",
+      "subhook": "part 2. still you.",
+      "question": "tag the wet arse. you know who they are.",
+      "slides": [
+        {
+          "title": "the revolving door",
+          "body": "in. out. in again. leaves the door wide open every three minutes and lets all the heat out to sea.",
+          "image": "assets/photos/dublin/couple-in-a-steamy-sauna-31092906.jpg"
+        },
+        {
+          "title": "the wet arse",
+          "body": "never brings a towel. sits wherever. leaves a big wet print on the bench like a crime scene.",
+          "image": "assets/photos/dublin/couple-in-a-steamy-sauna-31092906.jpg"
+        },
+        {
+          "title": "fiadh from foxrock",
+          "body": "calls it \"the spa\". asks if the sea is filtered. twenty minutes, then brunch in the range rover. it's 8am.",
+          "image": "assets/photos/dublin/couple-in-a-steamy-sauna-31092906.jpg"
+        },
+        {
+          "title": "the organic mammy",
+          "body": "she's 50, glowing, and doesn't believe in 5g. brought her own birch branches and a flask of something green. will outlast you all.",
+          "image": "assets/photos/dublin/couple-in-a-steamy-sauna-31092906.jpg"
+        },
+        {
+          "title": "the lecturer",
+          "body": "explains brown fat to anyone within a metre. nobody asked. nobody can leave.",
+          "image": "assets/photos/dublin/couple-in-a-steamy-sauna-31092906.jpg"
+        },
+        {
+          "title": "the hen party",
+          "body": "eight of them in matching robes. one is crying, one has lost a shoe. best craic in the building.",
+          "image": "assets/photos/dublin/couple-in-a-steamy-sauna-31092906.jpg"
+        }
+      ],
+      "hookImage": "assets/photos/dublin/couple-in-a-steamy-sauna-31092906.jpg",
+      "endImage": "assets/photos/dublin/couple-in-a-steamy-sauna-31092906.jpg",
+      "retired": true,
+      "note_posting": "sent to Buffer as drafts on 26 Nov 2026, posted by hand"
+    },
+    {
+      "id": "ireland-sauna-types-3",
+      "date": "2026-12-08",
+      "cities": [
+        "dublin"
+      ],
+      "scope": "ireland",
+      "series": "sauna-types",
+      "kind": "types",
+      "hook": "even more types of people at an irish sea sauna",
+      "subhook": "part 3. we're not done.",
+      "question": "which one have you sat beside?",
+      "slides": [
+        {
+          "title": "the clock watcher",
+          "body": "stares at the clock the whole time. \"is that fifteen minutes?\" it's been four.",
+          "image": "assets/photos/dublin/man-and-woman-talking-in-a-sauna-6667416.jpg"
+        },
+        {
+          "title": "the third date",
+          "body": "both trying very hard to look relaxed. neither can feel their feet. it's going great.",
+          "image": "assets/photos/dublin/man-and-woman-talking-in-a-sauna-6667416.jpg"
+        },
+        {
+          "title": "the sea purist",
+          "body": "thinks the sauna is cheating. swims for 40 minutes, comes out blue, calls it \"refreshing\".",
+          "image": "assets/photos/dublin/man-and-woman-talking-in-a-sauna-6667416.jpg"
+        },
+        {
+          "title": "the singer",
+          "body": "starts with a hum. then a full verse. by round three the whole sauna is doing the fields of athenry.",
+          "image": "assets/photos/dublin/man-and-woman-talking-in-a-sauna-6667416.jpg"
+        },
+        {
+          "title": "the networker",
+          "body": "handed you a business card in the plunge. wants to circle back after round two.",
+          "image": "assets/photos/dublin/man-and-woman-talking-in-a-sauna-6667416.jpg"
+        },
+        {
+          "title": "the sleeper",
+          "body": "lay down on the top bench and was gone. snoring. nobody knows how long they've been there.",
+          "image": "assets/photos/dublin/man-and-woman-talking-in-a-sauna-6667416.jpg"
+        }
+      ],
+      "hookImage": "assets/photos/dublin/man-and-woman-talking-in-a-sauna-6667416.jpg",
+      "endImage": "assets/photos/dublin/man-and-woman-talking-in-a-sauna-6667416.jpg",
+      "retired": true,
+      "note_posting": "sent to Buffer as drafts on 26 Nov 2026, posted by hand"
+    },
+    {
+      "id": "signs-2",
+      "date": "2026-11-28",
+      "cities": [
+        "dublin"
+      ],
+      "kind": "list",
+      "hook": "signs you need a sauna this week, part 2",
+      "subhook": "you know who you are",
+      "question": "how many this time?",
+      "slides": [
+        {
+          "title": "you've been \"grand, thanks\" all week",
+          "body": "you are not grand. you're held together by tea and spite.",
+          "image": "assets/photos/dublin/back-view-of-a-woman-standing-near-the-glass-wall-5979546.jpg"
+        },
+        {
+          "title": "you've cancelled plans twice already",
+          "body": "the couch has won. one sauna and you'll be human again.",
+          "image": "assets/photos/dublin/brown-table-near-the-glass-window-12404352.jpg"
+        },
+        {
+          "title": "your back makes a noise when you stand up",
+          "body": "you're 32. twenty minutes of heat and it might stop creaking.",
+          "image": "assets/photos/dublin/nordic-sauna-experience-with-whisking-ritual-32504771.jpg"
+        },
+        {
+          "title": "you've opened the fridge six times looking for nothing",
+          "body": "you don't want a snack. you want to be warm and quiet.",
+          "image": "assets/photos/dublin/cozy-wooden-sauna-interior-with-warm-lighting-36177119.jpg"
+        },
+        {
+          "title": "it's been raining since tuesday",
+          "body": "wet socks, damp coat on the radiator. go and get properly warm.",
+          "image": "assets/photos/dublin/wooden-cabin-near-ski-slope-20989358.jpg"
+        }
+      ],
+      "series": "signs",
+      "hookImage": "assets/photos/dublin/relaxing-in-a-steamy-modern-sauna-31092896.jpg",
+      "endImage": "assets/photos/dublin/relaxing-in-a-steamy-modern-sauna-31092896.jpg"
+    },
+    {
+      "id": "signs-3",
+      "date": "2026-12-02",
+      "cities": [
+        "dublin"
+      ],
+      "kind": "list",
+      "hook": "signs you need a sauna this week, part 3",
+      "subhook": "last one, we promise",
+      "question": "which one is you today?",
+      "slides": [
+        {
+          "title": "your brain has 47 tabs open",
+          "body": "nothing switches off. except your phone, which isn't allowed in anyway.",
+          "image": "assets/photos/dublin/alone-at-the-dock-27264182.jpg"
+        },
+        {
+          "title": "four coffees in and you're still wrecked",
+          "body": "heat, cold, rest. better than a fifth coffee. trust us.",
+          "image": "assets/photos/dublin/relaxing-sauna-experience-with-steamy-stones-31092914.jpg"
+        },
+        {
+          "title": "you're cold even indoors",
+          "body": "jumper, blanket, hot water bottle. still freezing. you need the real thing.",
+          "image": "assets/photos/dublin/heap-of-snow-on-a-doorway-11588839.jpg"
+        },
+        {
+          "title": "you snapped at someone over nothing",
+          "body": "sorry to the barista. go sit in the heat and think about what you did.",
+          "image": "assets/photos/dublin/rustic-scandinavian-sauna-interior-41241636.jpg"
+        },
+        {
+          "title": "the weekend went by in a blink",
+          "body": "give yourself one hour that's just yours. phone in the locker.",
+          "image": "assets/photos/dublin/unrecognizable-people-walking-on-shore-near-trailer-5490151.jpg"
+        }
+      ],
+      "series": "signs",
+      "hookImage": "assets/photos/dublin/steam-rising-from-sauna-stones-with-ladle-32504789.jpg",
+      "endImage": "assets/photos/dublin/steam-rising-from-sauna-stones-with-ladle-32504789.jpg"
+    },
+    {
+      "id": "not-go-1",
+      "date": "2026-11-30",
+      "cities": [
+        "dublin"
+      ],
+      "kind": "types",
+      "hook": "signs you should not go to the sauna this week",
+      "subhook": "sorry, but no",
+      "question": "have you ever done one of these?",
+      "slides": [
+        {
+          "title": "you've had a few pints",
+          "body": "drink and heat don't mix. it's a real risk. save the sauna for tomorrow.",
+          "image": "assets/photos/dublin/cozy-winter-night-in-an-outdoor-hot-tub-34762260.jpg"
+        },
+        {
+          "title": "you've just got a new tattoo",
+          "body": "it needs a couple of weeks to heal. steam will wreck your artist's work.",
+          "image": "assets/photos/dublin/cozy-winter-night-in-an-outdoor-hot-tub-34762260.jpg"
+        },
+        {
+          "title": "you're full of the flu",
+          "body": "a fever and a hot room is a bad idea. stay in bed. you're not a hero.",
+          "image": "assets/photos/dublin/cozy-winter-night-in-an-outdoor-hot-tub-34762260.jpg"
+        },
+        {
+          "title": "you got a spray tan yesterday",
+          "body": "you'll leave a perfect outline of yourself on the bench. everyone will see it.",
+          "image": "assets/photos/dublin/cozy-winter-night-in-an-outdoor-hot-tub-34762260.jpg"
+        },
+        {
+          "title": "you've a first date in 20 minutes and your hair is done",
+          "body": "red face, flat hair, smelling of woodsmoke. actually, that might be a vibe.",
+          "image": "assets/photos/dublin/cozy-winter-night-in-an-outdoor-hot-tub-34762260.jpg"
+        }
+      ],
+      "series": "signs",
+      "hookImage": "assets/photos/dublin/cozy-winter-night-in-an-outdoor-hot-tub-34762260.jpg",
+      "endImage": "assets/photos/dublin/cozy-winter-night-in-an-outdoor-hot-tub-34762260.jpg",
+      "label": "reason"
+    },
+    {
+      "id": "not-go-2",
+      "date": "2026-12-04",
+      "cities": [
+        "dublin"
+      ],
+      "kind": "types",
+      "hook": "signs you should not go to the sauna this week, part 2",
+      "subhook": "we're begging you",
+      "question": "what would you add?",
+      "slides": [
+        {
+          "title": "you just ate a massive dinner",
+          "body": "a full belly in the heat is a rough combo. give it an hour or two.",
+          "image": "assets/photos/dublin/traditional-sauna-with-leaves-and-wooden-bucket-41258381.jpg"
+        },
+        {
+          "title": "you're running on crisps and no water",
+          "body": "drink a pint of water first. the sauna will take whatever's left.",
+          "image": "assets/photos/dublin/traditional-sauna-with-leaves-and-wooden-bucket-41258381.jpg"
+        },
+        {
+          "title": "you think ten minutes in the ice bath makes you hard",
+          "body": "it doesn't. a minute or two is plenty. you're not a seal.",
+          "image": "assets/photos/dublin/traditional-sauna-with-leaves-and-wooden-bucket-41258381.jpg"
+        },
+        {
+          "title": "you're only going for the photos",
+          "body": "the phone stays in the locker. it'd fog up anyway.",
+          "image": "assets/photos/dublin/traditional-sauna-with-leaves-and-wooden-bucket-41258381.jpg"
+        },
+        {
+          "title": "you've a cold sore and a towel-sharing habit",
+          "body": "mind yourself and everyone else. bring your own, keep it to yourself.",
+          "image": "assets/photos/dublin/traditional-sauna-with-leaves-and-wooden-bucket-41258381.jpg"
+        }
+      ],
+      "series": "signs",
+      "hookImage": "assets/photos/dublin/traditional-sauna-with-leaves-and-wooden-bucket-41258381.jpg",
+      "endImage": "assets/photos/dublin/traditional-sauna-with-leaves-and-wooden-bucket-41258381.jpg",
+      "label": "reason"
     }
   ]
 }

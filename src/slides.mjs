@@ -146,12 +146,12 @@ export const photoOnlySlide = (background) =>
   page("", background, { shade: "background:linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 22%)", plain: true });
 
 /** ...then the same photo as a frame round a cream card with the type's name and description. */
-export function typeCardSlide({ title, body }, index, total, background) {
+export function typeCardSlide({ title, body }, index, total, background, label = "type") {
   const size = sizeFor(title, [[14, 104], [22, 92], [32, 80], [999, 68]]);
   return page(`
   <div style="position:absolute;inset:110px 80px;background:#f3ebdd;color:#2a1d16;padding:0 80px;
     display:flex;flex-direction:column;justify-content:center;text-transform:lowercase">
-    <div style="font-size:34px;font-weight:600;color:#b5582c;letter-spacing:1px;text-transform:uppercase">type ${index + 1} of ${total}</div>
+    <div style="font-size:34px;font-weight:600;color:#b5582c;letter-spacing:1px;text-transform:uppercase">${escape(label)} ${index + 1} of ${total}</div>
     <div style="font-size:${size}px;font-weight:800;letter-spacing:-3px;line-height:1.02;margin:24px 0 36px">${escape(title)}</div>
     <div style="font-size:50px;font-weight:600;line-height:1.3;color:#3d2c22">${escape(body)}</div>
     <div style="position:absolute;bottom:56px;left:0;right:0;text-align:center;font-size:30px;font-weight:600;color:#8a7360">saunahop.com</div>
