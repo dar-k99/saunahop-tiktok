@@ -1,0 +1,21 @@
+Photos from Pexels (free to use, pexels.com/license). Added 26 Nov 2026 for the Dublin posts.
+Each photo is used once only (src/check.mjs enforces it).
+
+alone-at-the-dock-27264182.jpg  https://www.pexels.com/photo/alone-at-the-dock-27264182/
+back-view-of-a-woman-standing-near-the-glass-wall-5979546.jpg  https://www.pexels.com/photo/back-view-of-a-woman-standing-near-the-glass-wall-5979546/
+brown-table-near-the-glass-window-12404352.jpg  https://www.pexels.com/photo/brown-table-near-the-glass-window-12404352/
+cozy-sauna-essentials-on-rustic-wooden-bench-41258365.jpg  https://www.pexels.com/photo/cozy-sauna-essentials-on-rustic-wooden-bench-41258365/
+cozy-winter-night-in-an-outdoor-hot-tub-34762260.jpg  https://www.pexels.com/photo/cozy-winter-night-in-an-outdoor-hot-tub-34762260/
+cozy-wooden-sauna-interior-with-warm-lighting-36177119.jpg  https://www.pexels.com/photo/cozy-wooden-sauna-interior-with-warm-lighting-36177119/
+heap-of-snow-on-a-doorway-11588839.jpg  https://www.pexels.com/photo/heap-of-snow-on-a-doorway-11588839/
+nordic-sauna-experience-with-whisking-ritual-32504771.jpg  https://www.pexels.com/photo/nordic-sauna-experience-with-whisking-ritual-32504771/
+relaxing-in-a-steamy-modern-sauna-31092896.jpg  https://www.pexels.com/photo/relaxing-in-a-steamy-modern-sauna-31092896/
+relaxing-sauna-experience-with-steamy-stones-31092914.jpg  https://www.pexels.com/photo/relaxing-sauna-experience-with-steamy-stones-31092914/
+rustic-scandinavian-sauna-interior-41241636.jpg  https://www.pexels.com/photo/rustic-scandinavian-sauna-interior-41241636/
+steam-rising-from-sauna-stones-with-ladle-32504789.jpg  https://www.pexels.com/photo/steam-rising-from-sauna-stones-with-ladle-32504789/
+traditional-sauna-with-leaves-and-wooden-bucket-41258381.jpg  https://www.pexels.com/photo/traditional-sauna-with-leaves-and-wooden-bucket-41258381/
+unrecognizable-people-walking-on-shore-near-trailer-5490151.jpg  https://www.pexels.com/photo/unrecognizable-people-walking-on-shore-near-trailer-5490151/
+warm-lighting-on-wooden-sauna-panels-39912941.jpg  https://www.pexels.com/photo/warm-lighting-on-wooden-sauna-panels-39912941/
+women-in-a-room-behind-a-glass-panel-5976845.jpg  https://www.pexels.com/photo/women-in-a-room-behind-a-glass-panel-5976845/
+wooden-cabin-near-ski-slope-20989358.jpg  https://www.pexels.com/photo/wooden-cabin-near-ski-slope-20989358/
+wooden-platform-on-sailing-vessel-15565352.jpg  https://www.pexels.com/photo/wooden-platform-on-sailing-vessel-15565352/

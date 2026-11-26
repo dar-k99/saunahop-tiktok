@@ -18,7 +18,7 @@
 
   "tonightFromHour": 17,
 
-  "videoDays": ["Tue", "Thu", "Sat"],
+  "videoDays": [],
   "video": {
     "clipStart": 2,
     "clipLength": 4,

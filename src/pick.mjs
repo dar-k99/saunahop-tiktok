@@ -99,13 +99,12 @@ export function pickTopic(topics, today, weekday, cityDays, tryTopic) {
 }
 
 /**
- * Today's tips/myths post: the next one in stories.json, one per story slot
- * (postsPerDay slots on each story day). Stories with "cities" only run there.
+ * Today's story post: the one in stories.json dated today for this slot.
+ * No rotation: posts never come round again. Retired posts are skipped, and
+ * if nothing is dated today the answer is null (no post).
  */
-export function pickStory(stories, today, weekday, storyDays, cityId, slot = 1, postsPerDay = 1) {
-  const list = stories.filter((s) => !s.cities || s.cities.includes(cityId));
-  const n = postNumber(today, weekday, storyDays) * postsPerDay + (slot - 1);
-  return list[((n % list.length) + list.length) % list.length];
+export function scheduledStory(stories, today, slot = 1) {
+  return stories.find((s) => !s.retired && s.date === today && (s.slot || 1) === slot) || null;
 }
 
 // ---- Photos and clips ----

@@ -12,8 +12,9 @@
 import fs from "fs";
 import path from "path";
 import { loadVenues, loadAvailability, countFreeSessions, londonToday, londonWeekday } from "./src/data.mjs";
-import { seededRandom, shuffle, pickTopic, pickVenues, pickStory, pillsFor, listFiles, buildCaption } from "./src/pick.mjs";
-import { hookSlide, venueSlide, mythSlide, pointSlide, endSlide, videoOverlay } from "./src/slides.mjs";
+import { seededRandom, pickTopic, pickVenues, scheduledStory, pillsFor, listFiles, buildCaption } from "./src/pick.mjs";
+import { checkStories } from "./src/check.mjs";
+import { hookSlide, venueSlide, mythSlide, pointSlide, photoOnlySlide, typeCardSlide, endSlide, videoOverlay } from "./src/slides.mjs";
 import { renderPages, renderVideo } from "./src/render.mjs";
 
 const readJson = (file) => JSON.parse(fs.readFileSync(file, "utf8"));
@@ -36,8 +37,23 @@ const now = new Date();
 const today = londonToday(now);
 const weekday = londonWeekday(now);
 
-// ---- 0. Which city: from config.json (or --city) ----
-const cityId = forcedCity || Object.keys(config.cities).find((id) => config.cities[id].days?.includes(weekday));
+// ---- Repeat guard: no reused photos or lines (src/check.mjs) ----
+const problems = checkStories(stories);
+if (problems.length) throw new Error(`stories.json has problems, fix them first:\n  - ${problems.join("\n  - ")}`);
+
+// ---- Today's post: the story dated today (stories.json "date"), never a rerun ----
+const forcedStory = forcedTopic && stories.find((s) => s.id === forcedTopic);
+if (forcedStory?.retired) throw new Error(`"${forcedTopic}" is retired: it has already been posted and won't be reused.`);
+const scheduled = forcedTopic || forcedType === "venues" ? null : scheduledStory(stories, today, slot);
+if (!forcedTopic && !forcedType && !scheduled && config.storyDays?.includes(weekday)) {
+  const key = slot === 1 ? today : `${today}-${slot}`;
+  fs.rmSync(path.resolve("output", key), { recursive: true, force: true }); // so post.mjs can't send an old build
+  console.log(`Nothing new dated ${today} (slot ${slot}) in stories.json, so no post. Old posts are never reused.`);
+  process.exit(0);
+}
+
+// ---- 0. Which city: --city, else the post's own city, else config.json ----
+const cityId = forcedCity || (forcedStory || scheduled)?.cities?.[0] || Object.keys(config.cities).find((id) => config.cities[id].days?.includes(weekday));
 const city = config.cities[cityId];
 if (!city) throw new Error(`No city for ${weekday}: check "cities" in config.json`);
 const topics = allTopics[cityId];
@@ -45,9 +61,8 @@ const postKey = slot === 1 ? today : `${today}-${slot}`; // output folder name
 const random = seededRandom(postKey + cityId + (forcedTopic || ""));
 console.log(`City: ${city.name}`);
 
-// ---- Post type: tips/myths story, or venue list ----
-const forcedStory = forcedTopic && stories.find((s) => s.id === forcedTopic);
-const type = forcedType || (forcedStory ? "story" : forcedTopic ? "venues" : config.storyDays?.includes(weekday) ? "story" : "venues");
+// ---- Post type: story, or venue list ----
+const type = forcedType || (forcedStory || scheduled ? "story" : forcedTopic ? "venues" : config.storyDays?.includes(weekday) ? "story" : "venues");
 if (!["story", "venues"].includes(type)) throw new Error(`--type must be "story" or "venues"`);
 console.log(`Post type: ${type}`);
 
@@ -67,9 +82,10 @@ const checkedAt = availability
 const tryTopic = (topic) => pickVenues(topic, venues, freeSessions, config, random);
 let chosen;
 if (type === "story") {
-  const base = forcedStory || pickStory(stories, today, weekday, config.storyDays || [weekday], cityId, slot, postsPerDay);
-  const story = { ...base, ...(base[cityId] || {}) }; // e.g. the "dublin" block: same post, irish wording
   if (forcedTopic && !forcedStory) throw new Error(`No story called "${forcedTopic}" in stories.json`);
+  const base = forcedStory || scheduled;
+  if (!base) throw new Error(`No story dated ${today} (slot ${slot}) in stories.json. Use --topic <id> to build a specific one.`);
+  const story = { ...base, ...(base[cityId] || {}) }; // e.g. the "dublin" block: same post, irish wording
   const fill = (text) => text.replaceAll("{city}", city.name);
   chosen = { topic: { ...story, hook: fill(story.hook), subhook: fill(story.subhook) }, venues: [] };
 } else if (forcedTopic) {
@@ -85,9 +101,11 @@ const { topic } = chosen;
 console.log(`${type === "story" ? "Story" : "Topic"}: ${topic.id}: "${topic.hook}"`);
 chosen.venues.forEach((v) => console.log(`  - ${v.name}`));
 
-// ---- 3. Photos: people for the hook and ending, empty saunas behind venue names ----
-const people = shuffle(listFiles("assets/photos/people", [".jpg", ".jpeg", ".png"]), random);
-const empty = shuffle(listFiles("assets/photos/empty", [".jpg", ".jpeg", ".png"]), random);
+// ---- 3. Photos: each story names its own (hookImage, slides[].image, endImage; checked above).
+// The old shared pools were retired on 26 Nov 2026 so photos are never reused, which
+// leaves venue posts without photos until they get new ones.
+if (type === "venues") throw new Error("Venue posts are off: their shared photo pool was retired (no reused photos). Give them new photos first.");
+const people = [], empty = [];
 const clips = listFiles("assets/clips", [".mp4", ".mov"]);
 
 // ---- 4. Render slides ----
@@ -98,12 +116,13 @@ fs.mkdirSync(outDir, { recursive: true });
 
 // A slide (or the story's "hookImage") can name its own photo, e.g. "assets/photos/history/....jpg".
 const ownImage = (file) => file && path.resolve(file);
-const storySlides = (topic.slides || []).map((slide, index, all) => ({
-  html: (topic.kind === "myths" ? mythSlide : pointSlide)(slide, index, all.length, ownImage(slide.image) || empty[index % empty.length], !!slide.image),
-}));
+const storySlides = (topic.slides || []).flatMap((slide, index, all) =>
+  topic.kind === "types" // per type: the photo alone (skipped when it's the hook photo again), then the photo framing a cream card
+    ? [...(slide.image === topic.hookImage ? [] : [{ html: photoOnlySlide(ownImage(slide.image)) }]), { html: typeCardSlide(slide, index, all.length, ownImage(slide.image)) }]
+    : [{ html: (topic.kind === "myths" ? mythSlide : pointSlide)(slide, index, all.length, ownImage(slide.image), !!topic.framed) }]);
 
 const slidePages = [
-  { html: type === "story" ? hookSlide(topic, ownImage(topic.hookImage) || people[0], { cta: "swipe →", plain: true, framed: !!topic.hookImage }) : hookSlide(topic, people[0]) },
+  { html: type === "story" ? hookSlide(topic, ownImage(topic.hookImage), { cta: "swipe →", plain: true, framed: !!topic.framed }) : hookSlide(topic, people[0]) },
   ...storySlides,
   ...chosen.venues.map((venue, index) => ({
     html: venueSlide({
@@ -118,7 +137,10 @@ const slidePages = [
       background: empty[index % empty.length],
     }),
   })),
-  { html: endSlide(city, venues.length, people[1 % people.length], type === "story") },
+  // scope "ireland": the end slide covers every Irish sauna, not just the city's.
+  { html: topic.scope === "ireland"
+      ? endSlide({ ...city, name: "Irish" }, readJson("data/venues.json").venues.filter((v) => v.country === "ie").length, ownImage(topic.endImage), true)
+      : endSlide(city, venues.length, type === "story" ? ownImage(topic.endImage) : people[1], type === "story") },
 ].map((p, i) => ({ ...p, file: path.join(outDir, `slide-${i + 1}.jpg`) }));
 
 const makeVideo = forceVideo || (config.videoDays.includes(weekday) && slot === postsPerDay); // video goes with the day's last post

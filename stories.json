@@ -1,5 +1,5 @@
 {
-  "_README": "Tips, myths and culture posts: no venue data needed. Used in order, one per story day (see storyDays in config.json), then it starts again. kind 'myths' = slides with myth + truth; kind 'list' = slides with title + body. {city} is swapped in. 'question' ends the caption to get comments; 'note' (optional) is added to the caption, for health topics. Style: all lowercase, no emojis, a blustering, posh, over-the-top old-school politician voice (cripes, piffle, latin, 'folks'). Never name or quote a real person. Facts stay accurate: health claims say 'linked with', never 'cures'. Dublin: each story has have a 'dublin' block (hook, subhook, question, note, slides) that replaces those fields on Dublin days. The Dublin voice is irish, not posh english: cap, bad craic, grand, deadly, notions, fair play, sure look, lads.",
+  "_README": "Story posts. Each new post has a 'date' (YYYY-MM-DD), optional 'slot' (1 or 2, default 1) and 'cities'; the build posts only the one dated today and never reruns old posts (no date = no post). Every post names its own photos: hookImage, slides[].image, endImage. A photo is used once only; 'retired': true marks posts already used. Run 'node src/check.mjs' to catch reused photos and repeated or reworded lines (build.mjs refuses to build otherwise). kind 'list' = slides with title + body; kind 'myths' = myth + truth. 'question' ends the caption to get comments. 'framed': true shows photos whole on cream (history style). Style: all lowercase, no emojis, funny. Dublin voice is irish (grand, deadly, sure look, lads). Health claims say 'linked with', never 'cures'.",
   "stories": [
     {
       "id": "perfect-round",
@@ -46,7 +46,8 @@
             "body": "two to four rounds is the classic. finish however you like, sure look."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "glossary",
@@ -101,7 +102,8 @@
             "body": "hot, then cold, then hot again. sauna, sea, repeat. dublin's been at it for years."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "nobody-tells-you",
@@ -156,7 +158,8 @@
             "body": "that calm, floaty feeling after? that's why people get hooked. it's deadly."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "etiquette",
@@ -211,7 +214,8 @@
             "body": "if you must bring it, put it on silent. better again, leave it in the locker."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "finland",
@@ -258,7 +262,8 @@
             "body": "the word for sauna steam is said to have once meant spirit or soul. lovely stuff."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "signs",
@@ -313,7 +318,8 @@
             "body": "sauna, plunge, rest, early night. trust us."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "research",
@@ -370,7 +376,8 @@
             "body": "sauna is a great habit, not a medicine. enjoy it for what it is."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "what-to-bring",
@@ -425,7 +432,8 @@
             "body": "optional, but a felt hat keeps your head cooler. looks a bit mad. works though."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "new-pub",
@@ -472,7 +480,8 @@
             "body": "sauna, sea, then one pint. best of both worlds."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "myths-2",
@@ -519,7 +528,8 @@
             "truth": "alcohol and heat are a risky mix, and drink is involved in a lot of sauna accidents. save it for after."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "date",
@@ -566,7 +576,8 @@
             "body": "literally. then go get chips."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "myths-1",
@@ -621,7 +632,8 @@
             "truth": "the finns have about 3 million saunas for 5.5 million people. everyone's at it. your mam would love it."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "once-a-week",
@@ -676,7 +688,8 @@
             "body": "same day, same time, every week. something to look forward to when it's lashing rain."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "first-time",
@@ -731,7 +744,8 @@
             "body": "before, between rounds and after. you'll lose more than you think."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "cold-plunge-myths",
@@ -780,7 +794,8 @@
             "truth": "most people do it for the feeling after: awake, calm and in flying form."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "sauna-vs-steam",
@@ -827,7 +842,8 @@
             "body": "whichever one you'll actually go to. try all three, sure what harm."
           }
         ]
-      }
+      },
+      "retired": true
     },
     {
       "id": "london-bathhouses",
@@ -837,42 +853,44 @@
       ],
       "hook": "london's secret sauna history",
       "subhook": "part 1: steam, scandal and a building you walk past every day",
-      "hookImage": "assets/photos/history/08-1862-jermyn-st-hot-room.jpg",
+      "hookImage": "assets/photos/retired/history/08-1862-jermyn-st-hot-room.jpg",
       "question": "what should part 2 cover?",
       "note": "pictures: william hogarth (public domain); illustrated london news and st giles bagnio via wellcome collection (cc by 4.0); nevill's postcard (public domain); bishopsgate kiosk by herry lawford (cc by 2.0).",
       "slides": [
         {
           "year": "1600s",
           "title": "london's first steam rooms",
-          "image": "assets/photos/history/01-1600s-bagnio-st-giles.jpg",
+          "image": "assets/photos/retired/history/01-1600s-bagnio-st-giles.jpg",
           "body": "picture it: the 1600s, no showers, and most londoners rarely had a proper wash. then came the bagnio (say \"ban-yo\"): a hot room to sweat in, a bath to soak in, and a barber to scrub you, shave you and cup you. this one in st giles was later called queen anne's bath."
         },
         {
           "year": "1700s",
           "title": "then it got scandalous",
-          "image": "assets/photos/history/02-1743-hogarth-the-bagnio.jpg",
+          "image": "assets/photos/retired/history/02-1743-hogarth-the-bagnio.jpg",
           "body": "soon bagnios were renting rooms by the night, no questions asked, and the word became polite slang for a brothel. william hogarth, the artist who loved painting london behaving badly, set this 1743 scene in one. the husband has just been stabbed by his wife's lover, who is legging it out of the window."
         },
         {
           "year": "1862",
           "title": "turkish bath mania",
-          "image": "assets/photos/history/09-1862-jermyn-st-cooling-room.jpg",
+          "image": "assets/photos/retired/history/09-1862-jermyn-st-cooling-room.jpg",
           "body": "forget gin: the big victorian craze was the turkish bath. room after room, each hotter than the last, then a scrub and a long lie-down somewhere gorgeous, like this cooling room on jermyn street. it was one of the grandest baths in london, until a bomb destroyed it in the second world war."
         },
         {
           "year": "1895",
           "title": "a sweat in the city",
-          "image": "assets/photos/history/11-1895-nevills-bishopsgate-cooling-room.jpg",
+          "image": "assets/photos/retired/history/11-1895-nevills-bishopsgate-cooling-room.jpg",
           "body": "in 1895 nevill's opened a turkish bath just off bishopsgate, in the heart of the city. bankers and clerks would slip out, sweat off the week, then stretch out in tiled rooms like this one before heading back to their desks."
         },
         {
           "year": "today",
           "title": "it's still there",
-          "image": "assets/photos/history/12-bishopsgate-turkish-bath-kiosk.jpg",
+          "image": "assets/photos/retired/history/12-bishopsgate-turkish-bath-kiosk.jpg",
           "body": "the baths are long gone, but the entrance survived. tucked into bishopsgate churchyard, two minutes from liverpool street, is a tiny tiled kiosk with an onion dome. thousands of people walk past it every day without knowing what it was. now you do."
         }
       ],
-      "caption": "london's secret sauna history, part 1.\n\n1600s: london's first steam baths were called bagnios. you could sweat, bathe and get a shave.\n\n1700s: bagnios also rented rooms by the night, and got a scandalous reputation. the painting is 'the bagnio' by william hogarth (1743), from his series marriage a-la-mode: a husband has just been stabbed by his wife's lover, who is escaping through the window.\n\n1862: the victorians went wild for turkish baths, a row of hotter and hotter rooms. the hammam on jermyn street in st james's was one of the grandest. this is its cooling room, drawn for the illustrated london news. a bomb destroyed it in the second world war.\n\n1895: nevill's turkish baths opened just off bishopsgate, by liverpool street. this postcard shows one of its cooling rooms.\n\ntoday: the tiled entrance kiosk is still standing in bishopsgate churchyard, two minutes from liverpool street station.\n\n{question} for a sauna today: saunahop.com"
+      "caption": "london's secret sauna history, part 1.\n\n1600s: london's first steam baths were called bagnios. you could sweat, bathe and get a shave.\n\n1700s: bagnios also rented rooms by the night, and got a scandalous reputation. the painting is 'the bagnio' by william hogarth (1743), from his series marriage a-la-mode: a husband has just been stabbed by his wife's lover, who is escaping through the window.\n\n1862: the victorians went wild for turkish baths, a row of hotter and hotter rooms. the hammam on jermyn street in st james's was one of the grandest. this is its cooling room, drawn for the illustrated london news. a bomb destroyed it in the second world war.\n\n1895: nevill's turkish baths opened just off bishopsgate, by liverpool street. this postcard shows one of its cooling rooms.\n\ntoday: the tiled entrance kiosk is still standing in bishopsgate churchyard, two minutes from liverpool street station.\n\n{question} for a sauna today: saunahop.com",
+      "retired": true,
+      "framed": true
     },
     {
       "id": "dublin-bathhouses",
@@ -882,42 +900,195 @@
       ],
       "hook": "dublin's secret sauna history",
       "subhook": "part 1: steam, rebels and a bath from guinness",
-      "hookImage": "assets/photos/history/dublin-05-forty-foot-sunrise.jpg",
+      "hookImage": "assets/photos/retired/history/dublin-05-forty-foot-sunrise.jpg",
       "question": "what should part 2 cover?",
       "slides": [
         {
           "year": "1860",
           "title": "domes beside trinity",
-          "image": "assets/photos/history/dublin-01-1860-lincoln-place-turkish-baths.jpg",
+          "image": "assets/photos/retired/history/dublin-01-1860-lincoln-place-turkish-baths.jpg",
           "body": "in 1860 a doctor called richard barter opened dublin's first purpose-built turkish baths on lincoln place, beside trinity college. with its domes and fancy arches it was one of the most striking buildings in town, and james joyce even put it in ulysses. that's it on the left, decades later."
         },
         {
           "year": "1869",
           "title": "a hotel with a sweat",
-          "image": "assets/photos/history/dublin-02-1900s-hammam-hotel-sackville-st.jpg",
+          "image": "assets/photos/retired/history/dublin-02-1900s-hammam-hotel-sackville-st.jpg",
           "body": "on paddy's day 1869 barter opened another one on sackville street, now o'connell street. the hammam hotel had turkish baths out the back, so you could steam, get scrubbed and stay the night, right in the middle of town. notions? fair play to him."
         },
         {
           "year": "1906",
           "title": "a bath from guinness",
-          "image": "assets/photos/history/dublin-04-iveagh-baths-entrance.jpg",
+          "image": "assets/photos/retired/history/dublin-04-iveagh-baths-entrance.jpg",
           "body": "plenty of dubliners had no bathroom at home, so in 1906 the guinness family's iveagh trust opened public baths in the liberties: hot baths and a swimming pool for the neighbours. it closed in 1985, but the red-brick building is still on bride road. it's a gym now."
         },
         {
           "year": "1922",
           "title": "the hammam goes up in smoke",
-          "image": "assets/photos/history/dublin-03-1922-hammam-hotel-civil-war.jpg",
+          "image": "assets/photos/retired/history/dublin-03-1922-hammam-hotel-civil-war.jpg",
           "body": "in july 1922 the civil war reached o'connell street, and the hammam was right in the middle of the fighting. on 5 july explosions and fire destroyed it. it never reopened, and the hammam buildings stand on the spot today."
         },
         {
           "year": "today",
           "title": "and then there's the sea",
-          "image": "assets/photos/history/dublin-06-forty-foot-steps.jpg",
+          "image": "assets/photos/retired/history/dublin-06-forty-foot-steps.jpg",
           "body": "dublin never stopped dipping. the forty foot in sandycove was men only until july 1974, when a crowd of women marched down and jumped in. now the coast is lined with sea saunas, so you can sweat and swim like a proper dub."
         }
       ],
       "caption": "dublin's secret sauna history, part 1.\n\n1860: dr richard barter opened dublin's first purpose-built turkish baths on lincoln place, beside trinity college. james joyce even put it in ulysses. the photo is from around 1972, with the old baths' facade on the left.\n\n1869: on st patrick's day barter opened the hammam hotel on sackville street (now o'connell street), a hotel with turkish baths out the back.\n\n1906: the guinness family's iveagh trust opened the iveagh baths on bride road in the liberties, for people with no bathroom at home. it closed in 1985 and the building is a gym today.\n\n1922: the civil war fighting on o'connell street destroyed the hammam on 5 july. it never reopened.\n\ntoday: the forty foot in sandycove was men only until women 'invaded' it in july 1974. now dublin's coast is full of sea saunas.\n\n{question} for a sauna today: saunahop.com",
-      "note": "pictures: national library of ireland (no known restrictions); hammam postcard and 1922 photo (public domain); iveagh baths by andreas wolf (cc0); forty foot sunrise by giuseppe milo (cc by 3.0); forty foot steps by aleks scholz (cc by-sa 2.0)."
+      "note": "pictures: national library of ireland (no known restrictions); hammam postcard and 1922 photo (public domain); iveagh baths by andreas wolf (cc0); forty foot sunrise by giuseppe milo (cc by 3.0); forty foot steps by aleks scholz (cc by-sa 2.0).",
+      "retired": true,
+      "framed": true
+    },
+    {
+      "id": "dublin-sea-sauna-person",
+      "date": "2026-11-28",
+      "cities": [
+        "dublin"
+      ],
+      "kind": "list",
+      "hook": "signs you've become a sea sauna person",
+      "subhook": "no shame in it",
+      "question": "how deep in are you?",
+      "hookImage": "assets/photos/dublin/alone-at-the-dock-27264182.jpg",
+      "endImage": "assets/photos/dublin/alone-at-the-dock-27264182.jpg",
+      "slides": [
+        {
+          "title": "you check the tide times before the weather",
+          "body": "high tide at seven? grand. the forecast can mind itself.",
+          "image": "assets/photos/dublin/wooden-platform-on-sailing-vessel-15565352.jpg"
+        },
+        {
+          "title": "you've strong opinions on which pier is best",
+          "body": "and you'll defend them at a wedding if you have to.",
+          "image": "assets/photos/dublin/unrecognizable-people-walking-on-shore-near-trailer-5490151.jpg"
+        },
+        {
+          "title": "you've one towel for the sea and one for everything else",
+          "body": "never the twain shall meet. the sea towel knows what it did.",
+          "image": "assets/photos/dublin/cozy-sauna-essentials-on-rustic-wooden-bench-41258365.jpg"
+        },
+        {
+          "title": "you've said \"ah it's not even that cold\" in november",
+          "body": "it was nine degrees. the sea was ten. you were delighted.",
+          "image": "assets/photos/dublin/back-view-of-a-woman-standing-near-the-glass-wall-5979546.jpg"
+        }
+      ]
+    },
+    {
+      "id": "dublin-regulars-know",
+      "date": "2026-11-30",
+      "cities": [
+        "dublin"
+      ],
+      "kind": "list",
+      "hook": "things every dublin sauna regular knows",
+      "subhook": "the unwritten rules",
+      "question": "what did we miss?",
+      "hookImage": "assets/photos/dublin/relaxing-in-a-steamy-modern-sauna-31092896.jpg",
+      "endImage": "assets/photos/dublin/cozy-winter-night-in-an-outdoor-hot-tub-34762260.jpg",
+      "slides": [
+        {
+          "title": "you know everyone's name but not one of their jobs",
+          "body": "ciara from the 7am. lovely woman. could be a surgeon. no idea.",
+          "image": "assets/photos/dublin/cozy-wooden-sauna-interior-with-warm-lighting-36177119.jpg"
+        },
+        {
+          "title": "the 7am crowd and the 7pm crowd are two different species",
+          "body": "one is silent and hardcore. the other brought a speaker. don't bring a speaker.",
+          "image": "assets/photos/dublin/steam-rising-from-sauna-stones-with-ladle-32504789.jpg"
+        },
+        {
+          "title": "there's always one lad doing very loud breathing",
+          "body": "in through the nose for seven, out like a kettle. every session.",
+          "image": "assets/photos/dublin/relaxing-sauna-experience-with-steamy-stones-31092914.jpg"
+        },
+        {
+          "title": "the walk to the sea is the longest 20 seconds of your life",
+          "body": "barefoot, on the slip, in a north wind. worth it though.",
+          "image": "assets/photos/dublin/heap-of-snow-on-a-doorway-11588839.jpg"
+        }
+      ]
+    },
+    {
+      "id": "dublin-winter-when",
+      "date": "2026-12-02",
+      "cities": [
+        "dublin"
+      ],
+      "kind": "list",
+      "hook": "you know it's winter in dublin when…",
+      "subhook": "a field guide",
+      "question": "which one is your week?",
+      "hookImage": "assets/photos/dublin/warm-lighting-on-wooden-sauna-panels-39912941.jpg",
+      "endImage": "assets/photos/dublin/brown-table-near-the-glass-window-12404352.jpg",
+      "slides": [
+        {
+          "title": "it's pitch dark by half four",
+          "body": "lunch, a meeting, and suddenly it's night. the sauna's lit though.",
+          "image": "assets/photos/dublin/rustic-scandinavian-sauna-interior-41241636.jpg"
+        },
+        {
+          "title": "one flake of snow and the whole country shuts down",
+          "body": "the bread's gone from tesco. the sauna is still open.",
+          "image": "assets/photos/dublin/wooden-cabin-near-ski-slope-20989358.jpg"
+        },
+        {
+          "title": "the only warm places left are the sauna and your nan's kitchen",
+          "body": "and only one of them asks if you've met anyone yet.",
+          "image": "assets/photos/dublin/traditional-sauna-with-leaves-and-wooden-bucket-41258381.jpg"
+        },
+        {
+          "title": "you'd let a stranger hit you with leaves if it meant feeling your toes",
+          "body": "that's a whisking. it's a real thing. look it up.",
+          "image": "assets/photos/dublin/nordic-sauna-experience-with-whisking-ritual-32504771.jpg"
+        }
+      ]
+    },
+    {
+      "id": "dublin-sauna-types",
+      "date": "2026-12-04",
+      "cities": [
+        "dublin"
+      ],
+      "kind": "types",
+      "hook": "types of people at an irish sea sauna",
+      "subhook": "you're one of them",
+      "question": "which one are you, really?",
+      "hookImage": "assets/photos/dublin/women-in-a-room-behind-a-glass-panel-5976845.jpg",
+      "endImage": "assets/photos/dublin/women-in-a-room-behind-a-glass-panel-5976845.jpg",
+      "slides": [
+        {
+          "title": "the og",
+          "body": "was doing this before the sea saunas had a waiting list. calls it \"the scene\". will tell you how it used to be, back in 2021.",
+          "image": "assets/photos/dublin/women-in-a-room-behind-a-glass-panel-5976845.jpg"
+        },
+        {
+          "title": "the first-timer",
+          "body": "screams getting into the sea. screams getting out. best day of their life.",
+          "image": "assets/photos/dublin/women-in-a-room-behind-a-glass-panel-5976845.jpg"
+        },
+        {
+          "title": "the ladle merchant",
+          "body": "one more ladle. and another. it's 110 degrees in here and they're asking if anyone's cold.",
+          "image": "assets/photos/dublin/women-in-a-room-behind-a-glass-panel-5976845.jpg"
+        },
+        {
+          "title": "the silent old man",
+          "body": "always there first. never says a word. nods at you once and you feel chosen.",
+          "image": "assets/photos/dublin/women-in-a-room-behind-a-glass-panel-5976845.jpg"
+        },
+        {
+          "title": "the gear lad",
+          "body": "felt sauna hat. personalised water bottle. his own bench towel and a little hourglass. leaves after one round.",
+          "image": "assets/photos/dublin/women-in-a-room-behind-a-glass-panel-5976845.jpg"
+        },
+        {
+          "title": "the one who came for the chats",
+          "body": "hasn't been near the sauna. been on the bench outside an hour. knows everyone's business.",
+          "image": "assets/photos/dublin/women-in-a-room-behind-a-glass-panel-5976845.jpg"
+        }
+      ],
+      "scope": "ireland"
     }
   ]
 }

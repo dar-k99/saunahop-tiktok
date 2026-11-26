@@ -53,7 +53,11 @@ const outDir = path.resolve("output", postKey);
 // link after a rebuild can hand Buffer the old slides.
 const mediaDir = `${postKey}/${Date.now().toString(36)}`;
 const postFile = path.join(outDir, "post.json");
-if (!fs.existsSync(postFile)) throw new Error(`No post built for ${postKey}. Run: node build.mjs${slotArg === 1 ? "" : ` --slot ${slotArg}`}`);
+if (!fs.existsSync(postFile)) {
+  // build.mjs makes no post when nothing new is dated today (old posts are never reused).
+  console.log(`No post built for ${postKey}, so nothing to send.`);
+  process.exit(0);
+}
 const post = JSON.parse(fs.readFileSync(postFile, "utf8"));
 
 const files = [...post.carousel.images, ...(post.video ? [post.video.file] : [])];
